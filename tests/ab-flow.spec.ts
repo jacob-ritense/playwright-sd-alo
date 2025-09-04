@@ -1,0 +1,36 @@
+import { test } from '@playwright/test';
+import { faker } from '@faker-js/faker';
+
+import createVerzoekTask from './tasks/create-verzoek.spec';
+import loginTask from './tasks/login.spec';
+import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
+
+const tasks = [
+  { name: 'create-verzoek', fn: createVerzoekTask },
+  { name: 'login', fn: loginTask },
+  { name: 'opvoeren-dienst-socrates', fn: opvoerenDienstSocratesTask },
+];
+
+test.describe('Algemene bijstand Flow', () => {
+  test('complete algemene-bijstand-aanvraag process', async ({ page }) => {
+    test.setTimeout(300000); // 5 minutes timeout for complete flow
+
+    // Generate test data
+    const testData = {
+      lastName: faker.person.lastName(),
+      requestId: null as string | null,
+    };
+    console.log('Test data:', testData);
+
+    for (const task of tasks) {
+      await test.step(`Running task: ${task.name}`, async () => {
+        try {
+          await task.fn(page, testData);
+        } catch (error) {
+          console.error(`Failed during task ${task.name}:`, error);
+          throw error;
+        }
+      });
+    }
+  });
+}); 
