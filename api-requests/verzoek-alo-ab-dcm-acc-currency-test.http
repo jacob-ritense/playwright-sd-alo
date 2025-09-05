@@ -25,7 +25,7 @@ Content-Type: application/json
                             "voornaam": "Robert Johannes",
                             "achternaam": "Leijenhorst",
                             "voorletters": "R.J.",
-                            "voorvoegsels": "van der",
+                            "voorvoegsels": "",
                             "geboortedatum": "1980-04-20"
                         }
                     }
