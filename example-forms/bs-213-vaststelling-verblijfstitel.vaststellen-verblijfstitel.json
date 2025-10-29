@@ -1,0 +1,270 @@
+{
+    "display": "form",
+    "components": [
+        {
+            "key": "pv.nationaliteitOfVerblijfsstatus",
+            "type": "hidden",
+            "input": true,
+            "label": "nationaliteitOfVerblijfsstatus",
+            "tableView": false
+        },
+        {
+            "key": "pv.bs213verblijfstitel",
+            "type": "hidden",
+            "input": true,
+            "label": "bs213verblijfstitel",
+            "tableView": false
+        },
+        {
+            "key": "pv.nationaliteitenBrp",
+            "type": "hidden",
+            "input": true,
+            "label": "nationaliteitenBrp",
+            "tableView": false
+        },
+        {
+            "key": "pv.actiesVerblijfstatus",
+            "type": "hidden",
+            "input": true,
+            "label": "actiesVerblijfstatus",
+            "tableView": false
+        },
+        {
+            "key": "pv.verblijfstitelBrp",
+            "type": "hidden",
+            "input": true,
+            "label": "verblijfstitelBrp",
+            "tableView": false
+        },
+        {
+            "key": "pv.nationaliteitTitel",
+            "type": "hidden",
+            "input": true,
+            "label": "nationaliteitTitel",
+            "tableView": false
+        },
+        {
+            "key": "pv.verblijfstitel",
+            "type": "hidden",
+            "input": true,
+            "label": "verblijfstitel",
+            "tableView": false
+        },
+        {
+            "key": "columns",
+            "type": "columns",
+            "input": false,
+            "customClass": "no-scrollbar",
+            "label": "Columns",
+            "columns": [
+                {
+                    "pull": 0,
+                    "push": 0,
+                    "size": "md",
+                    "width": 6,
+                    "offset": 0,
+                    "components": [
+                        {
+                            "label": "HTML",
+                            "attrs": [
+                                {
+                                    "attr": "",
+                                    "value": ""
+                                }
+                            ],
+                            "content": "<h4 class=\"pb-2\"><strong>Opgegeven nationaliteit/verblijfsstatus</strong></h4>\n<p>\n    {{ { 'IS_GEEN_NEDERLANDER' : 'Is geen Nederlander', 'NEDERLANDSE_NATIONALITEIT' : 'Ik heb de Nederlandse nationaliteit', 'EU_ONDERDAAN' : 'Ik ben EU onderdaan',  'GELDIGE_VERBLIJFSVERGUNNING' : 'Ik heb een geldige verblijfsvergunning',  'GEEN_VERBLIJFSVERGUNNING' : 'Ik heb geen verblijfsvergunning', 'VERLOPEN_VERBLIJFSVERGUNNING' : 'Mijn verblijfsvergunning is verlopen', '' : '-' }[data.pv?.nationaliteitOfVerblijfsstatus] || '-'}}\n</p>\n",
+                            "refreshOnChange": false,
+                            "key": "html4",
+                            "type": "htmlelement",
+                            "input": false,
+                            "tableView": false
+                        },
+                        {
+                            "key": "html6",
+                            "type": "htmlelement",
+                            "input": false,
+                            "label": "html",
+                            "content": "<hr>",
+                            "tableView": false,
+                            "refreshOnChange": false
+                        },
+                        {
+                            "key": "html5",
+                            "type": "htmlelement",
+                            "input": false,
+                            "label": "HTML",
+                            "content": "<h4 class=\"pb-2\"><strong>Opgegeven activiteiten om verblijfsvergunning te krijgen / te houden</strong></h4>\n<p>\n  {{{ data.pv?.actiesVerblijfstatus ? {\"VERLENGING_VERBLIJFSDOCUMENT_AANGEVRAAGD\":\"Verlenging van mijn verblijfsdocument aangevraagd\", \"BEZWAAR_AFWIJZING\":\"Binnen de bezwaarperiode, bezwaar gemaakt tegen de afwijzing van mijn verblijfsdocument door de IND\", \"GEEN\":\"Geen verlenging van het verblijfsvergunning aangevraagd en geen bezwaar gemaakt tegen de afwijzing\"}[data.pv?.actiesVerblijfstatus]  : '-'}}} \n</p>\n",
+                            "tableView": false,
+                            "refreshOnChange": false
+                        },
+                        {
+                            "key": "html7",
+                            "type": "htmlelement",
+                            "input": false,
+                            "label": "html",
+                            "content": "<hr>",
+                            "tableView": false,
+                            "refreshOnChange": false
+                        }
+                    ],
+                    "currentWidth": 6
+                },
+                {
+                    "pull": 0,
+                    "push": 0,
+                    "size": "md",
+                    "width": 6,
+                    "offset": 0,
+                    "components": [
+                        {
+                            "key": "html",
+                            "type": "htmlelement",
+                            "input": false,
+                            "label": "HTML",
+                            "content": "<h4 class=\"pb-2\"><strong>Opgehaalde nationaliteit/verblijfsstatus uit BRP</strong></h4>\n<p>\n    {{data.pv?.nationaliteitenBrp?.length > 0 ? data.pv?.nationaliteitenBrp.map(v => '<p>'+v?.name+'</p>').join('') : '-'}}\n</p>\n",
+                            "tableView": false,
+                            "refreshOnChange": false
+                        },
+                        {
+                            "key": "html3",
+                            "type": "htmlelement",
+                            "input": false,
+                            "label": "html",
+                            "content": "<hr>",
+                            "tableView": false,
+                            "refreshOnChange": false
+                        },
+                        {
+                            "label": "HTML",
+                            "attrs": [
+                                {
+                                    "attr": "",
+                                    "value": ""
+                                }
+                            ],
+                            "content": "<h4 class=\"pb-2\"><strong>Opgehaalde verblijfstitel uit BRP</strong></h4>\n<p>\n  {{{ data.pv?.verblijfstitelBrp?.code + ': ' || '-' }}} {{{ data.pv?.verblijfstitelBrp?.name || '' }}}\n</p>\n",
+                            "refreshOnChange": false,
+                            "key": "html1",
+                            "type": "htmlelement",
+                            "input": false,
+                            "tableView": false
+                        },
+                        {
+                            "key": "html2",
+                            "type": "htmlelement",
+                            "input": false,
+                            "label": "html",
+                            "content": "<hr>",
+                            "tableView": false,
+                            "refreshOnChange": false
+                        }
+                    ],
+                    "currentWidth": 6
+                }
+            ],
+            "tableView": false
+        },
+        {
+            "label": "Is de [aanvrager of partner] Nederlander?",
+            "optionsLabelPosition": "right",
+            "inline": false,
+            "tableView": false,
+            "values": [
+                {
+                    "label": "Ja",
+                    "value": "NEDERLANDSE_NATIONALITEIT"
+                },
+                {
+                    "label": "Nee",
+                    "value": "IS_GEEN_NEDERLANDER"
+                }
+            ],
+            "validate": {
+                "required": true
+            },
+            "validateWhenHidden": false,
+            "customDefaultValue": "component.label = data.pv?.nationaliteitTitel; instance.redraw(); (data.pv?.nationaliteitOfVerblijfsstatus === 'NEDERLANDSE_NATIONALITEIT' || data.pv?.nationaliteitOfVerblijfsstatus === 'IS_GEEN_NEDERLANDER') ? value = data.pv?.nationaliteitOfVerblijfsstatus : value = null;",
+            "key": "pv.nationaliteitOfVerblijfsstatus",
+            "type": "radio",
+            "input": true
+        },
+        {
+            "key": "pv.verblijfstitel",
+            "data": {
+                "custom": "values = [\n    { \"code\": \"0\", \"name\": \"Onbekend\" },\n    { \"code\": \"9\", \"name\": \"Art. 9 van de Vreemdelingenwet\" },\n    { \"code\": \"10\", \"name\": \"Art. 10 van de Vreemdelingenwet\" },\n    { \"code\": \"11\", \"name\": \"Vergunning art. 9 Vw, zonder beperking, dan wel gerechtigd krachtens art. 10 Vw\" },\n    { \"code\": \"12\", \"name\": \"Vergunning art. 9 Vw, met beperking, die elke vorm arbeid in loondienst toestaat\" },\n    { \"code\": \"13\", \"name\": \"Vergunning art. 9 Vw, met beperking, die arbeid in loondienst niet toestaat\" },\n    { \"code\": \"14\", \"name\": \"Voorwaardelijke vergunning art. 9a Vw\" },\n    { \"code\": \"15\", \"name\": \"Benelux of EG richtl nrs 68/360/EEG, 73/148/EEG 75/34/EEG, verord nr 1251/70/EEG\" },\n    { \"code\": \"16\", \"name\": \"EG-richtlijnen nrs. 90/364/EEG, 90/365/EEG en 90/366/EEG\" },\n    { \"code\": \"17\", \"name\": \"Verzoek tot toelating als vluchteling, uitzetting blijft achterwege\" },\n    { \"code\": \"18\", \"name\": \"Gemeld bij VD, geen verzoek toelating als vluchteling, geen uitzetting\" },\n    { \"code\": \"19\", \"name\": \"Vergunning art. 9 Vw, met andere beperking dan hierboven\" },\n    { \"code\": \"20\", \"name\": \"Ander verdrag dan hierboven\" },\n    { \"code\": \"21\", \"name\": \"Vw 2000 art. 8, onder a, vergunning regulier bepaalde tijd, arbeid vrij\" },\n    { \"code\": \"22\", \"name\": \"Vw2000 art. 8, sub a, VVR bep tijd arbeid mits TWV, VVR bep tijd verblijf en arbeid\" },\n    { \"code\": \"23\", \"name\": \"Vw 2000 art. 8, onder a, vergunning regulier bepaalde tijd, arbeid specifiek\" },\n    { \"code\": \"24\", \"name\": \"Vw 2000 art. 8, onder a, vergunning regulier bepaalde tijd, geen arbeid\" },\n    { \"code\": \"25\", \"name\": \"Vw 2000 art. 8, sub b, verg. reg. onbep. tijd of langdurig ingez., arbeid vrij\" },\n    { \"code\": \"26\", \"name\": \"Vw 2000 art. 8, onder c, vergunning asiel bepaalde tijd, arbeid vrij\" },\n    { \"code\": \"27\", \"name\": \"Vw 2000 art. 8, sub d, verg. asiel onbep. tijd of langdurig ingez., arbeid vrij\" },\n    { \"code\": \"28\", \"name\": \"Vw 2000 art. 8, onder e, gemeenschapsonderdaan econ. actief, arbeid vrij\" },\n    { \"code\": \"29\", \"name\": \"Vw 2000 art. 8, onder e, gemeenschapsonderdaan econ. niet-actief, arbeid vrij\" },\n    { \"code\": \"30\", \"name\": \"Vw 2000 art. 8, onder e, toetsing aan het gemeenschapsrecht, arbeid vrij\" },\n    { \"code\": \"31\", \"name\": \"Vw 2000 art. 8, onder f en h, in procedure voor vergunning art. 14 Vw 2000\" },\n    { \"code\": \"32\", \"name\": \"Vw 2000 art. 8, onder f en h, in procedure voor vergunning art. 28 Vw 2000\" },\n    { \"code\": \"33\", \"name\": \"Vw 2000 art. 8, onder g en h, in procedure voortgezet verblijf, tijdige aanvr.\" },\n    { \"code\": \"34\", \"name\": \"Vw 2000 art. 8, onder g en h, in procedure voortgezet verblijf, ontijdige aanvr.\" },\n    { \"code\": \"35\", \"name\": \"Vw 2000 art. 8, onder l, Associatiebesluit 1/80 EEG/Turkije, arbeid specifiek\" },\n    { \"code\": \"36\", \"name\": \"Vw 2000 art. 8, onder e, gemeenschapsonderdaan econ. actief, arbeid specifiek\" },\n    { \"code\": \"37\", \"name\": \"Vw 2000 art. 8, onder e, gemeenschapsonderdaan econ. niet-actief, arbeid spec.\" },\n    { \"code\": \"38\", \"name\": \"Vw 2000 art. 8, onder e, toetsing aan het gemeenschapsrecht, arbeid specifiek\" },\n    { \"code\": \"39\", \"name\": \"Vw 2000 art. 8, onder m, in afwachting indiening asielaanvraag, geen arbeid\" },\n    { \"code\": \"40\", \"name\": \"Vw 2000 art. 8, onder e, gemeenschapsonderdaan duurzaam verblijf, arbeid vrij\" },\n    { \"code\": \"41\", \"name\": \"Rechtmatig verblijf Vw 2000 art. 8, onder e, is beëindigd\" },\n    { \"code\": \"42\", \"name\": \"Rechtmatig verblijf op grond van voorlopige maatregel EHRM, geen arbeid\" },\n    { \"code\": \"43\", \"name\": \"Rechtmatig verblijf op aanwijzing Minister van Justitie, geen arbeid\" },\n    { \"code\": \"44\", \"name\": \"Vw 2000 art. 8, onder m, Dublinclaimant, wacht op overdracht, rva, geen arbeid\" },\n    { \"code\": \"45\", \"name\": \"Vw 2000 art.8, onder i, onderzoeker/student, verblijfsrecht in EU-land\" },\n    { \"code\": \"91\", \"name\": \"Vw 2000 art. 115, lid 4, vergunning onbepaalde tijd, arbeid vrij\" },\n    { \"code\": \"92\", \"name\": \"Vw 2000 art. 115, lid 6, vergunning asiel bepaalde tijd, arbeid vrij\" },\n    { \"code\": \"93\", \"name\": \"Vw 2000 art. 115, lid 2, verg. regulier bepaalde tijd, arbeid nader te bepalen\" },\n    { \"code\": \"98\", \"name\": \"geen verblijfstitel (meer)\" }\n  ]"
+            },
+            "type": "select",
+            "input": true,
+            "label": "Verblijfstitel vaststellen",
+            "widget": "choicesjs",
+            "dataSrc": "custom",
+            "dataType": "object",
+            "calculateValue": "if (data.pv?.verblijfstitel?.code === '' && data.pv?.verblijfstitel?.name === '') {value = null}",
+            "template": "<span><b>{{ item.code }}:</b> {{ item.name }}  </span>",
+            "customConditional": "show = data.pv.nationaliteitOfVerblijfsstatus === 'IS_GEEN_NEDERLANDER';",
+            "validate": {
+                "required": true
+            },
+            "tableView": true,
+            "validateWhenHidden": false
+        },
+        {
+            "label": "Is er sprake van gemeenschapsrecht?",
+            "optionsLabelPosition": "right",
+            "inline": false,
+            "tableView": false,
+            "values": [
+                {
+                    "label": "Ja",
+                    "value": "GEMEENSCHAPSRECHT_VAN_TOEPASSING"
+                },
+                {
+                    "label": "Nee",
+                    "value": "GEMEENSCHAPSRECHT_NIET_VAN_TOEPASSING"
+                }
+            ],
+            "validateWhenHidden": false,
+            "key": "pv.isSprakeVanGemeenschapsrecht",
+            "properties": {
+                "sourceKey": "pv:bs213verblijfstitel.isSprakeVanGemeenschapsrecht",
+                "targetKey": "pv:isSprakeVanGemeenschapsrecht"
+            },
+            "customConditional": "show = [\"30\", \"38\"].includes(data.pv?.verblijfstitel?.code);",
+            "validate": {
+                "required": true
+            },
+            "type": "radio",
+            "redrawOn": "pv.verblijfstitel",
+            "input": true
+        },
+        {
+            "key": "pv.toelichtingConsulent",
+            "type": "textarea",
+            "input": true,
+            "label": "Toelichting",
+            "validate": {
+                "required": true
+            },
+            "properties": {
+                "sourceKey": "pv:bs213verblijfstitel.toelichtingConsulent",
+                "targetKey": "pv:toelichtingConsulent"
+            },
+            "tableView": true,
+            "autoExpand": false,
+            "applyMaskOn": "change",
+            "placeholder": "Onderbouw kort je keuze",
+            "validateWhenHidden": false
+        },
+        {
+            "key": "submit",
+            "type": "button",
+            "input": true,
+            "label": "Indienen",
+            "action": "custom",
+            "custom": "if (data.pv.nationaliteitOfVerblijfsstatus === 'NEDERLANDSE_NATIONALITEIT') {data.pv.verblijfstitel = {code: '', name: ''}} form.submit(); component.disabled = true;",
+            "tableView": false,
+            "showValidations": false,
+            "disableOnInvalid": true
+        }
+    ]
+}
