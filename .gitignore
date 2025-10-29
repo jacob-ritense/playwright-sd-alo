@@ -87,9 +87,11 @@ pnpm-lock.yaml
 # Dotenv environment variables file
 .env
 .env.*
+.env.json
 !.env.example
 .env.properties
 !.env.properties.example
+http-client.private.env.json
 api-requests/http-client.private.env.json
 
 # Playwright specific

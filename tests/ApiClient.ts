@@ -4,6 +4,22 @@ import {request, expect} from "@playwright/test";
 export async function createVerzoek(achternaam: string, apiTestRequestFile: string, apiRequestConfigFile: string, environment: string) {
     console.log('Creating verzoek with config file:', apiRequestConfigFile);
 
+    if (!apiRequestConfigFile?.trim()) {
+        throw new Error('Environment variable API_REQUEST_CONFIG_FILE is not set. Please point it to the API config JSON file (see .env.properties.example).');
+    }
+
+    if (!fs.existsSync(apiRequestConfigFile)) {
+        throw new Error(`Config file not found at path: ${apiRequestConfigFile}`);
+    }
+
+    if (!apiTestRequestFile?.trim()) {
+        throw new Error('Environment variable API_TEST_REQUEST_FILE is not set. Please point it to the .http request template.');
+    }
+
+    if (!fs.existsSync(apiTestRequestFile)) {
+        throw new Error(`Request template file not found at path: ${apiTestRequestFile}`);
+    }
+
     let config = readHttpRequestConfig(apiRequestConfigFile);
     if (!config) {
         throw new Error(`Failed to read config from ${apiRequestConfigFile}`);
