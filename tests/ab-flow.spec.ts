@@ -7,6 +7,7 @@ import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
 import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spec';
 import overwegenUitzettenInfoverzoekTask from './tasks/overwegen-uitzetten-infoverzoek.spec';
 import vaststellenPersoonAanvragerTask from './tasks/vaststellen-persoon-aanvrager.spec';
+import vaststellenPersoonPartnerTask from './tasks/vaststellen-persoon-partner.spec';
 
 const tasks = [
   { name: 'create-verzoek', fn: createVerzoekTask },
@@ -15,6 +16,7 @@ const tasks = [
   { name: 'overwegen-inzet-handhaving', fn: overwegenInzetHandhavingTask },
   { name: 'overwegen-uitzetten-infoverzoek', fn: overwegenUitzettenInfoverzoekTask },
   { name: 'vaststellen-persoon-aanvrager', fn: vaststellenPersoonAanvragerTask },
+  { name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask },
 ];
 
 test.describe('Algemene bijstand Flow', () => {
