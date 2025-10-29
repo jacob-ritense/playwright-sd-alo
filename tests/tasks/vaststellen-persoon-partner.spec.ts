@@ -24,7 +24,6 @@ export default async function(page: Page, testData: TestData) {
     await taskElement.click();
     console.log(`Clicked task: "${taskName}".`);
     await page.waitForLoadState('networkidle', { timeout: 15000 });
-    await page.waitForTimeout(2000);
     
     // Select "Ja, gebruik de gegevens uit de BRP" radio button
     console.log('Selecting "Ja, gebruik de gegevens uit de BRP"...');
