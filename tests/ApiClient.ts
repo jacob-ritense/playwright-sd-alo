@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import {request, expect} from "@playwright/test";
+import { faker } from '@faker-js/faker';
 
 export async function createVerzoek(achternaam: string, apiTestRequestFile: string, apiRequestConfigFile: string, environment: string) {
     console.log('Creating verzoek with config file:', apiRequestConfigFile);
@@ -45,16 +46,22 @@ export async function createVerzoek(achternaam: string, apiTestRequestFile: stri
 
     body.type = objecttypesApiUrl;
 
+    let publicReference: string | undefined;
+
     // Ensure record and typeVersion exist before assigning
     if (body && body.record) {
         body.record.typeVersion = objecttypesVersion;
         console.log('Set body.record.typeVersion to:', body.record.typeVersion);
+
+        publicReference = `OF-${faker.string.alphanumeric({ length: 8 }).toUpperCase()}`;
+        body.record.public_reference = publicReference;
+        console.log('Generated public reference:', publicReference);
     } else {
         console.error('Request body or body.record is missing. Cannot set typeVersion.');
         throw new Error('Request body structure is invalid for setting typeVersion.');
     }
 
-    // Update all relevant name fields in the request
+    // Update name fields in the request
     if (body?.record?.data?.data) {
         const data = body.record.data.data;
         
@@ -64,20 +71,6 @@ export async function createVerzoek(achternaam: string, apiTestRequestFile: stri
             console.log('Updated main applicant last name to:', achternaam);
         } else {
             console.warn('Could not find grPersoongegevens structure to update last name. Path checked: data[\'uw-gegevens\']?.naw?.grPersoongegevens');
-        }
-
-        // Update company name if it exists
-        if (data['foo-uw-ondernemingen']?.ingeschrevenOnderneming?.[0]) {
-            const onderneming = data['foo-uw-ondernemingen'].ingeschrevenOnderneming[0];
-            onderneming.ondernemingNaam = `${achternaam} Onderneming`;
-            onderneming.korteOmschrijving = `Test aanvraag ${achternaam}`;
-            console.log('Updated company details with last name');
-        }
-
-        // Update payment details if they exist
-        if (data['foo-uitbetaling']) {
-            data['foo-uitbetaling'].naamRekeninghouderBetaling = achternaam;
-            console.log('Updated payment details with last name');
         }
     } else {
         throw new Error('Could not find data structure in request body');
@@ -89,10 +82,16 @@ export async function createVerzoek(achternaam: string, apiTestRequestFile: stri
         'Content-Type': 'application/json'
     };
 
-    console.log('Sending request to create verzoek...');
+    let payload = JSON.stringify(body);
+    if (publicReference && payload.includes('"public_reference":"placeholder"')) {
+        console.warn('Detected placeholder public_reference in serialized payload. Overriding with generated value.');
+        payload = payload.replace(/\"public_reference\"\s*:\s*\"placeholder\"/g, `"public_reference":"${publicReference}"`);
+    }
+
+    console.log('Sending request to create verzoek with public_reference:', publicReference ?? 'not set');
     const response = await apiContext.post(objectsApiUrl, {
         headers,
-        data: JSON.stringify(body)
+        data: payload
     });
 
     const responseText = await response.text();
