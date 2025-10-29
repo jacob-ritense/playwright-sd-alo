@@ -1,0 +1,346 @@
+{
+    "display": "form",
+    "components": [
+        {
+            "label": "pv.meldingsDatumDisplay",
+            "key": "pv.meldingsDatumDisplay",
+            "properties": {
+                "sourceKey": "pv:meldingsDatum"
+            },
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "pv.aanvraagDatumDisplay",
+            "key": "pv.aanvraagDatumDisplay",
+            "properties": {
+                "sourceKey": "pv:aanvraagDatum"
+            },
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "pv.gewensteIngangsdatum",
+            "key": "pv.gewensteIngangsdatum",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "pv.voorgesteldeIngangsdatum",
+            "key": "pv.voorgesteldeIngangsdatum",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "pv.vastgesteldeIngangsdatum",
+            "key": "pv.vastgesteldeIngangsdatum",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "pv.welkeDatumGebruikt",
+            "key": "pv.welkeDatumGebruikt",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "Gegevens van de aanvraag",
+            "tag": "div",
+            "content": "<h2 class=\"mb-3\">Gegevens van de aanvraag</h2>",
+            "refreshOnChange": false,
+            "key": "MeldigEnAanvraagDatum",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false
+        },
+        {
+            "label": "Columns",
+            "columns": [
+                {
+                    "components": [
+                        {
+                            "label": "HTML",
+                            "content": "<div class=\"mb-2\">Meldingsdatum: {{{ data.pv?.meldingsDatumDisplay ? moment(data.pv?.meldingsDatumDisplay).format('DD-MM-YYYY') : 'Er is geen meldingsdatum bekend' }}}</div>",
+                            "refreshOnChange": false,
+                            "key": "html",
+                            "type": "htmlelement",
+                            "input": false,
+                            "tableView": false
+                        },
+                        {
+                            "label": "Meldingsdatum",
+                            "format": "dd-MM-yyyy",
+                            "hideLabel": false,
+                            "tableView": false,
+                            "datePicker": {
+                                "disableWeekends": false,
+                                "disableWeekdays": false
+                            },
+                            "enableTime": false,
+                            "enableMinDateInput": false,
+                            "enableMaxDateInput": false,
+                            "validateWhenHidden": false,
+                            "key": "pv.meldingsDatum",
+                            "calculateValue": "console.log('value', value); value = value;",
+                            "customConditional": "data.pv?.wijzigMelddatum ? show = true :  show = false",
+                            "type": "datetime",
+                            "input": true,
+                            "widget": {
+                                "type": "calendar",
+                                "displayInTimezone": "viewer",
+                                "locale": "en",
+                                "useLocaleSettings": false,
+                                "allowInput": true,
+                                "mode": "single",
+                                "enableTime": false,
+                                "noCalendar": false,
+                                "format": "dd-MM-yyyy",
+                                "hourIncrement": 1,
+                                "minuteIncrement": 1,
+                                "time_24hr": false,
+                                "minDate": null,
+                                "disableWeekends": false,
+                                "disableWeekdays": false,
+                                "maxDate": null
+                            }
+                        }
+                    ],
+                    "width": 8,
+                    "offset": 0,
+                    "push": 0,
+                    "pull": 0,
+                    "size": "md",
+                    "currentWidth": 8
+                },
+                {
+                    "components": [
+                        {
+                            "label": "Wijzig",
+                            "tableView": false,
+                            "clearOnHide": false,
+                            "validateWhenHidden": false,
+                            "key": "pv.wijzigMelddatum",
+                            "customDefaultValue": "data.pv?.meldingsDatum ? value = false : value = true;",
+                            "type": "checkbox",
+                            "input": true
+                        }
+                    ],
+                    "width": 2,
+                    "offset": 0,
+                    "push": 0,
+                    "pull": 0,
+                    "size": "md",
+                    "currentWidth": 2
+                }
+            ],
+            "key": "columns",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+        },
+        {
+            "label": "Columns",
+            "columns": [
+                {
+                    "components": [
+                        {
+                            "label": "HTML",
+                            "content": "<div class=\"mb-2\">Aanvraagdatum: {{{ moment(data.pv?.aanvraagDatumDisplay).format('DD-MM-YYYY') }}}</div>",
+                            "refreshOnChange": false,
+                            "key": "html",
+                            "type": "htmlelement",
+                            "input": false,
+                            "tableView": false
+                        },
+                        {
+                            "label": "Aanvraagdatum",
+                            "format": "dd-MM-yyyy",
+                            "hideLabel": false,
+                            "tableView": false,
+                            "datePicker": {
+                                "disableWeekends": false,
+                                "disableWeekdays": false
+                            },
+                            "enableTime": false,
+                            "enableMinDateInput": false,
+                            "enableMaxDateInput": false,
+                            "validateWhenHidden": false,
+                            "key": "pv.aanvraagDatum",
+                            "customConditional": "data.pv?.wijzigAanvraagdatum ? show = true :  show = false",
+                            "type": "datetime",
+                            "input": true,
+                            "widget": {
+                                "type": "calendar",
+                                "displayInTimezone": "viewer",
+                                "locale": "en",
+                                "useLocaleSettings": false,
+                                "allowInput": true,
+                                "mode": "single",
+                                "enableTime": false,
+                                "noCalendar": false,
+                                "format": "dd-MM-yyyy",
+                                "hourIncrement": 1,
+                                "minuteIncrement": 1,
+                                "time_24hr": false,
+                                "minDate": null,
+                                "disableWeekends": false,
+                                "disableWeekdays": false,
+                                "maxDate": null
+                            }
+                        }
+                    ],
+                    "width": 8,
+                    "offset": 0,
+                    "push": 0,
+                    "pull": 0,
+                    "size": "md",
+                    "currentWidth": 8
+                },
+                {
+                    "components": [
+                        {
+                            "label": "Wijzig",
+                            "tableView": false,
+                            "clearOnHide": false,
+                            "customDefaultValue": "data.pv?.aanvraagDatum ? value = true : value = false;",
+                            "validateWhenHidden": false,
+                            "key": "pv.wijzigAanvraagdatum",
+                            "type": "checkbox",
+                            "input": true
+                        }
+                    ],
+                    "width": 2,
+                    "offset": 0,
+                    "push": 0,
+                    "pull": 0,
+                    "size": "md",
+                    "currentWidth": 2
+                }
+            ],
+            "key": "columns",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+        },
+        {
+            "label": "Columns",
+            "columns": [
+                {
+                    "components": [
+                        {
+                            "label": "Geen andere datum",
+                            "tag": "div",
+                            "content": "<div class=\"mb-2\">Geen afwijkende datum gevraagd</div>",
+                            "refreshOnChange": false,
+                            "key": "geenAndereDatum",
+                            "customConditional": "show = !( data.pv?.voorgesteldeIngangsdatum );",
+                            "type": "htmlelement",
+                            "input": false,
+                            "tableView": false
+                        },
+                        {
+                            "label": "Verzoek afwijkende ingangsdatum",
+                            "tag": "div",
+                            "content": "<div class=\"mb-2\">Door de aanvrager verzochte ingangsdatum: {{{ (data.pv?.gewensteIngangsdatum ? moment(data.pv.gewensteIngangsdatum).format('DD-MM-yyyy') : '-') }}}</div>",
+                            "refreshOnChange": false,
+                            "key": "aanvragerGewensteIngangsdatum",
+                            "customConditional": "data.pv?.gewensteIngangsdatum ? show = true : show = false;",
+                            "conditional": {
+                                "show": true
+                            },
+                            "type": "htmlelement",
+                            "input": false,
+                            "tableView": false
+                        },
+                        {
+                            "label": "Verzoek afwijkende ingangsdatum",
+                            "content": "<div class=\"mb-2\">Voorgestelde ingangsdatum: {{{ data.pv?.voorgesteldeIngangsdatum ? moment(data.pv.voorgesteldeIngangsdatum).format('DD-MM-yyyy') : '-' }}} ({{{ { 'datumOnstaanRecht' :'datum onstaanrecht', 'ingangsDatumOpBasisVanProces' :'meldingsdatum of aanvraagdatum', 'gewensteIngangsdatum' :'door aanvrager gewenste ingangsdatum' }[data.pv?.welkeDatumGebruikt]  }}})</div>",
+                            "refreshOnChange": false,
+                            "key": "redenAfwijkendeIngangsdatum",
+                            "conditional": {
+                                "show": true
+                            },
+                            "type": "htmlelement",
+                            "input": false,
+                            "tableView": false
+                        },
+                        {
+                            "label": "Ingangsdatum uitkering",
+                            "format": "dd-MM-yyyy",
+                            "tableView": false,
+                            "datePicker": {
+                                "disableWeekends": false,
+                                "disableWeekdays": false
+                            },
+                            "enableTime": false,
+                            "clearOnHide": false,
+                            "customDefaultValue": "value = data.pv?.vastgesteldeIngangsdatum ? data.pv?.vastgesteldeIngangsdatum : data.pv?.voorgesteldeIngangsdatum;",
+                            "enableMinDateInput": false,
+                            "enableMaxDateInput": false,
+                            "validateWhenHidden": false,
+                            "key": "pv.ingangsdatumConsulent",
+                            "type": "datetime",
+                            "input": true,
+                            "widget": {
+                                "type": "calendar",
+                                "displayInTimezone": "viewer",
+                                "locale": "en",
+                                "useLocaleSettings": false,
+                                "allowInput": true,
+                                "mode": "single",
+                                "enableTime": false,
+                                "noCalendar": false,
+                                "format": "dd-MM-yyyy",
+                                "hourIncrement": 1,
+                                "minuteIncrement": 1,
+                                "time_24hr": false,
+                                "minDate": null,
+                                "disableWeekends": false,
+                                "disableWeekdays": false,
+                                "maxDate": null
+                            }
+                        },
+                        {
+                            "label": "Toelichting",
+                            "placeholder": "Onderbouw kort je keuze",
+                            "applyMaskOn": "change",
+                            "autoExpand": false,
+                            "tableView": true,
+                            "validate": {
+                                "required": true
+                            },
+                            "validateWhenHidden": false,
+                            "key": "pv.toelichting",
+                            "type": "textarea",
+                            "input": true
+                        }
+                    ],
+                    "width": 9,
+                    "offset": 0,
+                    "push": 0,
+                    "pull": 0,
+                    "size": "md",
+                    "currentWidth": 9
+                }
+            ],
+            "key": "columns",
+            "type": "columns",
+            "input": false,
+            "tableView": false
+        },
+        {
+            "type": "button",
+            "label": "Indienen",
+            "key": "submit",
+            "disableOnInvalid": true,
+            "input": true,
+            "tableView": false
+        }
+    ]
+}
