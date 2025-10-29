@@ -12,6 +12,7 @@ import verblijfadresAanvragerTask from './tasks/verblijfadres-aanvrager.spec';
 import verblijfadresPartnerTask from './tasks/verblijfadres-partner.spec';
 import verblijfstitelAanvragerTask from './tasks/verblijfstitel-aanvrager.spec';
 import verblijfstitelPartnerTask from './tasks/verblijfstitel-partner.spec';
+import inangsdatumTask from './tasks/inangsdatum.spec';
 
 const tasks = [
   { name: 'create-verzoek', fn: createVerzoekTask },
@@ -25,6 +26,7 @@ const tasks = [
   { name: 'verblijfadres-partner', fn: verblijfadresPartnerTask },
   { name: 'verblijfstitel-aanvrager', fn: verblijfstitelAanvragerTask },
   { name: 'verblijfstitel-partner', fn: verblijfstitelPartnerTask },
+  { name: 'inangsdatum', fn: inangsdatumTask },
 ];
 
 test.describe('Algemene bijstand Flow', () => {
