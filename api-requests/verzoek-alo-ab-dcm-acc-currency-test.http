@@ -1764,7 +1764,7 @@ Content-Type: application/json
             "attachments": [],
             "language_code": "nl",
             "submission_id": "12345-abcde-67890",
-            "public_reference": "OF-ZFG75Z"
+            "public_reference": "OF-{{$random.alphanumeric(8)}}"
         },
         "startAt": "2025-03-20",
         "registrationAt": "2025-03-20"

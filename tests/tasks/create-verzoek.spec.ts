@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 import { createVerzoek } from '../ApiClient';
 
-const infra: string = (process.env.INFRA === undefined) ? 'local' : process.env.INFRA;
+const infra: string = (process.env.INFRA === undefined) ? 'alo-dev' : process.env.INFRA;
 const apiTestRequestFile = process.env.API_TEST_REQUEST_FILE ?? '';
 const apiRequestConfigFile = process.env.API_REQUEST_CONFIG_FILE ?? '';
 
