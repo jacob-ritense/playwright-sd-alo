@@ -11,7 +11,15 @@ export default async function(page: Page, testData: TestData) {
   try {
     console.log(`Looking for task: "${taskName}"`);
     const taskElement = page.getByText(taskName, { exact: true });
-    await taskElement.waitFor({ state: 'visible', timeout: 30000 });
+    try {
+      await taskElement.waitFor({ state: 'visible', timeout: 30000 });
+    } catch (timeoutError) {
+      console.warn(`Task "${taskName}" not visible within timeout, refreshing page and retrying...`);
+      await page.reload();
+      await page.waitForLoadState('networkidle', { timeout: 15000 });
+      await page.waitForTimeout(2000);
+      await page.getByText(taskName, { exact: true }).waitFor({ state: 'visible', timeout: 20000 });
+    }
     console.log(`Task "${taskName}" is visible.`);
     await taskElement.click();
     console.log(`Clicked task: "${taskName}".`);
