@@ -8,6 +8,8 @@ import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spe
 import overwegenUitzettenInfoverzoekTask from './tasks/overwegen-uitzetten-infoverzoek.spec';
 import vaststellenPersoonAanvragerTask from './tasks/vaststellen-persoon-aanvrager.spec';
 import vaststellenPersoonPartnerTask from './tasks/vaststellen-persoon-partner.spec';
+import verblijfadresAanvragerTask from './tasks/verblijfadres-aanvrager.spec';
+import verblijfadresPartnerTask from './tasks/verblijfadres-partner.spec';
 
 const tasks = [
   { name: 'create-verzoek', fn: createVerzoekTask },
@@ -17,6 +19,8 @@ const tasks = [
   { name: 'overwegen-uitzetten-infoverzoek', fn: overwegenUitzettenInfoverzoekTask },
   { name: 'vaststellen-persoon-aanvrager', fn: vaststellenPersoonAanvragerTask },
   { name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask },
+  { name: 'verblijfadres-aanvrager', fn: verblijfadresAanvragerTask },
+  { name: 'verblijfadres-partner', fn: verblijfadresPartnerTask },
 ];
 
 test.describe('Algemene bijstand Flow', () => {
