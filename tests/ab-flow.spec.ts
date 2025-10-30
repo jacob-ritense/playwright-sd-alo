@@ -14,6 +14,7 @@ import vaststellenVerblijfstitelAanvragerTask from './tasks/vaststellen-verblijf
 import vaststellenVerblijfstitelPartnerTask from './tasks/vaststellen-verblijfstitel-partner.spec';
 import vaststellenIngangsdatumTask from './tasks/vaststellen-ingangsdatum.spec';
 import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituatie.spec';
+import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
 
 const tasks = [
   { name: 'create-verzoek', fn: createVerzoekTask },
@@ -29,6 +30,7 @@ const tasks = [
   { name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
   { name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
   { name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask },
+  { name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
 ];
 
 test.describe('Algemene bijstand Flow', () => {
