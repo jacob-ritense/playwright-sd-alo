@@ -8,11 +8,13 @@ import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spe
 import overwegenUitzettenInfoverzoekTask from './tasks/overwegen-uitzetten-infoverzoek.spec';
 import vaststellenPersoonAanvragerTask from './tasks/vaststellen-persoon-aanvrager.spec';
 import vaststellenPersoonPartnerTask from './tasks/vaststellen-persoon-partner.spec';
-import verblijfadresAanvragerTask from './tasks/verblijfadres-aanvrager.spec';
-import verblijfadresPartnerTask from './tasks/verblijfadres-partner.spec';
-import verblijfstitelAanvragerTask from './tasks/verblijfstitel-aanvrager.spec';
-import verblijfstitelPartnerTask from './tasks/verblijfstitel-partner.spec';
-import inangsdatumTask from './tasks/inangsdatum.spec';
+import vaststellenVerblijfadresAanvragerTask from './tasks/vaststellen-verblijfadres-aanvrager.spec';
+import vaststellenVerblijfadresPartnerTask from './tasks/vaststellen-verblijfadres-partner.spec';
+import vaststellenVerblijfstitelAanvragerTask from './tasks/vaststellen-verblijfstitel-aanvrager.spec';
+import vaststellenVerblijfstitelPartnerTask from './tasks/vaststellen-verblijfstitel-partner.spec';
+import vaststellenIngangsdatumTask from './tasks/vaststellen-ingangsdatum.spec';
+import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituatie.spec';
+import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
 
 const tasks = [
   { name: 'create-verzoek', fn: createVerzoekTask },
@@ -22,11 +24,13 @@ const tasks = [
   { name: 'overwegen-uitzetten-infoverzoek', fn: overwegenUitzettenInfoverzoekTask },
   { name: 'vaststellen-persoon-aanvrager', fn: vaststellenPersoonAanvragerTask },
   { name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask },
-  { name: 'verblijfadres-aanvrager', fn: verblijfadresAanvragerTask },
-  { name: 'verblijfadres-partner', fn: verblijfadresPartnerTask },
-  { name: 'verblijfstitel-aanvrager', fn: verblijfstitelAanvragerTask },
-  { name: 'verblijfstitel-partner', fn: verblijfstitelPartnerTask },
-  { name: 'inangsdatum', fn: inangsdatumTask },
+  { name: 'vaststellen-verblijfadres-aanvrager', fn: vaststellenVerblijfadresAanvragerTask },
+  { name: 'vaststellen-verblijfadres-partner', fn: vaststellenVerblijfadresPartnerTask },
+  { name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask },
+  { name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
+  { name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
+  { name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask },
+  { name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
 ];
 
 test.describe('Algemene bijstand Flow', () => {

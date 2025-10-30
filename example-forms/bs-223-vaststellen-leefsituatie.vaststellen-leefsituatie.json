@@ -1,0 +1,156 @@
+{
+    "display": "form",
+    "components": [
+        {
+            "label": "Formulier Titel",
+            "content": "<h2>Vaststellen leefsituatie</h2><hr>",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false,
+            "key": "formTitle"
+        },
+        {
+            "label": "aantalBelanghebbende",
+            "key": "pv.aantalBelanghebbende",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "woonsituatie",
+            "key": "pv.woonsituatie",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "leefsituatie",
+            "key": "pv.leefsituatie",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "tenlasteKomendeKinderen",
+            "key": "pv.tenlasteKomendeKinderen",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "tenlasteKomendeKinderen",
+            "key": "pv.art23Lid3VanToepassing",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
+        },
+        {
+            "label": "Aantal belanghebbenden",
+            "content": "<h4 class=\"pb-2\"><strong>Aantal (vastgestelde) belanghebbenden</strong></h4>\n<p>{{{ data.pv?.aantalBelanghebbende || 'Niet beschikbaar' }}}</p><hr>",
+            "refreshOnChange": false,
+            "key": "displayAantalBelanghebbenden",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false
+        },
+        {
+            "label": "Woonsituatie",
+            "content": "<h4 class=\"pb-2\"><strong>De (vastgestelde) woonsituatie</strong></h4>\n<p>{{ ({'ZELFSTANDIG_WONEND': 'Zelfstandig wonend', 'VERBLIJF_INSTELLING': 'Verblijf in instelling'})[data.pv?.woonsituatie] || 'Niet beschikbaar' }}</p><hr>",
+            "refreshOnChange": false,
+            "key": "displayWoonsituatie",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false
+        },
+        {
+            "label": "Art 23.3 van toepassing",
+            "key": "displayArt23lid3VanToepassing",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false,
+            "content": "<h4 class=\"pb-2\" style=\"display:flex;align-items:center;gap:.25rem;\">\n  <strong>Art 23.3 van toepassing</strong><i class=\"fa fa-question-circle text-muted custom-tooltip\"><span class=\"tooltip-text\">Hier komt een beknopte beschijving van artikel 23.3</span></i></h4>\n<p>{{ { 'JA': 'Ja', 'NEE': 'Nee'}[data.pv?.art23Lid3VanToepassing] || '-' }}</p><hr>"
+        },
+        {
+            "label": "Ten laste komende jongste belanghebbende",
+            "content": "<h4 class=\"pb-2\"><strong>Ten laste komende kinderen</strong></h4>\n<p>{{ { 'JA': 'Ja', 'NEE': 'Nee'}[data.pv?.tenlasteKomendeKinderen] || '-' }}</p><hr>",
+            "refreshOnChange": false,
+            "key": "displayTlkJongste",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false
+        },
+        {
+            "label": "Invoer Consulent Leefsituatie",
+            "content": "<h4 class=\"pb-2\"><strong>Leefsituatie vaststellen door consulent</strong></h4>",
+            "type": "htmlelement",
+            "input": false,
+            "tableView": false,
+            "key": "consulentInvoerLeefsituatieTitle"
+        },
+        {
+            "label": "Leefsituatie",
+            "optionsLabelPosition": "right",
+            "inline": false,
+            "tableView": false,
+            "values": [
+                {
+                    "label": "Institutioneel huishouden",
+                    "value": "INSTITUTIONEEL_HUISHOUDEN",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Alleenstaande ouder",
+                    "value": "ALLEENSTAANDE_OUDER",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Alleenstaand",
+                    "value": "ALLEENSTAAND",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Samenwonend met kinderen",
+                    "value": "SAMENWONEND_KINDEREN",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Samenwonend zonder kinderen",
+                    "value": "SAMENWONEND",
+                    "shortcut": ""
+                }
+            ],
+            "validate": {
+                "required": true
+            },
+            "validateWhenHidden": false,
+            "key": "pv.leefsituatie",
+            "type": "radio",
+            "input": true
+        },
+        {
+            "label": "Toelichting",
+            "placeholder": "Onderbouw kort uw keuze voor de leefsituatie",
+            "applyMaskOn": "change",
+            "autoExpand": false,
+            "tableView": true,
+            "validate": {
+                "required": true
+            },
+            "validateWhenHidden": false,
+            "key": "pv.toelichtingLeefsituatie",
+            "type": "textarea",
+            "input": true
+        },
+        {
+            "label": "Indienen",
+            "showValidations": false,
+            "disableOnInvalid": true,
+            "tableView": false,
+            "key": "submit",
+            "type": "button",
+            "input": true,
+            "action": "custom",
+            "custom": "form.submit(); component.disabled = true;"
+        }
+    ]
+}
