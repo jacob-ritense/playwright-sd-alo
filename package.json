@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.6.1",
     "otpauth": "^9.2.4"
   }
 }

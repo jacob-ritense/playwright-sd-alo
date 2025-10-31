@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import {request, expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
+import path from 'node:path';
 
 export async function createVerzoek(achternaam: string, apiTestRequestFile: string, apiRequestConfigFile: string, environment: string) {
     console.log('Creating verzoek with config file:', apiRequestConfigFile);
@@ -154,14 +155,26 @@ function readHttpRequestConfig(apiRequestConfigFile: string) {
     }
 }
 
-function readHttpFile(filePath: string) {
+export function readHttpFile(filePath: string) {
+    const abs = path.isAbsolute(filePath) ? filePath : path.resolve(process.cwd(), filePath);
+    if (!fs.existsSync(abs)) throw new Error(`File not found: ${abs}`);
+
+    // Read + normalize
+    const raw = fs.readFileSync(abs, 'utf8').replace(/^\uFEFF/, ''); // strip BOM
+    const text = raw.replace(/\r\n/g, '\n');                         // CRLF -> LF
+
+    // Find first blank line (headers/body)
+    const sep = '\n\n';
+    const i = text.indexOf(sep);
+    if (i === -1) throw new Error('No blank-line separator found between headers and body.');
+
+    const bodyText = text.slice(i + sep.length).trim();
+
+    // If it's JSON, return object; otherwise return the raw body string
     try {
-        console.log('Reading request file:', filePath);
-        const fileContent = fs.readFileSync(filePath, 'utf-8');
-        const [_, bodyPart] = fileContent.split('\n\n');
-        return JSON.parse(bodyPart);
-    } catch (err) {
-        console.error("Error reading or parsing the request file:", err);
-        return null;
+        return JSON.parse(bodyText);
+    } catch {
+        return bodyText; // .http bodies aren’t always JSON
     }
 }
+
