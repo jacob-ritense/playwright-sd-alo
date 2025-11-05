@@ -27,6 +27,13 @@ export default async function vaststellenBesluitTask(page: Page, testData: TestD
     await page.waitForLoadState('networkidle', { timeout: 15000 });
     await page.waitForTimeout(2000);
 
+    console.log(`[${flowTaskName}] Selecting "Toekennen" radio option...`);
+    const toekennenRadio = page.getByRole('radio', { name: /^Toekennen$/i });
+    await toekennenRadio.waitFor({ state: 'visible', timeout: 20000 });
+    await toekennenRadio.check();
+    await page.waitForLoadState('networkidle', { timeout: 15000 });
+    await page.waitForTimeout(1000);
+
     console.log(`[${flowTaskName}] Clicking "Indienen" button...`);
     await page.getByRole('button', { name: 'Indienen' }).click();
     await page.waitForLoadState('networkidle', { timeout: 15000 });
