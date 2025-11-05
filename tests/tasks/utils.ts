@@ -1,12 +1,28 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { config } from 'dotenv';
+import { loginTest } from './login-test';
+import { URL_DEV, USERNAME_LOCAL, PASSWORD_LOCAL } from './env';
 
-config({ path: '.env.properties' });
+export {
+  URL_DEV,
+  URL_TEST,
+  USERNAME_LOCAL,
+  USERNAME_TEST,
+  PASSWORD_LOCAL,
+  PASSWORD_TEST,
+  SECRET_KEY_TEST,
+} from './env';
 
-export const URL = (process.env.URL_DEV ?? '').trim();
-export const USERNAME = (process.env.USERNAME_DEV ?? '').trim();
-export const PASSWORD = (process.env.PASSWORD_DEV ?? '').trim();
+export type LoginEnvironment = 'local' | 'test';
+
+export async function login(page: Page, environment: LoginEnvironment = 'local') {
+  if (environment === 'test') {
+    await loginTest(page);
+    return;
+  }
+
+  await loginLocalPortal(page);
+}
 
 export async function waitForAngular(page: Page) {
   console.log('Waiting for Angular to initialize...');
@@ -33,25 +49,25 @@ export async function waitForAngular(page: Page) {
   }
 }
 
-export async function loginLocal(page: Page) {
+export async function loginLocalPortal(page: Page) {
   console.log('Attempting local login...');
-  const loginPageUrl = URL;
+  const loginPageUrl = URL_DEV;
   if (!loginPageUrl) {
-    throw new Error('URL environment variable is not set. Please configure it in .env.properties.');
+    throw new Error('URL_DEV environment variable is not set. Please configure it in .env.properties.');
   }
   try {
     await page.goto(loginPageUrl);
     console.log(`Navigated to ${loginPageUrl}`);
 
-    if (!USERNAME || !PASSWORD) {
+    if (!USERNAME_LOCAL || !PASSWORD_LOCAL) {
       throw new Error('Missing local login credentials');
     }
 
     await page.waitForSelector('input[type="text"]', { state: 'visible', timeout: 10000 });
     await page.waitForSelector('input[type="password"]', { state: 'visible', timeout: 10000 });
 
-    await page.getByLabel('Username or email').fill(USERNAME);
-    await page.getByLabel('Password').fill(PASSWORD);
+    await page.getByLabel('Username or email').fill(USERNAME_LOCAL);
+    await page.getByLabel('Password').fill(PASSWORD_LOCAL);
 
     await page.getByRole('button', {name: 'Sign In'}).click();
 

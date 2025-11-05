@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
 import createVerzoekTask from './tasks/create-verzoek.spec';
-import loginTask from './tasks/login.spec';
+import loginTask from './tasks/login-test.spec';
 import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
 import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spec';
 import overwegenUitzettenInfoverzoekTask from './tasks/overwegen-uitzetten-infoverzoek.spec';
