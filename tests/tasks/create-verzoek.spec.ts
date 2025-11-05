@@ -1,9 +1,14 @@
 import { Page } from '@playwright/test';
 import { createVerzoek } from '../ApiClient';
 
-const infra: string = (process.env.INFRA === undefined) ? 'alo-dev' : process.env.INFRA;
-const apiTestRequestFile = process.env.API_TEST_REQUEST_FILE ?? '';
-const apiRequestConfigFile = process.env.API_REQUEST_CONFIG_FILE ?? '';
+const inferredInfra =
+  process.env.INFRA ??
+  process.env.INFRA_DEFAULT ??
+  process.env.INFRA_DEV ??
+  process.env.INFRA_TEST;
+const infra = ((inferredInfra ?? '').trim()) || 'alo-dev';
+const apiTestRequestFile = (process.env.API_TEST_REQUEST_FILE ?? '').trim();
+const apiRequestConfigFile = (process.env.API_REQUEST_CONFIG_FILE ?? '').trim();
 
 interface TestData {
   lastName: string;

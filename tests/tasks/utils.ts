@@ -1,5 +1,12 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { config } from 'dotenv';
+
+config({ path: '.env.properties' });
+
+export const URL = (process.env.URL_DEV ?? '').trim();
+export const USERNAME = (process.env.USERNAME_DEV ?? '').trim();
+export const PASSWORD = (process.env.PASSWORD_DEV ?? '').trim();
 
 export async function waitForAngular(page: Page) {
   console.log('Waiting for Angular to initialize...');
@@ -28,20 +35,23 @@ export async function waitForAngular(page: Page) {
 
 export async function loginLocal(page: Page) {
   console.log('Attempting local login...');
-  const loginPageUrl = 'http://localhost:4200/';
+  const loginPageUrl = URL;
+  if (!loginPageUrl) {
+    throw new Error('URL environment variable is not set. Please configure it in .env.properties.');
+  }
   try {
     await page.goto(loginPageUrl);
     console.log(`Navigated to ${loginPageUrl}`);
 
-    if (!process.env.USERNAME_LOCAL || !process.env.PASSWORD_LOCAL) {
+    if (!USERNAME || !PASSWORD) {
       throw new Error('Missing local login credentials');
     }
 
     await page.waitForSelector('input[type="text"]', { state: 'visible', timeout: 10000 });
     await page.waitForSelector('input[type="password"]', { state: 'visible', timeout: 10000 });
 
-    await page.getByLabel('Username or email').fill(process.env.USERNAME_LOCAL);
-    await page.getByLabel('Password').fill(process.env.PASSWORD_LOCAL);
+    await page.getByLabel('Username or email').fill(USERNAME);
+    await page.getByLabel('Password').fill(PASSWORD);
 
     await page.getByRole('button', {name: 'Sign In'}).click();
 
