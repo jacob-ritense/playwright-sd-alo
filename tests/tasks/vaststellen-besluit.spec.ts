@@ -34,6 +34,17 @@ export default async function vaststellenBesluitTask(page: Page, testData: TestD
     await page.waitForLoadState('networkidle', { timeout: 15000 });
     await page.waitForTimeout(1000);
 
+    console.log(`[${flowTaskName}] Selecting bijstandsvorm "Lening"...`);
+    const bijstandsvormDropdown = page.locator('.choices > div').first();
+    await bijstandsvormDropdown.waitFor({ state: 'visible', timeout: 20000 });
+    await bijstandsvormDropdown.click();
+
+    const leningOption = page.getByRole('option', { name: 'Lening' }).first();
+    await leningOption.waitFor({ state: 'visible', timeout: 10000 });
+    await leningOption.click();
+    await page.waitForLoadState('networkidle', { timeout: 15000 });
+    await page.waitForTimeout(1000);
+
     console.log(`[${flowTaskName}] Clicking "Indienen" button...`);
     await page.getByRole('button', { name: 'Indienen' }).click();
     await page.waitForLoadState('networkidle', { timeout: 15000 });
