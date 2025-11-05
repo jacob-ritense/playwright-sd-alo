@@ -41,7 +41,27 @@ export default async function vaststellenBesluitTask(page: Page, testData: TestD
 
     const leningOption = page.getByRole('option', { name: 'Lening' }).first();
     await leningOption.waitFor({ state: 'visible', timeout: 10000 });
-    await leningOption.click();
+   await leningOption.click();
+   await page.waitForLoadState('networkidle', { timeout: 15000 });
+   await page.waitForTimeout(1000);
+
+    console.log(`[${flowTaskName}] Uploading besluit document...`);
+    const dropZoneText = 'Kies een bestand, of sleep het hier naartoe';
+    const dropZone = page.getByText(dropZoneText, { exact: false }).first();
+    await dropZone.waitFor({ state: 'visible', timeout: 30000 });
+    await dropZone.click({ force: true });
+
+    const filePath = 'context-files/test-beschikking.txt';
+    let fileInput = dropZone.locator('xpath=ancestor::div[contains(@class,"formio-component")]//input[@type="file"]').first();
+    if (!(await fileInput.count())) {
+      fileInput = page.locator('input[type="file"]').first();
+    }
+    await fileInput.setInputFiles(filePath);
+    console.log(`[${flowTaskName}] Document "${filePath}" selected, confirming upload...`);
+
+    const opslaanButton = page.getByRole('button', { name: /^Opslaan$/i }).first();
+    await opslaanButton.waitFor({ state: 'visible', timeout: 15000 });
+    await opslaanButton.click();
     await page.waitForLoadState('networkidle', { timeout: 15000 });
     await page.waitForTimeout(1000);
 
