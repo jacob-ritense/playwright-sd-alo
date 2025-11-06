@@ -5,12 +5,8 @@ import { URL_DEV, USERNAME_LOCAL, PASSWORD_LOCAL } from './env';
 
 export {
   URL_DEV,
-  URL_TEST,
   USERNAME_LOCAL,
-  USERNAME_TEST,
   PASSWORD_LOCAL,
-  PASSWORD_TEST,
-  SECRET_KEY_TEST,
 } from './env';
 
 export type LoginEnvironment = 'local' | 'test';
