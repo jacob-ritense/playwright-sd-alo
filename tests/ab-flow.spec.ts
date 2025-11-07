@@ -1,5 +1,6 @@
 import { test } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { setActiveScenario, SCENARIOS } from '../test-cases/scenarios/test-scenario-picker';
 
 import createVerzoekTask from './tasks/create-verzoek.spec';
 import loginTask from './tasks/login.spec';
@@ -34,25 +35,31 @@ const tasks = [
 ];
 
 test.describe('Algemene bijstand Flow', () => {
-  test('complete algemene-bijstand-aanvraag process', async ({ page }) => {
-    test.setTimeout(300000); // 5 minutes timeout for complete flow
+    test('complete algemene-bijstand-aanvraag process', async ({ page }) => {
+        test.setTimeout(300000);
 
-    // Generate test data
-    const testData = {
-      lastName: faker.person.lastName(),
-      requestId: null as string | null,
-    };
-    console.log('Test data:', testData);
+        // 🔑 Pick scenario (env overrides; defaults to "A")
+        const scenarioKey = (process.env.SCENARIO ?? 'A') as keyof typeof SCENARIOS;
+        setActiveScenario(scenarioKey);
+        console.log(`Scenario selected: ${String(scenarioKey)} -> ${SCENARIOS[scenarioKey]}`);
 
-    for (const task of tasks) {
-      await test.step(`Running task: ${task.name}`, async () => {
-        try {
-          await task.fn(page, testData);
-        } catch (error) {
-          console.error(`Failed during task ${task.name}:`, error);
-          throw error;
+        // Generate test data
+        const testData = {
+            lastName: faker.person.lastName(),
+            requestId: null as string | null,
+        };
+        console.log('Test data:', testData);
+
+        for (const task of tasks) {
+            await test.step(`Running task: ${task.name}`, async () => {
+                try {
+                    await task.fn(page, testData); // tasks read their own option via picker
+                } catch (error) {
+                    console.error(`Failed during task ${task.name}:`, error);
+                    throw error;
+                }
+            });
         }
-      });
-    }
-  });
-}); 
+    });
+});
+
