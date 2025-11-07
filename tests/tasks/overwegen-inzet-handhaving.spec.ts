@@ -17,11 +17,6 @@ const optionHandlers: Record<Option, (page: Page) => Promise<void>> = {
         console.log('Clicking "Ja" radio button...');
         await page.getByRole('radio', { name: 'Ja' }).check();
     },
-    C: async (page) => {
-        // placeholder for future option
-        console.log('Clicking "Ja" radio button...');
-        await page.getByRole('radio', { name: 'Ja' }).check();
-    },
 };
 
 export default async function(page: Page, testData: TestData) {

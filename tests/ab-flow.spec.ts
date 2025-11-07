@@ -8,15 +8,15 @@ import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
 import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spec';
 import overwegenUitzettenInfoverzoekTask from './tasks/overwegen-uitzetten-infoverzoek.spec';
 import vaststellenPersoonAanvragerTask from './tasks/vaststellen-persoon-aanvrager.spec';
-//import vaststellenPersoonPartnerTask from './tasks/vaststellen-persoon-partner.spec';
+import vaststellenPersoonPartnerTask from './tasks/vaststellen-persoon-partner.spec';
 import vaststellenVerblijfadresAanvragerTask from './tasks/vaststellen-verblijfadres-aanvrager.spec';
-//import vaststellenVerblijfadresPartnerTask from './tasks/vaststellen-verblijfadres-partner.spec';
-//import vaststellenVerblijfstitelAanvragerTask from './tasks/vaststellen-verblijfstitel-aanvrager.spec';
-//import vaststellenVerblijfstitelPartnerTask from './tasks/vaststellen-verblijfstitel-partner.spec';
+import vaststellenVerblijfadresPartnerTask from './tasks/vaststellen-verblijfadres-partner.spec';
+import vaststellenVerblijfstitelAanvragerTask from './tasks/vaststellen-verblijfstitel-aanvrager.spec';
+import vaststellenVerblijfstitelPartnerTask from './tasks/vaststellen-verblijfstitel-partner.spec';
 import vaststellenAanvangsdatumTask from './tasks/vaststellen-aanvangsdatum.spec';
-//import vaststellenIngangsdatumTask from './tasks/vaststellen-ingangsdatum.spec';
+import vaststellenIngangsdatumTask from './tasks/vaststellen-ingangsdatum.spec';
 import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituatie.spec';
-//import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
+import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
 import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
 
 const tasks = [
@@ -31,7 +31,7 @@ const tasks = [
   //{ name: 'vaststellen-verblijfadres-partner', fn: vaststellenVerblijfadresPartnerTask },
   //{ name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask },
   //{ name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
-  { name: 'vaststellen-aanvangsdatum', fn: vaststellenAanvangsdatumTask },
+  //{ name: 'vaststellen-aanvangsdatum', fn: vaststellenAanvangsdatumTask },
   //{ name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
   { name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask },
   //{ name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
