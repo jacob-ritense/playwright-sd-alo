@@ -1,17 +1,18 @@
 // test-scenario-picker.ts
-export type Option = 'A' | 'B' | 'C';
+export type Option = 'A' | 'B' | 'C' | 'D';
 
 const TASKS_BY_NUMBER: Record<number, string> = {
-    1: 'overwegen-inzet-handhaving',
-    // 2: 'some-other-task',
-    // 3: 'another-task',
-    // 4: 'yet-another-task',
+    1: 'overwegen-inzet-handhaving', //A = Nee, B = Ja
+    2: 'overwegen-uitzetten-infoverzoek', //A = Nee, B = Ja
+    3: 'vaststellen-persoon-aanvrager', //A = Ja BRP, B = Nee
+    4: 'vaststellen-verblijfadres-aanvrager', //A = Verblijfadres, B = BRP adres, C = Anders
+    5: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
 };
 
 export const SCENARIOS: Record<string, string> = {
-    //A: '1A,2B,3A,4C',
-    A: '1A',
-    B: '1B',
+    A: '1A, 2A, 3A, 4A, 5A',
+    B: '1A, 2A, 3A, 4B, 5B',
+    C: '1B, 2B, 3A, 4B, 5B',
 };
 
 let activeScenario = 'A';

@@ -31,7 +31,7 @@ const tasks = [
   //{ name: 'vaststellen-verblijfadres-partner', fn: vaststellenVerblijfadresPartnerTask },
   //{ name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask },
   //{ name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
-  //{ name: 'vaststellen-aanvangsdatum', fn: vaststellenAanvangsdatumTask },
+  { name: 'vaststellen-aanvangsdatum', fn: vaststellenAanvangsdatumTask },
   //{ name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
   { name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask },
   //{ name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
