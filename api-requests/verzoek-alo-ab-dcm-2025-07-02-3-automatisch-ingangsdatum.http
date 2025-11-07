@@ -1,0 +1,130 @@
+POST {{objects_api_url}}
+Authorization: Token {{token}}
+Content-Crs: EPSG:4326
+Content-Type: application/json
+
+{
+   "type": "{{objecttypes_api_url_alo}}",
+    "record": {
+        "index": 1,
+        "typeVersion": "{{objecttypes_version}}",
+        "data": {
+            "bsn": "999991322",
+            "data": {
+                "uw-gegevens": {
+                    "naw": {
+                        "grAdresgegevens": {
+                            "plaats": "'s-Gravenhage",
+                            "straat": "Herengracht",
+                            "postcode": "2511 EG",
+                            "huisletter": "",
+                            "huisnummer": "1",
+                            "toevoeging": ""
+                        },
+                        "grPersoongegevens": {
+                            "Bsn": "999991322",
+                            "voornaam": "Celeste",
+                            "achternaam": "Avion",
+                            "voorletters": "C.",
+                            "voorvoegsels": "",
+                            "geboortedatum": "1960-12-29"
+                        }
+                    }
+                },
+                "alo-uitbetaling": {
+                    "ibanAanWie": "NEE",
+                    "ibanUitbetaling": "NL59FTSB0280536194",
+                    "naamRekeninghouder": "Celeste"
+                },
+                "alo-uw-inkomsten": {
+                    "heeftInkomsten": "GEEN_INKOMSTEN"
+                },
+                "alo-reden-aanvraag": {
+                    "grIoaw": {
+                        "geenRechtMeerWw": "NEE",
+                        "geenRechtMeerWga": "NEE",
+                        "gedeeltelijkArbeidsongeschikt": "NEE"
+                    },
+                    "grGeenInkomen": {
+                        "waaromGeenInkomen": "BIJSTANDSUITKERING_STOPGEZET"
+                    },
+                    "grIngangsdatum": {
+                        "redenLaat": "NEE"
+                    },
+                    "waaromBijstandsuitkering": "GEEN_ONVOLDOENDE_INKOMEN",
+                    "grBeeindigingBijstandsUitkering": {
+                        "kiesBijstandsuitkeringGestopt": "AANVRAAG_MET_PARTNER"
+                    }
+                },
+                "alo-uw-woonsituatie": {
+                    "hoeWoontU": "BIJ_FAMILIE_VRIENDEN_OF_KENNISSEN",
+                    "bijWieWoontU": "OUDERS",
+                    "grAndereBewoners": {
+                        "meerMensenOpAdres": "NEE"
+                    }
+                },
+                "alo-uw-beschikbaarheid": {
+                    "grBeschikbaarheid": {
+                        "onbetaald": "NEE",
+                        "beschikbaarheid": 28
+                    }
+                },
+                "alo-gezinssamenstelling": {
+                    "partnerWoontBijU": "NEE",
+                    "thuiswonendeKinderen": "NEE"
+                },
+                "alo-aanvullende-gegevens": {
+                    "lieverPost": true,
+                    "grWoonsituatie": {
+                        "woonsituatie": "WAAR_IK_WOON"
+                    },
+                    "grNationaliteit": {
+                        "nationaliteitBezit": "NEDERLANDSE_NATIONALITEIT"
+                    },
+                    "grContactAanvraag": {
+                        "hulpAanvraag": "NEE"
+                    },
+                    "grNieuweContactgegevens": {
+                        "geenEmail": true,
+                        "geenTelefoon": true
+                    }
+                },
+                "alo-bezittingen-en-schulden": {
+                    "grRekeningen": {
+                        "grLogicaBank": {
+                            "hhgVoegRekeningToe": [
+                                {
+                                    "prive": "NL59FTSB0280536194",
+                                    "hoeveelGeld": 500,
+                                    "typeRekening": "NEDERLANDSE_PRIVE_REKENING",
+                                    "uploadAfschrift": []
+                                }
+                            ]
+                        },
+                        "geenBankrekening": false
+                    },
+                    "grUwVermogen": {
+                        "welkVermogen": {
+                            "CRYPTO": false,
+                            "CARAVAN": false,
+                            "VAARTUIG": false,
+                            "CONTANTEN": false,
+                            "KOOPWONING": false,
+                            "MOTORVOERTUIG": false,
+                            "EEN_STUK_GROND": false,
+                            "OBLIGATIES_AANDELEN": false
+                        }
+                    },
+                    "heeftSchulden": "NEE"
+                }
+            },
+            "type": "Verzoek AB DCM",
+            "attachments": [],
+            "language_code": "nl",
+            "submission_id": "c035840c-1637-4718-9d3f-77c95a64b5d2",
+            "public_reference": "placeholder"
+        },
+        "startAt": "2025-07-02",
+        "registrationAt": "2025-07-02"
+    }
+}
