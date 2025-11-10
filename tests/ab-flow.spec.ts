@@ -17,6 +17,7 @@ import vaststellenAanvangsdatumTask from './tasks/vaststellen-aanvangsdatum.spec
 import vaststellenIngangsdatumTask from './tasks/vaststellen-ingangsdatum.spec';
 import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituatie.spec';
 import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
+import vaststellenLeefsituatieTask from './tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
 
 const tasks = [
@@ -26,15 +27,16 @@ const tasks = [
   { name: 'overwegen-inzet-handhaving', fn: overwegenInzetHandhavingTask },
   { name: 'overwegen-uitzetten-infoverzoek', fn: overwegenUitzettenInfoverzoekTask },
   { name: 'vaststellen-persoon-aanvrager', fn: vaststellenPersoonAanvragerTask },
-  //{ name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask },
+  { name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask },
   { name: 'vaststellen-verblijfadres-aanvrager', fn: vaststellenVerblijfadresAanvragerTask },
-  //{ name: 'vaststellen-verblijfadres-partner', fn: vaststellenVerblijfadresPartnerTask },
-  //{ name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask },
-  //{ name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
+  { name: 'vaststellen-verblijfadres-partner', fn: vaststellenVerblijfadresPartnerTask },
+  { name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask },
+  { name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
   { name: 'vaststellen-aanvangsdatum', fn: vaststellenAanvangsdatumTask },
-  //{ name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
+  { name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
   { name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask },
-  //{ name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
+  { name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
+    { name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask },
   { name: 'vaststellen-besluit', fn: vaststellenBesluitTask },
 ];
 
