@@ -1,5 +1,5 @@
 // test-scenario-picker.ts
-export type Option = 'A' | 'B' | 'C' | 'D';
+export type Option = 'A' | 'B' | 'C' | 'D' | 'E'
 
 const TASKS_BY_NUMBER: Record<number, string> = {
     1: 'overwegen-inzet-handhaving', //A = Nee, B = Ja
@@ -10,7 +10,7 @@ const TASKS_BY_NUMBER: Record<number, string> = {
 };
 
 export const SCENARIOS: Record<string, string> = {
-    A: '1A, 2A, 3A, 4A, 5A',
+    A: '1A, 2A, 3A ,4A, 5A',
     B: '1A, 2A, 3A, 4B, 5B',
     C: '1B, 2B, 3A, 4B, 5B',
 };

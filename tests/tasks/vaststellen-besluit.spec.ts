@@ -96,10 +96,10 @@ export default async function vaststellenBesluitTask(page: Page, testData: TestD
         await page.waitForTimeout(2000);
 
         // 🔑 Option-specific logic (no duplicated blocks)
-        const option = getOptionForTask('vaststellen-besluit', 'B'); // default as you prefer
+        const option = getOptionForTask('vaststellen-besluit', 'A'); // default as you prefer
         await optionHandlers[option](page, flowTaskName);
 
-        // ⬇️ Common upload block — runs for ALL options (A/B/C/D), unchanged
+        // ⬇️ Common upload block — runs for ALL options (A/B/C/D)
         console.log(`[${flowTaskName}] Uploading besluit document...`);
         const dropZoneText = 'Kies een bestand, of sleep het hier naartoe';
         const dropZone = page.getByText(dropZoneText, { exact: false }).first();
