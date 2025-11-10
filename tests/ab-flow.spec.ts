@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
 import createVerzoekTask from './tasks/create-verzoek.spec';
@@ -17,6 +17,7 @@ import vaststellenAanvangsdatumTask from './tasks/vaststellen-aanvangsdatum.spec
 import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituatie.spec';
 //import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
 import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
+import { resolveFlowEnvironment, type FlowEnvironment } from './tasks/utils';
 
 const tasks = [
   { name: 'create-verzoek', fn: createVerzoekTask },
@@ -37,26 +38,38 @@ const tasks = [
   { name: 'vaststellen-besluit', fn: vaststellenBesluitTask },
 ];
 
-test.describe('Algemene bijstand Flow', () => {
+export interface AbFlowOptions {
+  environment?: FlowEnvironment;
+}
+
+export async function runAbFlow(page: Page, options?: AbFlowOptions) {
+  const environment = options?.environment ?? resolveFlowEnvironment();
+  process.env.AB_FLOW_ENV_CURRENT = environment;
+  const activeEnvironment = environment;
+  console.log(`Starting AB flow in environment: ${activeEnvironment}`);
+
+  const testData = {
+    lastName: faker.person.lastName(),
+    requestId: null as string | null,
+  };
+  console.log('Test data:', testData);
+
+  for (const task of tasks) {
+    await test.step(`Running task: ${task.name}`, async () => {
+      try {
+        await task.fn(page, testData);
+      } catch (error) {
+        console.error(`Failed during task ${task.name}:`, error);
+        throw error;
+      }
+    });
+  }
+}
+
+test.describe('Algemene bijstand Flow (default)', () => {
   test('complete algemene-bijstand-aanvraag process', async ({ page }) => {
-    test.setTimeout(300000); // 5 minutes timeout for complete flow
-
-    // Generate test data
-    const testData = {
-      lastName: faker.person.lastName(),
-      requestId: null as string | null,
-    };
-    console.log('Test data:', testData);
-
-    for (const task of tasks) {
-      await test.step(`Running task: ${task.name}`, async () => {
-        try {
-          await task.fn(page, testData);
-        } catch (error) {
-          console.error(`Failed during task ${task.name}:`, error);
-          throw error;
-        }
-      });
-    }
+    test.setTimeout(300000);
+    process.env.AB_FLOW_ENV_CURRENT = 'dev';
+    await runAbFlow(page, { environment: 'dev' });
   });
-}); 
+});

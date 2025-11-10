@@ -1,24 +1,28 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { loginTest } from './login-test';
-import { URL_DEV, USERNAME_LOCAL, PASSWORD_LOCAL } from './env';
+import { URL_DEV, USERNAME_LOCAL, PASSWORD_LOCAL, URL_TEST, USERNAME_TEST, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
 
-export {
-  URL_DEV,
-  USERNAME_LOCAL,
-  PASSWORD_LOCAL,
-} from './env';
+export { URL_DEV, URL_TEST, USERNAME_LOCAL, USERNAME_TEST, PASSWORD_LOCAL, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
 
+export type FlowEnvironment = 'dev' | 'test' | 'acc';
 export type LoginEnvironment = 'local' | 'test';
 
-export async function login(page: Page, environment: LoginEnvironment = 'local') {
-  if (environment === 'test') {
+export async function login(page: Page, environment?: LoginEnvironment) {
+  const strategy = environment ?? loginStrategyByEnvironment[resolveFlowEnvironment()];
+  if (strategy === 'test') {
     await loginTest(page);
     return;
   }
 
   await loginLocalPortal(page);
 }
+
+const loginStrategyByEnvironment: Record<FlowEnvironment, LoginEnvironment> = {
+  dev: 'local',
+  test: 'test',
+  acc: 'test', // Placeholder until ACC-specific login is needed
+};
 
 export async function waitForAngular(page: Page) {
   console.log('Waiting for Angular to initialize...');
@@ -435,3 +439,11 @@ export async function completeTask(page: Page) {
   
   throw new Error('No completion button found for task');
 } 
+
+export function resolveFlowEnvironment(): FlowEnvironment {
+  const env = (process.env.AB_FLOW_ENV_CURRENT ?? process.env.AB_FLOW_ENV ?? 'dev').toLowerCase();
+  if (env === 'test' || env === 'acc') {
+    return env;
+  }
+  return 'dev';
+}
