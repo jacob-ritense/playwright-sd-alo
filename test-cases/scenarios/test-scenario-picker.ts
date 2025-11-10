@@ -2,11 +2,22 @@
 export type Option = 'A' | 'B' | 'C' | 'D' | 'E'
 
 const TASKS_BY_NUMBER: Record<number, string> = {
-    1: 'overwegen-inzet-handhaving', //A = Nee, B = Ja
-    2: 'overwegen-uitzetten-infoverzoek', //A = Nee, B = Ja
-    3: 'vaststellen-persoon-aanvrager', //A = Ja BRP, B = Nee
-    4: 'vaststellen-verblijfadres-aanvrager', //A = Verblijfadres, B = BRP adres, C = Anders
-    5: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
+    1: 'opvoeren-dienst-socrates', // Geen keuzes
+    2: 'overwegen-inzet-handhaving', //A = Nee, B = Ja
+    3: 'vastleggen-uitkomst-poortonderzoek', // Geen keuzes
+    4: 'overwegen-uitzetten-infoverzoek', //A = Nee, B = Ja
+    5: 'vaststellen-persoon-aanvrager', //A = Ja BRP, B = Nee (ander BSN)
+    6: 'vaststellen-persoon-partner', //A = Ja BRP, B = Nee
+    7: 'vaststellen-verblijfadres-aanvrager', //A = Verblijfadres, B = BRP adres, C = Anders
+    8: 'vaststellen-verblijfadres-partner', //A = Verblijfadres, B = BRP adres, C = Anders
+    9: 'vaststellen-verblijfstitel-aanvrager', //A = Ja, B = Nee
+    10: 'vaststellen-verblijfstitel-partner', //A = Ja, B = Nee
+    11: 'vaststellen-aanvangsdatum', // Geen keuzes
+    12: 'vaststellen-ingangsdatum', // Geem keuzes
+    13: 'vaststellen-leef-woonsituatie', // Geen keuzes
+    14: 'vaststellen-woonsituatie', // A: 1-belanghebbend-zelfstandig-Art23JA B: 2-belanghebbend-instelling-Art23NEE
+    15: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)
+    16: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
 };
 
 export const SCENARIOS: Record<string, string> = {

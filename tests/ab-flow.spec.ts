@@ -1,11 +1,12 @@
-import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
-import { setActiveScenario, SCENARIOS } from '../test-cases/scenarios/test-scenario-picker';
+import {test} from '@playwright/test';
+import {faker} from '@faker-js/faker';
+import {setActiveScenario, SCENARIOS} from '../test-cases/scenarios/test-scenario-picker';
 
 import createVerzoekTask from './tasks/create-verzoek.spec';
 import loginTask from './tasks/login.spec';
 import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
 import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spec';
+import uitkomstPoortonderzoekTask from './tasks/vastleggen-uitkomst-poortonderzoek.spec';
 import overwegenUitzettenInfoverzoekTask from './tasks/overwegen-uitzetten-infoverzoek.spec';
 import vaststellenPersoonAanvragerTask from './tasks/vaststellen-persoon-aanvrager.spec';
 import vaststellenPersoonPartnerTask from './tasks/vaststellen-persoon-partner.spec';
@@ -21,27 +22,28 @@ import vaststellenLeefsituatieTask from './tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
 
 const tasks = [
-  { name: 'create-verzoek', fn: createVerzoekTask },
-  { name: 'login', fn: loginTask },
-  { name: 'opvoeren-dienst-socrates', fn: opvoerenDienstSocratesTask },
-  { name: 'overwegen-inzet-handhaving', fn: overwegenInzetHandhavingTask },
-  { name: 'overwegen-uitzetten-infoverzoek', fn: overwegenUitzettenInfoverzoekTask },
-  { name: 'vaststellen-persoon-aanvrager', fn: vaststellenPersoonAanvragerTask },
-  { name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask },
-  { name: 'vaststellen-verblijfadres-aanvrager', fn: vaststellenVerblijfadresAanvragerTask },
-  { name: 'vaststellen-verblijfadres-partner', fn: vaststellenVerblijfadresPartnerTask },
-  { name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask },
-  { name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
-  { name: 'vaststellen-aanvangsdatum', fn: vaststellenAanvangsdatumTask },
-  { name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
-  { name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask },
-  { name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
-    { name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask },
-  { name: 'vaststellen-besluit', fn: vaststellenBesluitTask },
+    {name: 'create-verzoek', fn: createVerzoekTask},
+    {name: 'login', fn: loginTask},
+    {name: 'opvoeren-dienst-socrates', fn: opvoerenDienstSocratesTask},
+    {name: 'overwegen-inzet-handhaving', fn: overwegenInzetHandhavingTask},
+    {name: 'vastleggen-uitkomst-poortonderzoek', fn: uitkomstPoortonderzoekTask},
+    {name: 'overwegen-uitzetten-infoverzoek', fn: overwegenUitzettenInfoverzoekTask},
+    {name: 'vaststellen-persoon-aanvrager', fn: vaststellenPersoonAanvragerTask},
+    {name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask},
+    {name: 'vaststellen-verblijfadres-aanvrager', fn: vaststellenVerblijfadresAanvragerTask},
+    {name: 'vaststellen-verblijfadres-partner', fn: vaststellenVerblijfadresPartnerTask},
+    {name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask},
+    {name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask},
+    {name: 'vaststellen-aanvangsdatum', fn: vaststellenAanvangsdatumTask},
+    {name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask},
+    {name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask},
+    {name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask},
+    {name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask},
+    {name: 'vaststellen-besluit', fn: vaststellenBesluitTask},
 ];
 
 test.describe('Algemene bijstand Flow', () => {
-    test('complete algemene-bijstand-aanvraag process', async ({ page }) => {
+    test('complete algemene-bijstand-aanvraag process', async ({page}) => {
         test.setTimeout(300000);
 
         // 🔑 Pick scenario (env overrides; defaults to "A")
