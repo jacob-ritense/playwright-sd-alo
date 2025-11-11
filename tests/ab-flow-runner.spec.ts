@@ -1,17 +1,9 @@
 import { test } from '@playwright/test';
-import { runAbFlow } from './ab-flow.spec';
+//import { runAbFlow } from './ab-flow.spec';
 import type { FlowEnvironment } from './tasks/utils';
 import { runAbFlow, type FlowOptions } from './multi-function-ab-flow';
 
-const verzoek = "./api-requests/verzoek-alo-ab-dcm-acc-currency-test.http";
-const environment = "alo-dev";
-
 const requestedEnvironments = parseRequestedEnvironments(process.env.AB_FLOW_ENV ?? 'test');
-const scenarios: FlowOptions[] = [
-    //{ API_TEST_REQUEST_FILE: verzoek, INFRA: environment, Scenario: 'A', lastTask: 'vaststellen-woonsituatie' },
-    { API_TEST_REQUEST_FILE: verzoek, INFRA: environment, Scenario: 'B', lastTask: 'vaststellen-persoon-aanvrager' },
-    //{ API_TEST_REQUEST_FILE: verzoek, INFRA: environment, Scenario: 'C' },
-];
 
 for (const environment of requestedEnvironments) {
   test.describe(`Algemene bijstand Flow (${environment.toUpperCase()})`, () => {
@@ -37,6 +29,12 @@ function parseRequestedEnvironments(input: string): FlowEnvironment[] {
 
   return normalized.length ? normalized : ['dev'];
 }
+
+// Tests runner
+const scenarios: FlowOptions[] = [
+    { API_TEST_REQUEST_FILE: "./api-requests/verzoek-alo-ab-dcm-acc-currency-test.http", INFRA: "alo-dev", Scenario: 'B', lastTask: 'vaststellen-persoon-aanvrager' },
+];
+
 test.describe.parallel('AB Flow scenarios', () => {
     for (const s of scenarios) {
         test(`${s.INFRA} | ${s.Scenario}`, async ({ page }) => {
