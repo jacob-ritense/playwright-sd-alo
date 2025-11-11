@@ -181,17 +181,17 @@ export async function openCreatedCase(page: Page, lastName: string) {
           await page.evaluate(() => {
             const table = document.querySelector('table');
             if (table) {
-              table.scrollTop = table.scrollTop + 300;
+              table.scrollTop = table.scrollTop + 500;
             }
           });
-          await page.waitForTimeout(1000);
+          await page.waitForTimeout(5000);
         }
       } catch (error) {
         attempts++;
         if (attempts >= maxAttempts) {
           throw error;
         }
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(5000);
       }
     }
 
