@@ -1,14 +1,13 @@
 import { Page } from '@playwright/test';
-import { faker } from '@faker-js/faker';
 
 interface TestData {
   lastName: string;
   requestId: string | null;
 }
 
-export default async function inangsdatumTask(page: Page, testData: TestData) {
-  const flowTaskName = 'vaststellen-ingangsdatum';
-  const taskName = 'Vaststellen Ingangsdatum';
+export default async function vaststellenAanvangsdatumTask(page: Page, testData: TestData) {
+  const flowTaskName = 'vaststellen-aanvangsdatum';
+  const taskName = 'Vaststellen aanvangsdatum';
 
   try {
     console.log(`[${flowTaskName}] Looking for task: "${taskName}"`);
@@ -28,19 +27,16 @@ export default async function inangsdatumTask(page: Page, testData: TestData) {
     await page.waitForLoadState('networkidle', { timeout: 15000 });
     await page.waitForTimeout(2000);
 
-    const toelichting = faker.lorem.sentence();
-    console.log(`[${flowTaskName}] Filling "Toelichting" with: "${toelichting}"`);
-    await page.getByRole('textbox', { name: 'Toelichting' }).fill(toelichting);
-
-    console.log(`[${flowTaskName}] Clicking "Indienen" button...`);
-    await page.getByRole('button', { name: 'Indienen' }).click();
+    console.log(`[${flowTaskName}] Clicking "Afronden" button...`);
+    await page.getByRole('button', { name: 'Afronden' }).click();
     await page.waitForLoadState('networkidle', { timeout: 15000 });
+    await page.waitForTimeout(2000);
     console.log(`[${flowTaskName}] Task "${taskName}" completed.`);
   } catch (error) {
     console.error(`[${flowTaskName}] Failed during task processing:`, error);
     try {
-      await page.screenshot({ path: 'vaststellen-ingangsdatum-error.png', fullPage: true });
-      console.log(`[${flowTaskName}] Screenshot saved as vaststellen-ingangsdatum-error.png`);
+      await page.screenshot({ path: 'vaststellen-aanvangsdatum-error.png', fullPage: true });
+      console.log(`[${flowTaskName}] Screenshot saved as vaststellen-aanvangsdatum-error.png`);
     } catch (screenshotError) {
       console.error(`[${flowTaskName}] Failed to save error screenshot:`, screenshotError);
     }
