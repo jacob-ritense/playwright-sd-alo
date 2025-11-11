@@ -26,7 +26,7 @@ await createVerzoek(lastName, apiTestRequestFile, apiRequestConfigFile, infra);
 ### 2. Login and Navigation
 ```typescript
 // Example steps
-await loginLocal(page);
+await login(page);
 await navigateToCases(page);
 ```
 - Login with local credentials
