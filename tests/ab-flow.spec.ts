@@ -3,7 +3,7 @@ import {faker} from '@faker-js/faker';
 import {setActiveScenario, SCENARIOS} from '../test-cases/scenarios/test-scenario-picker';
 
 import createVerzoekTask from './tasks/create-verzoek.spec';
-import loginTask from './tasks/login.spec';
+import loginTask from './tasks/login-test.spec';
 import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
 import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spec';
 import uitkomstPoortonderzoekTask from './tasks/vastleggen-uitkomst-poortonderzoek.spec';
@@ -20,6 +20,7 @@ import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituat
 import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
 import vaststellenLeefsituatieTask from './tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
+import { resolveFlowEnvironment, type FlowEnvironment } from './tasks/utils';
 
 const tasks = [
     {name: 'create-verzoek', fn: createVerzoekTask},
@@ -71,3 +72,38 @@ test.describe('Algemene bijstand Flow', () => {
     });
 });
 
+export interface AbFlowOptions {
+  environment?: FlowEnvironment;
+}
+
+export async function runAbFlow(page: Page, options?: AbFlowOptions) {
+  const environment = options?.environment ?? resolveFlowEnvironment();
+  process.env.AB_FLOW_ENV_CURRENT = environment;
+  const activeEnvironment = environment;
+  console.log(`Starting AB flow in environment: ${activeEnvironment}`);
+
+  const testData = {
+    lastName: faker.person.lastName(),
+    requestId: null as string | null,
+  };
+  console.log('Test data:', testData);
+
+  for (const task of tasks) {
+    await test.step(`Running task: ${task.name}`, async () => {
+      try {
+        await task.fn(page, testData);
+      } catch (error) {
+        console.error(`Failed during task ${task.name}:`, error);
+        throw error;
+      }
+    });
+  }
+}
+
+test.describe('Algemene bijstand Flow (default)', () => {
+  test('complete algemene-bijstand-aanvraag process', async ({ page }) => {
+    test.setTimeout(300000);
+    process.env.AB_FLOW_ENV_CURRENT = 'dev';
+    await runAbFlow(page, { environment: 'dev' });
+  });
+});

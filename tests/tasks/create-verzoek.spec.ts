@@ -1,9 +1,9 @@
 import { Page } from '@playwright/test';
 import { createVerzoek } from '../ApiClient';
+import { resolveFlowEnvironment, type FlowEnvironment } from './utils';
 
-const infra: string = (process.env.INFRA === undefined) ? 'alo-dev' : process.env.INFRA;
-const apiTestRequestFile = process.env.API_TEST_REQUEST_FILE ?? '';
-const apiRequestConfigFile = process.env.API_REQUEST_CONFIG_FILE ?? '';
+const apiTestRequestFile = (process.env.API_TEST_REQUEST_FILE ?? '').trim();
+const apiRequestConfigFile = (process.env.API_REQUEST_CONFIG_FILE ?? '').trim();
 
 interface TestData {
   lastName: string;
@@ -11,6 +11,8 @@ interface TestData {
 }
 
 export default async function(page: Page, testData: TestData) {
+  const infra = resolveInfra();
+
   try {
     console.log('Using configuration:', {
       apiTestRequestFile,
@@ -27,4 +29,19 @@ export default async function(page: Page, testData: TestData) {
     console.error('Failed to create verzoek:', error);
     throw error;
   }
-} 
+}
+
+function resolveInfra() {
+  const env = resolveFlowEnvironment();
+  const envKey = env.toUpperCase();
+  const specific = process.env[`INFRA_${envKey}` as keyof NodeJS.ProcessEnv];
+  const fallback = defaultInfraByEnvironment[env];
+  const base = (specific ?? process.env.INFRA ?? fallback).trim();
+  return base || fallback;
+}
+
+const defaultInfraByEnvironment: Record<FlowEnvironment, string> = {
+  dev: 'alo-dev',
+  test: 'alo-test',
+  acc: 'alo-acc',
+};
