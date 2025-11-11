@@ -2,26 +2,26 @@
 export type Option = 'A' | 'B' | 'C' | 'D' | 'E';
 
 const TASKS_BY_NUMBER: Record<number, string> = {
-    1: 'opvoeren-dienst-socrates',
-    2: 'overwegen-inzet-handhaving',
-    3: 'vastleggen-uitkomst-poortonderzoek',
-    4: 'overwegen-uitzetten-infoverzoek',
-    5: 'vaststellen-persoon-aanvrager',
-    6: 'vaststellen-persoon-partner',
-    7: 'vaststellen-verblijfadres-aanvrager',
-    8: 'vaststellen-verblijfadres-partner',
-    9: 'vaststellen-verblijfstitel-aanvrager',
-    10: 'vaststellen-verblijfstitel-partner',
-    11: 'vaststellen-aanvangsdatum',
-    12: 'vaststellen-ingangsdatum',
-    13: 'vaststellen-leef-woonsituatie',
-    14: 'vaststellen-woonsituatie',
-    15: 'vaststellen-leefsituatie',
-    16: 'vaststellen-besluit',
+    1: 'opvoeren-dienst-socrates', // Geen keuzes
+    2: 'overwegen-inzet-handhaving', //A = Nee, B = Ja
+    3: 'vastleggen-uitkomst-poortonderzoek', // Geen keuzes
+    4: 'overwegen-uitzetten-infoverzoek', //A = Nee, B = Ja
+    5: 'vaststellen-persoon-aanvrager', //A = Ja BRP, B = Nee (ander BSN)
+    6: 'vaststellen-persoon-partner', //A = Ja BRP, B = Nee
+    7: 'vaststellen-verblijfadres-aanvrager', //A = Verblijfadres, B = BRP adres, C = Anders
+    8: 'vaststellen-verblijfadres-partner', //A = Verblijfadres, B = BRP adres, C = Anders
+    9: 'vaststellen-verblijfstitel-aanvrager', //A = Ja , B = Nee
+    10: 'vaststellen-verblijfstitel-partner', //A = Ja , B = Nee
+    11: 'vaststellen-aanvangsdatum', // Geen keuzes
+    12: 'vaststellen-ingangsdatum', // Geen keuzes
+    13: 'vaststellen-leef-woonsituatie', // Geen keuzes
+    14: 'vaststellen-woonsituatie', // A: 1-belanghebbend-zelfstandig-Art23JA B: 2-belanghebbend-instelling-Art23NEE
+    15: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)
+    16: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
 };
 
 export const SCENARIOS: Record<string, string> = {
-    A: '1,2A,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
+    A: '1,2A,4A,5A,6A,7A,8A,9A, 10A,11,12,13,14A,15A,16A',
     B: '1,2B,3,4A,5A,6A,7B,8B,9B,10B,11,12,13,14B,15C,16B',
     C: '1,2A,3,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
 };
