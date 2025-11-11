@@ -8,7 +8,7 @@ interface TestData {
     requestId: string | null;
 }
 
-const optionHandlers: Record<Option, (page: Page) => Promise<void>> = {
+const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
         console.log('Selecting "Verblijfadres" option for woonsituatie...');
         const verblijfadresRadio = page.getByRole('radio', { name: 'Verblijfadres' });
@@ -83,7 +83,7 @@ export default async function verblijfadresPartnerTask(page: Page, testData: Tes
 
         // 🔑 Choose option via scenario picker
         const option = getOptionForTask('vaststellen-verblijfadres-partner', 'A');
-        const handler = optionHandlers[option] ?? optionHandlers.A;
+        const handler = optionHandlers[option] ?? optionHandlers.A!;
         await handler(page);
 
         const toelichting = faker.lorem.words(6);

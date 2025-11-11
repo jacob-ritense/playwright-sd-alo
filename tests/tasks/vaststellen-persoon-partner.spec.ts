@@ -8,7 +8,7 @@ interface TestData {
     requestId: string | null;
 }
 
-const optionHandlers: Record<Option, (page: Page) => Promise<void>> = {
+const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
         console.log('Selecting "Ja, gebruik de gegevens uit de BRP"...');
         await page.getByRole('radio', { name: 'Ja, gebruik de gegevens uit de BRP' }).check();
@@ -43,7 +43,7 @@ export default async function(page: Page, testData: TestData) {
 
         // 🔑 Get option from scenario picker (correct task id!)
         const option = getOptionForTask('vaststellen-persoon-partner', 'A');
-        const handler = optionHandlers[option] ?? optionHandlers.A;
+        const handler = optionHandlers[option] ?? optionHandlers.A!;
         await handler(page);
 
         // Fill in the toelichting text field with random words

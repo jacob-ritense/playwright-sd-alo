@@ -13,7 +13,7 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     9: 'vaststellen-verblijfstitel-aanvrager', //A = Ja, B = Nee
     10: 'vaststellen-verblijfstitel-partner', //A = Ja, B = Nee
     11: 'vaststellen-aanvangsdatum', // Geen keuzes
-    12: 'vaststellen-ingangsdatum', // Geem keuzes
+    12: 'vaststellen-ingangsdatum', // Geen keuzes
     13: 'vaststellen-leef-woonsituatie', // Geen keuzes
     14: 'vaststellen-woonsituatie', // A: 1-belanghebbend-zelfstandig-Art23JA B: 2-belanghebbend-instelling-Art23NEE
     15: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)

@@ -8,7 +8,7 @@ interface TestData {
     requestId: string | null;
 }
 
-const optionHandlers: Record<Option, (page: Page) => Promise<void>> = {
+const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
         // Option A: Choose "Ja"
         console.log('Selecting "Ja" for nationality question...');
@@ -56,7 +56,7 @@ export default async function verblijfstitelAanvragerTask(page: Page, testData: 
 
         // 🔑 Choose option from scenario picker (default A to preserve current behavior)
         const option = getOptionForTask('vaststellen-verblijfstitel-aanvrager', 'A');
-        const handler = optionHandlers[option] ?? optionHandlers.A;
+        const handler = optionHandlers[option] ?? optionHandlers.A!;
         await handler(page);
 
         const toelichting = faker.lorem.words(8);

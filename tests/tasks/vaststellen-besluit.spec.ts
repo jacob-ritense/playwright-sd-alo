@@ -43,7 +43,7 @@ async function pickBijstandsvorm(
 }
 
 // Option handlers (A has unique flow; B/C/D share helpers)
-const optionHandlers: Record<Option, (page: Page, flowTaskName: string) => Promise<void>> = {
+const optionHandlers: Partial<Record<Option, (page: Page, flowTaskName: string) => Promise<void>>> = {
     A: async (page, flowTaskName) => {
         console.log(`[${flowTaskName}] Selecting "Afwijzen" radio option...`);
         const afwijzenRadio = page.getByRole('radio', { name: /^Afwijzen$/i });
@@ -96,8 +96,10 @@ export default async function vaststellenBesluitTask(page: Page, testData: TestD
         await page.waitForTimeout(2000);
 
         // 🔑 Option-specific logic (no duplicated blocks)
-        const option = getOptionForTask('vaststellen-besluit', 'A'); // default as you prefer
-        await optionHandlers[option](page, flowTaskName);
+        const option = getOptionForTask('vaststellen-besluit', 'A');
+        const handler = optionHandlers[option] ?? optionHandlers.A!; // fallback to A
+        await handler(page, flowTaskName);
+
 
         // ⬇️ Common upload block — runs for ALL options (A/B/C/D)
         console.log(`[${flowTaskName}] Uploading besluit document...`);

@@ -8,7 +8,7 @@ interface TestData {
     requestId: string | null;
 }
 
-const optionHandlers: Record<Option, (page: Page) => Promise<void>> = {
+const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
         console.log('Selecting "Verblijfadres" option for woonsituatie...');
         const verblijfadresRadio = page.getByRole('radio', { name: 'Verblijfadres' });
@@ -85,7 +85,7 @@ export default async function verblijfadresAanvragerTask(page: Page, testData: T
 
         // 🔑 Choose option from scenario picker (task id used in your runner)
         const option = getOptionForTask('vaststellen-verblijfadres-aanvrager', 'A');
-        const handler = optionHandlers[option] ?? optionHandlers.A;
+        const handler = optionHandlers[option] ?? optionHandlers.A!;
         await handler(page);
 
         const toelichting = faker.lorem.words(6);

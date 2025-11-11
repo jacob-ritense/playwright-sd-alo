@@ -8,7 +8,7 @@ interface TestData {
     requestId: string | null;
 }
 
-const optionHandlers: Record<Option, (page: Page) => Promise<void>> = {
+const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
         console.log('Clicking "Nee" radio button...');
         await page.getByRole('radio', { name: 'Nee' }).check();
@@ -33,7 +33,7 @@ export default async function(page: Page, testData: TestData) {
 
         // 🔑 Get option from scenario picker (no arg required)
         const option = getOptionForTask('overwegen-inzet-handhaving', 'A');
-        const handler = optionHandlers[option] ?? optionHandlers.A;
+        const handler = optionHandlers[option] ?? optionHandlers.A!;
         await handler(page);
 
         const toelichtingText = faker.lorem.words(3);

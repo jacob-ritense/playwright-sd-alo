@@ -8,7 +8,7 @@ interface TestData {
     requestId: string | null;
 }
 
-const optionHandlers: Record<Option, (page: Page, flowTaskName: string) => Promise<void>> = {
+const optionHandlers: Partial<Record<Option, (page: Page, flowTaskName: string) => Promise<void>>> = {
     A: async (page, flowTaskName) => {
         console.log(`[${flowTaskName}] Filling "Aantal belanghebbenden" with 1...`);
         await page.getByLabel('Aantal belanghebbenden').fill('1');
@@ -56,7 +56,7 @@ export default async function vaststellenWoonsituatieTask(page: Page, testData: 
 
         // 🔑 Option-specific actions
         const option = getOptionForTask('vaststellen-woonsituatie', 'A');
-        const handler = optionHandlers[option] ?? optionHandlers.A;
+        const handler = optionHandlers[option] ?? optionHandlers.A!;
         await handler(page, flowTaskName);
 
         const toelichting = faker.lorem.words(8);
