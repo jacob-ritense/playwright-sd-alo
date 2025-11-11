@@ -1,5 +1,28 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { loginTest } from './login-test';
+import { URL_DEV, USERNAME_LOCAL, PASSWORD_LOCAL, URL_TEST, USERNAME_TEST, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
+
+export { URL_DEV, URL_TEST, USERNAME_LOCAL, USERNAME_TEST, PASSWORD_LOCAL, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
+
+export type FlowEnvironment = 'dev' | 'test' | 'acc';
+export type LoginEnvironment = 'local' | 'test';
+
+export async function login(page: Page, environment?: LoginEnvironment) {
+  const strategy = environment ?? loginStrategyByEnvironment[resolveFlowEnvironment()];
+  if (strategy === 'test') {
+    await loginTest(page);
+    return;
+  }
+
+  await loginLocalPortal(page);
+}
+
+const loginStrategyByEnvironment: Record<FlowEnvironment, LoginEnvironment> = {
+  dev: 'local',
+  test: 'test',
+  acc: 'test', // Placeholder until ACC-specific login is needed
+};
 
 export async function waitForAngular(page: Page) {
   console.log('Waiting for Angular to initialize...');
@@ -26,22 +49,25 @@ export async function waitForAngular(page: Page) {
   }
 }
 
-export async function loginLocal(page: Page) {
+export async function loginLocalPortal(page: Page) {
   console.log('Attempting local login...');
-  const loginPageUrl = 'http://localhost:4200/';
+  const loginPageUrl = URL_DEV;
+  if (!loginPageUrl) {
+    throw new Error('URL_DEV environment variable is not set. Please configure it in .env.properties.');
+  }
   try {
     await page.goto(loginPageUrl);
     console.log(`Navigated to ${loginPageUrl}`);
 
-    if (!process.env.USERNAME_LOCAL || !process.env.PASSWORD_LOCAL) {
+    if (!USERNAME_LOCAL || !PASSWORD_LOCAL) {
       throw new Error('Missing local login credentials');
     }
 
     await page.waitForSelector('input[type="text"]', { state: 'visible', timeout: 10000 });
     await page.waitForSelector('input[type="password"]', { state: 'visible', timeout: 10000 });
 
-    await page.getByLabel('Username or email').fill(process.env.USERNAME_LOCAL);
-    await page.getByLabel('Password').fill(process.env.PASSWORD_LOCAL);
+    await page.getByLabel('Username or email').fill(USERNAME_LOCAL);
+    await page.getByLabel('Password').fill(PASSWORD_LOCAL);
 
     await page.getByRole('button', {name: 'Sign In'}).click();
 
@@ -155,7 +181,7 @@ export async function openCreatedCase(page: Page, lastName: string) {
           await page.evaluate(() => {
             const table = document.querySelector('table');
             if (table) {
-              table.scrollTop = table.scrollTop + 300;
+              table.scrollTop = table.scrollTop + 500;
             }
           });
           await page.waitForTimeout(5000);
@@ -413,3 +439,11 @@ export async function completeTask(page: Page) {
   
   throw new Error('No completion button found for task');
 } 
+
+export function resolveFlowEnvironment(): FlowEnvironment {
+  const env = (process.env.AB_FLOW_ENV_CURRENT ?? process.env.AB_FLOW_ENV ?? 'dev').toLowerCase();
+  if (env === 'test' || env === 'acc') {
+    return env;
+  }
+  return 'dev';
+}

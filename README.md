@@ -24,3 +24,4 @@ Daarna kun je de Playwright UI starten met:
 ```bash
 npx playwright test --ui
 ```
+Verzoeken voor nieuwe functionaliteit kunnen worden gedaan via Github. Bij bugs graag een story aanmaken in targetprocess 

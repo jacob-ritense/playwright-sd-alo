@@ -6,8 +6,8 @@ interface TestData {
   requestId: string | null;
 }
 
-export default async function loginTask(page: Page, testData: TestData) {
-  await login(page);
+export default async function loginTestTask(page: Page, testData: TestData) {
+  await login(page, 'test');
   await waitForAngular(page);
   await navigateToAlgemeneBijstandAanvraag(page);
   await openCreatedCase(page, testData.lastName);
