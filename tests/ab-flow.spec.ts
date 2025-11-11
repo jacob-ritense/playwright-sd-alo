@@ -26,7 +26,7 @@ const tasks = [
     {name: 'login', fn: loginTask},
     {name: 'opvoeren-dienst-socrates', fn: opvoerenDienstSocratesTask},
     {name: 'overwegen-inzet-handhaving', fn: overwegenInzetHandhavingTask},
-    {name: 'vastleggen-uitkomst-poortonderzoek', fn: uitkomstPoortonderzoekTask},
+    //{name: 'vastleggen-uitkomst-poortonderzoek', fn: uitkomstPoortonderzoekTask},
     {name: 'overwegen-uitzetten-infoverzoek', fn: overwegenUitzettenInfoverzoekTask},
     {name: 'vaststellen-persoon-aanvrager', fn: vaststellenPersoonAanvragerTask},
     {name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask},
@@ -38,7 +38,7 @@ const tasks = [
     {name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask},
     {name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask},
     {name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask},
-    {name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask},
+    //{name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask},
     {name: 'vaststellen-besluit', fn: vaststellenBesluitTask},
 ];
 
