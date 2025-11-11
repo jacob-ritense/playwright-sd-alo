@@ -21,9 +21,9 @@ const TASKS_BY_NUMBER: Record<number, string> = {
 };
 
 export const SCENARIOS: Record<string, string> = {
-    A: '1A, 2A, 3A ,4A, 5A',
-    B: '1A, 2A, 3A, 4B, 5B',
-    C: '1B, 2B, 3A, 4B, 5B',
+    A: '1, 2A,4A, 5A, 6A, 7A, 8A, 9A, 10A, 11, 12, 13, 14A, 15A, 16A',
+    B: '1, 2B, 3 ,4A, 5A, 6A, 7B, 8B, 9B, 10B, 11, 12, 13, 14B, 15C, 16B',
+    C: '1, 2A, 3 ,4A, 5A, 6A, 7A, 8A, 9A, 10A, 11, 12, 13, 14A, 15A, 16A',
 };
 
 let activeScenario = 'A';
