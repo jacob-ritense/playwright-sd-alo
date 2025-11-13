@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 
 // Import each concrete task implementation
 import createVerzoekTask from './tasks/create-verzoek.spec';
-import loginTask from './tasks/login.spec';
+import loginTask from './tasks/navigate-case-dev';
 import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
 import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spec';
 import overwegenUitzettenInfoverzoekTask from './tasks/overwegen-uitzetten-infoverzoek.spec';

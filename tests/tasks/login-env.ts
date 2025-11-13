@@ -2,7 +2,7 @@ import { Page } from '@playwright/test';
 import OTPAuth from 'otpauth';
 import { URL_TEST, USERNAME_TEST, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
 
-export async function loginTest(page: Page) {
+export async function loginEnv(page: Page) {
   const url = URL_TEST;
   const username = USERNAME_TEST;
   const password = PASSWORD_TEST;

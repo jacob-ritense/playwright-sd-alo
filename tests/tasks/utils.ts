@@ -1,28 +1,17 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { loginTest } from './login-test';
-import { URL_DEV, USERNAME_LOCAL, PASSWORD_LOCAL, URL_TEST, USERNAME_TEST, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
+import { loginEnv } from './login-env';
+import { loginDev } from './login-dev';
 
-export { URL_DEV, URL_TEST, USERNAME_LOCAL, USERNAME_TEST, PASSWORD_LOCAL, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
+export type LoginEnvironment = 'alo-dev' | 'alo-test' | 'alo-acc';
 
-export type FlowEnvironment = 'dev' | 'test' | 'acc';
-export type LoginEnvironment = 'local' | 'test';
-
-export async function login(page: Page, environment?: LoginEnvironment) {
-  const strategy = environment ?? loginStrategyByEnvironment[resolveFlowEnvironment()];
-  if (strategy === 'test') {
-    await loginTest(page);
-    return;
-  }
-
-  await loginLocalPortal(page);
+export async function login(page: Page, environment: LoginEnvironment) {
+    if (environment === 'alo-test' || environment === 'alo-acc') {
+        await loginEnv(page);
+    } else {
+        await loginDev(page);
+    }
 }
-
-const loginStrategyByEnvironment: Record<FlowEnvironment, LoginEnvironment> = {
-  dev: 'local',
-  test: 'test',
-  acc: 'test', // Placeholder until ACC-specific login is needed
-};
 
 export async function waitForAngular(page: Page) {
   console.log('Waiting for Angular to initialize...');
@@ -46,47 +35,6 @@ export async function waitForAngular(page: Page) {
       console.error('Could not get debug info during Angular wait failure:', debugError.message);
     }
     throw new Error(`Angular initialization timeout or error: ${error.message}`);
-  }
-}
-
-export async function loginLocalPortal(page: Page) {
-  console.log('Attempting local login...');
-  const loginPageUrl = URL_DEV;
-  if (!loginPageUrl) {
-    throw new Error('URL_DEV environment variable is not set. Please configure it in .env.properties.');
-  }
-  try {
-    await page.goto(loginPageUrl);
-    console.log(`Navigated to ${loginPageUrl}`);
-
-    if (!USERNAME_LOCAL || !PASSWORD_LOCAL) {
-      throw new Error('Missing local login credentials');
-    }
-
-    await page.waitForSelector('input[type="text"]', { state: 'visible', timeout: 10000 });
-    await page.waitForSelector('input[type="password"]', { state: 'visible', timeout: 10000 });
-
-    await page.getByLabel('Username or email').fill(USERNAME_LOCAL);
-    await page.getByLabel('Password').fill(PASSWORD_LOCAL);
-
-    await page.getByRole('button', {name: 'Sign In'}).click();
-
-    await page.waitForURL((url) => url.toString() !== loginPageUrl, { timeout: 15000 });
-    await page.waitForLoadState('networkidle', {timeout: 20000});
-
-    const loginErrorVisible = await page.getByText(/invalid credentials|login failed/i).isVisible({timeout: 2000});
-    if (loginErrorVisible) {
-      await page.screenshot({ path: 'login-credentials-error.png', fullPage: true });
-      throw new Error('Login failed - explicit error message displayed');
-    }
-    console.log('Local login appears successful.');
-
-  } catch (error) {
-    console.error('Login failed:', error.message);
-    if (!error.message.includes('URL did not change') && !error.message.includes('explicit error message')) {
-      await page.screenshot({ path: 'login-generic-error.png', fullPage: true });
-    }
-    throw new Error(`Login failed: ${error.message}`);
   }
 }
 
@@ -438,12 +386,4 @@ export async function completeTask(page: Page) {
   }
   
   throw new Error('No completion button found for task');
-} 
-
-export function resolveFlowEnvironment(): FlowEnvironment {
-  const env = (process.env.AB_FLOW_ENV_CURRENT ?? process.env.AB_FLOW_ENV ?? 'dev').toLowerCase();
-  if (env === 'test' || env === 'acc') {
-    return env;
-  }
-  return 'dev';
 }

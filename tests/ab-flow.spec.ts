@@ -3,7 +3,7 @@ import {faker} from '@faker-js/faker';
 import {setActiveScenario, SCENARIOS} from '../test-cases/scenarios/test-scenario-picker';
 
 import createVerzoekTask from './tasks/create-verzoek.spec';
-import loginTask from './tasks/login-test.spec';
+import loginTask from './tasks/login-navigate-case.spec';
 import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
 import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spec';
 import uitkomstPoortonderzoekTask from './tasks/vastleggen-uitkomst-poortonderzoek.spec';
@@ -20,7 +20,6 @@ import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituat
 import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
 import vaststellenLeefsituatieTask from './tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
-import { resolveFlowEnvironment, type FlowEnvironment } from './tasks/utils';
 
 const tasks = [
     {name: 'create-verzoek', fn: createVerzoekTask},
