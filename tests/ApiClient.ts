@@ -3,8 +3,8 @@ import {request, expect} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 import path from 'node:path';
 
-const apiTestRequestFile = process.env.API_TEST_REQUEST_FILE ?? '';
-const apiRequestConfigFile = process.env.API_REQUEST_CONFIG_FILE ?? '';
+//const apiTestRequestFile = process.env.API_TEST_REQUEST_FILE ?? '';
+//const apiRequestConfigFile = process.env.API_REQUEST_CONFIG_FILE ?? '';
 
 export async function createVerzoek(achternaam: string, apiTestRequestFile: string, apiRequestConfigFile: string, environment: string) {
     console.log('Creating verzoek with config file:', apiRequestConfigFile);

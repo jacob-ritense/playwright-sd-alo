@@ -2,10 +2,11 @@
 // multi-function-ab-flow.ts
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import type { LoginEnvironment } from './tasks/utils';
 import {
     setActiveScenario,
     getActiveScenarioSteps,
-    getOptionForTask,
+    getActiveRequestFile,
     SCENARIOS,
     type ScenarioKey,
 } from '../test-cases/scenarios/test-scenario-picker';
@@ -28,7 +29,6 @@ import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituat
 import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
 import vaststellenLeefsituatieTask from './tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
-import {LoginEnvironment} from "./tasks/utils";
 
 export type FlowSlug =
     | 'create-verzoek'
@@ -51,16 +51,16 @@ export type FlowSlug =
     | 'vaststellen-besluit';
 
 export type FlowOptions = {
-    API_TEST_REQUEST_FILE: string;
-    INFRA: LoginEnvironment;
-    Scenario: ScenarioKey;     // required now
+    API_TEST_REQUEST_FILE?: string;
+    INFRA: LoginEnvironment;   // <- strongly typed now
+    Scenario: ScenarioKey;
     lastTask?: FlowSlug;
 };
 
 export interface TestData {
     lastName: string;
     requestId: string | null;
-    options: FlowOptions;
+    options: FlowOptions & { API_TEST_REQUEST_FILE: string };
 }
 
 const tasks = [
@@ -110,33 +110,39 @@ async function runTaskWithLogging(page: import('@playwright/test').Page, testDat
     });
 }
 
-
 export async function runAbFlow(page: import('@playwright/test').Page, options: FlowOptions) {
     test.setTimeout(300_000);
 
-    // Only use the test-provided scenario
     const scenarioKey = options.Scenario;
     setActiveScenario(scenarioKey);
     console.log(`Scenario selected: ${scenarioKey} -> ${SCENARIOS[scenarioKey]}`);
 
+    const apiFile = options.API_TEST_REQUEST_FILE ?? getActiveRequestFile();
+
     const testData: TestData = {
         lastName: faker.person.lastName(),
         requestId: null,
-        options,
+        options: { ...options, API_TEST_REQUEST_FILE: apiFile },
     };
+
     log.info('Flow options', options);
 
-    // Execute exactly in scenario order
-    const steps = getActiveScenarioSteps(); // [{num, taskId, option?}] ordered
+    // 🔹 Always run these two first
+    await runTaskWithLogging(page, testData, 'create-verzoek');
+    await runTaskWithLogging(page, testData, 'login');
+
+    // 🔹 Then execute exactly in scenario order
+    const steps = getActiveScenarioSteps();
     for (const step of steps) {
         const slug = step.taskId as FlowSlug;
 
         const task = tasks.find(t => t.name === slug);
         if (!task) {
-            throw new Error(`Scenario "${scenarioKey}" step #${step.num} -> "${slug}" has no task implementation.`);
+            throw new Error(
+                `Scenario "${scenarioKey}" step #${step.num} -> "${slug}" has no task implementation.`
+            );
         }
 
-        // Tasks can call getOptionForTask(slug) to read A/B/C/...
         await runTaskWithLogging(page, testData, slug, `step ${step.num}${step.option ?? ''}`);
 
         if (options.lastTask && slug === options.lastTask) {

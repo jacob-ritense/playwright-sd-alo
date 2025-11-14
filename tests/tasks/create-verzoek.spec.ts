@@ -1,47 +1,45 @@
+// tasks/create-verzoek.spec.ts
 import { Page } from '@playwright/test';
 import { createVerzoek } from '../ApiClient';
-import { resolveFlowEnvironment, type FlowEnvironment } from './utils';
-
-const apiTestRequestFile = (process.env.API_TEST_REQUEST_FILE ?? '').trim();
-const apiRequestConfigFile = (process.env.API_REQUEST_CONFIG_FILE ?? '').trim();
+import { getActiveRequestFile } from '../../test-cases/scenarios/test-scenario-picker';
 
 interface TestData {
-  lastName: string;
-  requestId: string | null;
+    lastName: string;
+    requestId: string | null;
+    options: {
+        INFRA: string;
+    };
 }
 
-export default async function(page: Page, testData: TestData) {
-  const infra = resolveInfra();
+const apiRequestConfigFile = (process.env.API_REQUEST_CONFIG_FILE ?? '').trim();
 
-  try {
-    console.log('Using configuration:', {
-      apiTestRequestFile,
-      apiRequestConfigFile,
-      infra
-    });
-    const response = await createVerzoek(testData.lastName, apiTestRequestFile, apiRequestConfigFile, infra);
-    console.log('Create verzoek response:', JSON.stringify(response, null, 2));
-    if (!response) throw new Error('API response should not be null');
-    if (!response.id) throw new Error('Verzoek should have an ID');
-    testData.requestId = response.id;
-    console.log('Created verzoek with ID:', testData.requestId);
-  } catch (error) {
-    console.error('Failed to create verzoek:', error);
-    throw error;
-  }
+export default async function (page: Page, testData: TestData) {
+    const infra = testData.options.INFRA;              // 🔹 from multi-function-ab-flow
+    const apiTestRequestFile = getActiveRequestFile(); // 🔹 from scenario (V1/V2/...)
+
+    try {
+        console.log('Using configuration:', {
+            apiTestRequestFile,
+            apiRequestConfigFile,
+            infra,
+        });
+
+        const response = await createVerzoek(
+            testData.lastName,
+            apiTestRequestFile,
+            apiRequestConfigFile,
+            infra,
+        );
+
+        console.log('Create verzoek response:', JSON.stringify(response, null, 2));
+        if (!response) throw new Error('API response should not be null');
+        if (!response.id) throw new Error('Verzoek should have an ID');
+
+        testData.requestId = response.id;
+        console.log('Created verzoek with ID:', testData.requestId);
+    } catch (error) {
+        console.error('Failed to create verzoek:', error);
+        throw error;
+    }
 }
 
-function resolveInfra() {
-  const env = resolveFlowEnvironment();
-  const envKey = env.toUpperCase();
-  const specific = process.env[`INFRA_${envKey}` as keyof NodeJS.ProcessEnv];
-  const fallback = defaultInfraByEnvironment[env];
-  const base = (specific ?? process.env.INFRA ?? fallback).trim();
-  return base || fallback;
-}
-
-const defaultInfraByEnvironment: Record<FlowEnvironment, string> = {
-  dev: 'alo-dev',
-  test: 'alo-test',
-  acc: 'alo-acc',
-};

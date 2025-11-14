@@ -1,36 +1,47 @@
 // test-scenario-picker.ts
 export type Option = 'A' | 'B' | 'C' | 'D' | 'E';
 
+// Map variant -> HTTP file
+export const REQUEST_FILES = {
+    V1: './api-requests/verzoek-alo-ab-dcm-acc-currency-test.http',
+    V2: './api-requests/verzoek-ab-automatisch.http',
+    // V3: '...', etc.
+} as const;
+
+export type RequestVariant = keyof typeof REQUEST_FILES; // 'V1' | 'V2' | ...
+
 export const SCENARIOS = {
-    A: '1,2A,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
-    B: '1,2B,3,4A,5A,6A,7B,8B,9B,10B,11,12,13,14B,15C,16B',
-    C: '1,2A,3,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
+    // first token = V*, rest = steps
+    A: 'V1, 1,2A,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
+    B: 'V1, 1,2B,3,4A,5A,6A,7B,8B,9B,10B,11,12,13,14B,15C,16B',
+    C: 'V1, 1,2A,3,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
 } as const;
 
 export type ScenarioKey = keyof typeof SCENARIOS;
 
 const TASKS_BY_NUMBER: Record<number, string> = {
-    1: 'opvoeren-dienst-socrates',
-    2: 'overwegen-inzet-handhaving',
-    3: 'vastleggen-uitkomst-poortonderzoek',
-    4: 'overwegen-uitzetten-infoverzoek',
-    5: 'vaststellen-persoon-aanvrager',
-    6: 'vaststellen-persoon-partner',
-    7: 'vaststellen-verblijfadres-aanvrager',
-    8: 'vaststellen-verblijfadres-partner',
-    9: 'vaststellen-verblijfstitel-aanvrager',
-    10: 'vaststellen-verblijfstitel-partner',
-    11: 'vaststellen-aanvangsdatum',
-    12: 'vaststellen-ingangsdatum',
-    13: 'vaststellen-leef-woonsituatie',
-    14: 'vaststellen-woonsituatie',
-    15: 'vaststellen-leefsituatie',
-    16: 'vaststellen-besluit',
+    1: 'opvoeren-dienst-socrates', // Geen keuzes
+    2: 'overwegen-inzet-handhaving', //A = Nee, B = Ja
+    3: 'vastleggen-uitkomst-poortonderzoek', // Geen keuzes
+    4: 'overwegen-uitzetten-infoverzoek', //A = Nee, B = Ja
+    5: 'vaststellen-persoon-aanvrager', //A = Ja BRP, B = Nee (ander BSN)
+    6: 'vaststellen-persoon-partner', //A = Ja BRP, B = Nee
+    7: 'vaststellen-verblijfadres-aanvrager', //A = Verblijfadres, B = BRP adres, C = Anders
+    8: 'vaststellen-verblijfadres-partner', //A = Verblijfadres, B = BRP adres, C = Anders
+    9: 'vaststellen-verblijfstitel-aanvrager', //A = Ja , B = Nee
+    10: 'vaststellen-verblijfstitel-partner', //A = Ja , B = Nee
+    11: 'vaststellen-aanvangsdatum', // Geen keuzes
+    12: 'vaststellen-ingangsdatum', // Geen keuzes
+    13: 'vaststellen-leef-woonsituatie', // Geen keuzes
+    14: 'vaststellen-woonsituatie', // A: 1-belanghebbend-zelfstandig-Art23JA B: 2-belanghebbend-instelling-Art23NEE
+    15: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)
+    16: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
 };
 
 let activeScenario: ScenarioKey = 'A';
 let activeMap = new Map<string, Option>();
 let activeSteps: Array<{ num: number; taskId: string; option?: Option }> = [];
+let activeVariant: RequestVariant | null = null;
 
 function normalizeItems(spec: string): string[] {
     return spec.split(',').map(s => s.trim()).filter(Boolean);
@@ -39,9 +50,24 @@ function normalizeItems(spec: string): string[] {
 function parseScenario(spec: string) {
     const options = new Map<string, Option>();
     const steps: Array<{ num: number; taskId: string; option?: Option }> = [];
-    if (!spec?.trim()) return { options, steps };
+
+    if (!spec?.trim()) {
+        return { variant: null as RequestVariant | null, options, steps };
+    }
 
     const items = normalizeItems(spec);
+
+    // 1) First token may be V1 / V2 / ...
+    let variant: RequestVariant | null = null;
+    if (items.length && /^V\d+$/i.test(items[0])) {
+        const key = items.shift()!.toUpperCase() as RequestVariant;
+        if (!REQUEST_FILES[key]) {
+            throw new Error(`Unknown request variant "${key}" in scenario spec "${spec}"`);
+        }
+        variant = key;
+    }
+
+    // 2) Remaining tokens are the numbered steps
     for (const raw of items) {
         const m = /^(\d+)(?:\s*([A-Z]))?$/i.exec(raw);
         if (!m) throw new Error(`Invalid scenario item "${raw}" (expected "2B" or "2")`);
@@ -54,21 +80,24 @@ function parseScenario(spec: string) {
         steps.push({ num, taskId, option: letter });
         if (letter) options.set(taskId, letter);
     }
-    return { options, steps };
+
+    return { variant, options, steps };
 }
 
 export function setActiveScenario(key: ScenarioKey) {
     const spec = SCENARIOS[key];
     if (!spec) throw new Error(`Unknown scenario "${String(key)}"`);
+
     activeScenario = key;
     const parsed = parseScenario(spec);
     activeMap = parsed.options;
     activeSteps = parsed.steps;
+    activeVariant = parsed.variant;
     console.log(`Active scenario set to ${activeScenario}: ${spec}`);
 }
 
 export function getOptionForTask(taskIdOrNumber: string | number, fallback: Option = 'A'): Option {
-    const TASKS_BY_NUMBER_LOCAL = TASKS_BY_NUMBER; // keep local ref for ts
+    const TASKS_BY_NUMBER_LOCAL = TASKS_BY_NUMBER;
     const taskId = typeof taskIdOrNumber === 'number'
         ? (TASKS_BY_NUMBER_LOCAL[taskIdOrNumber] ?? '')
         : taskIdOrNumber;
@@ -78,7 +107,14 @@ export function getOptionForTask(taskIdOrNumber: string | number, fallback: Opti
 }
 
 export function getActiveScenarioSteps() {
-    return [...activeSteps]; // [{num, taskId, option?}, ...] in exact order
+    return [...activeSteps];
 }
+
+
+export function getActiveRequestFile(): string {
+    if (!activeVariant) throw new Error('No request variant set for active scenario');
+    return REQUEST_FILES[activeVariant];
+}
+
 
 
