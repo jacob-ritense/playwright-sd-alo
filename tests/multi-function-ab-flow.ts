@@ -60,7 +60,7 @@ export type FlowOptions = {
 export interface TestData {
     lastName: string;
     requestId: string | null;
-    options: FlowOptions & { API_TEST_REQUEST_FILE: string };
+    options?: FlowOptions & { API_TEST_REQUEST_FILE: string };
 }
 
 const tasks = [

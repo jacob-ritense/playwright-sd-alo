@@ -1,9 +1,14 @@
-import {Page} from '@playwright/test';
-import {login, waitForAngular, navigateToAlgemeneBijstandAanvraag, openCreatedCase} from './utils';
-import {TestData} from '../multi-function-ab-flow';
+// tasks/login-navigate-case.spec.ts
+import { Page } from '@playwright/test';
+import { login, waitForAngular, navigateToAlgemeneBijstandAanvraag, openCreatedCase } from './utils';
+import type { TestData } from '../multi-function-ab-flow'; // scenario flow
+import { DEFAULT_INFRA } from './env'; // adjust path
 
 export default async function loginTask(page: Page, testData: TestData) {
-    await login(page, testData.options.INFRA);
+    const infra = (testData.options?.INFRA ?? DEFAULT_INFRA);
+
+    await login(page, infra);
+    await waitForAngular(page);
     await navigateToAlgemeneBijstandAanvraag(page);
     await openCreatedCase(page, testData.lastName);
 }

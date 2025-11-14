@@ -1,21 +1,17 @@
 // tasks/create-verzoek.spec.ts
 import { Page } from '@playwright/test';
 import { createVerzoek } from '../ApiClient';
-import { getActiveRequestFile } from '../../test-cases/scenarios/test-scenario-picker';
-
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-    options: {
-        INFRA: string;
-    };
-}
+import type { TestData } from '../multi-function-ab-flow';
+import { DEFAULT_INFRA, DEFAULT_API_TEST_REQUEST_FILE } from './env'; // adjust path
 
 const apiRequestConfigFile = (process.env.API_REQUEST_CONFIG_FILE ?? '').trim();
 
 export default async function (page: Page, testData: TestData) {
-    const infra = testData.options.INFRA;              // 🔹 from multi-function-ab-flow
-    const apiTestRequestFile = getActiveRequestFile(); // 🔹 from scenario (V1/V2/...)
+    const infra = (testData.options?.INFRA ?? DEFAULT_INFRA);
+
+    // Scenario flow can pre-fill this on testData.options.API_TEST_REQUEST_FILE.
+    const apiTestRequestFile =
+        testData.options?.API_TEST_REQUEST_FILE ?? DEFAULT_API_TEST_REQUEST_FILE;
 
     try {
         console.log('Using configuration:', {

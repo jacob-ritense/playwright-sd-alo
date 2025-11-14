@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
+import type { LoginEnvironment } from './tasks/utils'; // adjust path
 
 config({ path: '.env.properties' });
 
@@ -12,3 +13,11 @@ export const PASSWORD_DEV = (process.env.PASSWORD_DEV ?? '').trim();
 export const PASSWORD_TEST = (process.env.PASSWORD_TEST ?? '').trim();
 
 export const SECRET_KEY_TEST = (process.env.SECRET_KEY_TEST ?? process.env.SECRET_KEY ?? '').trim();
+
+// INFRA for the manual script (hardcoded in env: INFRA_TEST=alo-test)
+export const DEFAULT_INFRA: LoginEnvironment =
+    (process.env.INFRA_TEST ?? 'alo-test').trim() as LoginEnvironment;
+
+// API file for the manual script (e.g. API_TEST_REQUEST_FILE=./api-requests/...http)
+export const DEFAULT_API_TEST_REQUEST_FILE: string =
+    (process.env.API_TEST_REQUEST_FILE ?? '').trim();

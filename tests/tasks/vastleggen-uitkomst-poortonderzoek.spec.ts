@@ -19,8 +19,8 @@ export default async function uitkomstPoortonderzoekTask(page: Page, testData: T
         }
 
         const toelichtingText = faker.lorem.words(5);
-        console.log(`Filling "Toelichting" with: "${toelichtingText}"`);
-        await page.getByRole('textbox', { name: 'Toelichting' }).fill(toelichtingText);
+        console.log(`Filling "Uitkomst poortonderzoek?" with: "${toelichtingText}"`);
+        await page.getByRole('textbox', { name: 'Uitkomst poortonderzoek?' }).fill(toelichtingText);
 
         console.log('Clicking "Indienen" button...');
         await page.getByRole('button', { name: 'Indienen' }).click();

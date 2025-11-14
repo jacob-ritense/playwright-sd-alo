@@ -15,6 +15,7 @@ export const SCENARIOS = {
     A: 'V1, 1,2A,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
     B: 'V1, 1,2B,3,4A,5A,6A,7B,8B,9B,10B,11,12,13,14B,15C,16B',
     C: 'V1, 1,2A,3,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
+    // D: '...', etc.
 } as const;
 
 export type ScenarioKey = keyof typeof SCENARIOS;
@@ -36,6 +37,9 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     14: 'vaststellen-woonsituatie', // A: 1-belanghebbend-zelfstandig-Art23JA B: 2-belanghebbend-instelling-Art23NEE
     15: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)
     16: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
+
+    // 99: adhoc taak 1?
+    // 98: adhoc taak 2?
 };
 
 let activeScenario: ScenarioKey = 'A';
