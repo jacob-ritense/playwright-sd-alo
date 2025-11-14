@@ -1,8 +1,11 @@
 import { Page } from '@playwright/test';
 import OTPAuth from 'otpauth';
 import { URL_TEST, USERNAME_TEST, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
+//import {TestData} from '../multi-function-ab-flow';
 
 export async function loginEnv(page: Page) {
+
+    // TEST or ACC credentials (change later based on given environment)
   const url = URL_TEST;
   const username = USERNAME_TEST;
   const password = PASSWORD_TEST;
