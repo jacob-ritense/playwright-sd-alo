@@ -110,6 +110,7 @@ async function runTaskWithLogging(page: import('@playwright/test').Page, testDat
     });
 }
 
+// MAIN TEST FLOW
 export async function runAbFlow(page: import('@playwright/test').Page, options: FlowOptions) {
     test.setTimeout(300_000);
 
@@ -117,6 +118,7 @@ export async function runAbFlow(page: import('@playwright/test').Page, options: 
     setActiveScenario(scenarioKey);
     console.log(`Scenario selected: ${scenarioKey} -> ${SCENARIOS[scenarioKey]}`);
 
+    // Get the request file ("verzoek") to use for the test (from the ab-flow-runner)
     const apiFile = options.API_TEST_REQUEST_FILE ?? getActiveRequestFile();
 
     const testData: TestData = {
@@ -127,11 +129,11 @@ export async function runAbFlow(page: import('@playwright/test').Page, options: 
 
     log.info('Flow options', options);
 
-    // 🔹 Always run these two first
+    // 🔹 Always run these two first: Create verzoek and login.
     await runTaskWithLogging(page, testData, 'create-verzoek');
     await runTaskWithLogging(page, testData, 'login');
 
-    // 🔹 Then execute exactly in scenario order
+    // 🔹 Then execute tasks exactly in scenario order
     const steps = getActiveScenarioSteps();
     for (const step of steps) {
         const slug = step.taskId as FlowSlug;
