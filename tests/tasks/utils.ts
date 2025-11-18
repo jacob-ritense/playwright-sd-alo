@@ -227,28 +227,6 @@ async function verifyCaseDetails(page: Page) {
   }
 }
 
-export async function waitForTask(page: Page, timeout: number = 2000) {
-  console.log('Waiting for task to appear...');
-  try {
-    await page.waitForLoadState('networkidle');
-    
-    const voortgangTab = page.getByRole('tab', { name: 'Voortgang' });
-    await voortgangTab.waitFor({ state: 'visible', timeout: 10000 });
-    await voortgangTab.click();
-    
-    await page.waitForTimeout(2000);
-    
-    const algemeenTab = page.getByRole('tab', { name: 'Algemeen' });
-    await algemeenTab.waitFor({ state: 'visible', timeout: 10000 });
-    await algemeenTab.click();
-    
-    await page.waitForTimeout(timeout);
-  } catch (error) {
-    console.error('Failed while waiting for task:', error);
-    throw new Error(`Task wait failed: ${error.message}`);
-  }
-}
-
 export async function waitForSpecificTask(page: Page, taskName: string, maxAttempts: number = 10, waitTimeBetweenAttempts: number = 2000): Promise<boolean> {
   console.log(`Waiting for "${taskName}" task to appear...`);
   let attempts = 0;
@@ -258,13 +236,11 @@ export async function waitForSpecificTask(page: Page, taskName: string, maxAttem
       const algemeenTab = page.getByRole('tab', { name: 'Algemeen' });
       if (await algemeenTab.isVisible()) {
         await algemeenTab.click();
-        await page.waitForLoadState('networkidle', { timeout: 5000 });
+        await page.waitForLoadState('networkidle', { timeout: 10000 });
       } else {
         const voortgangTab = page.getByRole('tab', { name: 'Voortgang' });
-        if (await voortgangTab.isVisible()){
-          await voortgangTab.click();
-          await page.waitForLoadState('networkidle', { timeout: 5000 });
-        }
+          await page.reload();
+          await page.waitForLoadState('networkidle', { timeout: 10000 });
       }
       
       const taskElement = page.getByText(taskName, { exact: true });

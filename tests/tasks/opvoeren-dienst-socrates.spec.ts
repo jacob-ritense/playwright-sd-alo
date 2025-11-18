@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { waitForTask, waitForSpecificTask, completeSpecificTask } from './utils';
+import { waitForSpecificTask, completeSpecificTask } from './utils';
 
 interface TestData {
   lastName: string;
@@ -7,8 +7,6 @@ interface TestData {
 }
 
 export default async function opvoerenDienstSocratesTask(page: Page, testData: TestData) {
-  await waitForTask(page, 2000);
-  
   const taskName = "Opvoeren dienst in Socrates";
   const taskFound = await waitForSpecificTask(page, taskName);
   if (!taskFound) {

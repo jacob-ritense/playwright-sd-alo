@@ -13,8 +13,8 @@ export type RequestVariant = keyof typeof REQUEST_FILES; // 'V1' | 'V2' | ...
 export const SCENARIOS = {
     // first token = V*, rest = steps
     A: 'V1, 1,2A,4A,5A,6A,7A,8A,9A,10A, 11,12,13,14A,15A,16A',
-    B: 'V1, 1,2B,3,4A,5A,6A,7B,8B,9B,10B,11,12,13,14B,15C,16B',
-    C: 'V1, 1,2A,3,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
+    B: 'V1, 1,2B,3,4A,5B,5A,6A,7C,8C,9B,10B,11,12,13,14B,15C,16B',
+    C: 'V1, 1,2A,3,4A,5A,6A,7B,8A,9A,10A,11,12,13,14A,15A,16C',
     // D: '...', etc.
 } as const;
 
@@ -43,9 +43,10 @@ const TASKS_BY_NUMBER: Record<number, string> = {
 };
 
 let activeScenario: ScenarioKey = 'A';
-let activeMap = new Map<string, Option>();
+let activeMap = new Map<string, Option>(); // you can later delete this if unused
 let activeSteps: Array<{ num: number; taskId: string; option?: Option }> = [];
 let activeVariant: RequestVariant | null = null;
+let stepCursor = 0;
 
 function normalizeItems(spec: string): string[] {
     return spec.split(',').map(s => s.trim()).filter(Boolean);
@@ -97,6 +98,8 @@ export function setActiveScenario(key: ScenarioKey) {
     activeMap = parsed.options;
     activeSteps = parsed.steps;
     activeVariant = parsed.variant;
+    stepCursor = 0;
+
     console.log(`Active scenario set to ${activeScenario}: ${spec}`);
 }
 
@@ -107,7 +110,18 @@ export function getOptionForTask(taskIdOrNumber: string | number, fallback: Opti
         : taskIdOrNumber;
 
     if (!taskId) throw new Error(`Unknown task "${String(taskIdOrNumber)}"`);
-    return activeMap.get(taskId) ?? fallback;
+
+    // Look for the next scenario step for this task starting at the cursor.
+    for (let i = stepCursor; i < activeSteps.length; i++) {
+        const step = activeSteps[i];
+        if (step.taskId === taskId) {
+            stepCursor = i + 1; // consume this occurrence
+            return step.option ?? fallback;
+        }
+    }
+
+    // No remaining steps for this task → default fallback behavior
+    return fallback;
 }
 
 export function getActiveScenarioSteps() {
