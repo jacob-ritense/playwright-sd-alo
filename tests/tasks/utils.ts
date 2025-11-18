@@ -234,15 +234,10 @@ export async function waitForSpecificTask(page: Page, taskName: string, maxAttem
   while (attempts < maxAttempts) {
     try {
       const algemeenTab = page.getByRole('tab', { name: 'Algemeen' });
-      if (await algemeenTab.isVisible()) {
-        await algemeenTab.click();
-        await page.waitForLoadState('networkidle', { timeout: 10000 });
-      } else {
         const voortgangTab = page.getByRole('tab', { name: 'Voortgang' });
-          await page.reload();
-          await page.waitForLoadState('networkidle', { timeout: 10000 });
-      }
-      
+        await page.reload();
+        await page.waitForLoadState('networkidle', { timeout: 10000 });
+
       const taskElement = page.getByText(taskName, { exact: true });
       const isVisible = await taskElement.isVisible();
 
@@ -272,67 +267,6 @@ export async function waitForSpecificTask(page: Page, taskName: string, maxAttem
   return false;
 }
 
-export async function completeSpecificTask(page: Page, taskName: string) {
-  console.log(`Starting to complete specific task: "${taskName}"...`);
-  try {
-    const algemeenTab = page.getByRole('tab', { name: 'Algemeen' });
-    if (await algemeenTab.isVisible()) {
-      await algemeenTab.click();
-      await page.waitForLoadState('networkidle', { timeout: 5000 });
-    }
-
-    const taskElement = page.getByText(taskName, { exact: true });
-    await taskElement.waitFor({ state: 'visible', timeout: 20000 });
-    console.log(`Clicking task: "${taskName}"`);
-    await taskElement.click();
-    
-    await page.waitForLoadState('networkidle', { timeout: 15000 });
-    await page.waitForTimeout(1000);
-
-    await fillFormInputs(page);
-    await completeTask(page);
-    
-    console.log(`Attempted to complete specific task "${taskName}"`);
-  } catch (error) {
-    console.error(`Failed during completion of specific task "${taskName}":`, error.message);
-    await page.screenshot({ path: `complete-specific-task-${taskName.replace(/\\s+/g, '_')}-error.png`, fullPage: true });
-    throw new Error(`Failed to complete specific task "${taskName}": ${error.message}`);
-  }
-}
-
-export async function fillFormInputs(page: Page) {
-  const inputs = await page.getByRole('textbox').all();
-  for (const input of inputs) {
-    if (!await input.inputValue()) {
-      const placeholder = await input.getAttribute('placeholder') || '';
-      const label = await input.getAttribute('aria-label') || placeholder;
-      const value = generateInputValue(label);
-      await input.fill(value);
-      console.log(`Filled input "${label}" with value: ${value}`);
-    }
-  }
-
-  const checkboxes = await page.getByRole('checkbox').all();
-  for (const checkbox of checkboxes) {
-    if (!await checkbox.isChecked()) {
-      await checkbox.check();
-      console.log('Checked required checkbox');
-    }
-  }
-
-  const radioGroups = await page.getByRole('radiogroup').all();
-  for (const group of radioGroups) {
-    const radios = await group.getByRole('radio').all();
-    if (radios.length > 0) {
-      const firstRadio = radios[0];
-      if (!await firstRadio.isChecked()) {
-        await firstRadio.check();
-        console.log('Selected first radio button option');
-      }
-    }
-  }
-}
-
 function generateInputValue(label: string): string {
   const lowercaseLabel = label.toLowerCase();
   if (lowercaseLabel.includes('email')) {
@@ -346,20 +280,4 @@ function generateInputValue(label: string): string {
   } else {
     return faker.lorem.words(3);
   }
-}
-
-export async function completeTask(page: Page) {
-  const buttonTexts = ['Bevestigen', 'Doorgaan', 'Opslaan', 'Afronden', 'Volgende', 'De dienst is opgevoerd in Socrates'];
-  
-  for (const text of buttonTexts) {
-    const button = page.getByRole('button', { name: text });
-    if (await button.isVisible()) {
-      await button.click();
-      await page.waitForLoadState('networkidle');
-      console.log(`Clicked ${text} button to complete task`);
-      return;
-    }
-  }
-  
-  throw new Error('No completion button found for task');
 }
