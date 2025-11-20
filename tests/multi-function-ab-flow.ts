@@ -112,7 +112,7 @@ async function runTaskWithLogging(page: import('@playwright/test').Page, testDat
 
 // MAIN TEST FLOW
 export async function runAbFlow(page: import('@playwright/test').Page, options: FlowOptions) {
-    test.setTimeout(300_000);
+    test.setTimeout(600_000);
 
     const scenarioKey = options.Scenario;
     setActiveScenario(scenarioKey);

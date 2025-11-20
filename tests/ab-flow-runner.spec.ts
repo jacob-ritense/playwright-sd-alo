@@ -4,8 +4,8 @@ import { runAbFlow, type FlowOptions } from './multi-function-ab-flow';
 // Tests runner
 // Fill in INFRA (Environment), Scenario (from test-scenario-picker) and the LastTask if wanted.
 const scenarios: FlowOptions[] = [
-    { INFRA: 'alo-test', Scenario: 'A'},
-    { INFRA: 'alo-test', Scenario: 'B', lastTask: 'vaststellen-woonsituatie' },
+    { INFRA: 'alo-test', Scenario: 'A' },
+    { INFRA: 'alo-test', Scenario: 'B' },
     { INFRA: 'alo-test', Scenario: 'C', lastTask: 'vaststellen-persoon-aanvrager' },
 ];
 
