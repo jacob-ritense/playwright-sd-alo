@@ -40,7 +40,7 @@ const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
         await page.getByRole('textbox', { name: 'Straatnaam' }).fill('Teststraat');
 
         console.log('Filling "Huisnummer" with: "1"');
-        await page.getByRole('textbox', { name: 'Huisnummer ' }).fill('1');
+        await page.getByRole('textbox', { name: /^Huisnummer$/ }).fill('1');
 
         console.log('Filling "Huisletter" with: "a"');
         await page.getByRole('textbox', { name: 'Huisletter' }).fill('a');
