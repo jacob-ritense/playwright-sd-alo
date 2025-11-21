@@ -1,8 +1,8 @@
 // tasks/create-verzoek.spec.ts
 import { Page } from '@playwright/test';
-import { createVerzoek } from '../ApiClient';
+import { createVerzoek } from '../helper-functions/ApiClient';
 import type { TestData } from '../multi-function-ab-flow';
-import { DEFAULT_INFRA, DEFAULT_API_TEST_REQUEST_FILE } from './env'; // adjust path
+import { DEFAULT_INFRA, DEFAULT_API_TEST_REQUEST_FILE } from '../helper-functions/env'; // adjust path
 
 const apiRequestConfigFile = (process.env.API_REQUEST_CONFIG_FILE ?? '').trim();
 

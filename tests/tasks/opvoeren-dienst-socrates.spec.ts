@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { waitForSpecificTask  } from './utils';
+import { waitForSpecificTask  } from '../helper-functions/utils';
 
 interface TestData {
   lastName: string;

@@ -1,6 +1,6 @@
 // login-dev.ts
 import { Page } from '@playwright/test';
-import { URL_DEV, USERNAME_DEV, PASSWORD_DEV } from './env';
+import { URL_DEV, USERNAME_DEV, PASSWORD_DEV } from '../helper-functions/env';
 
 export async function loginDev(page: Page) {
     const url = URL_DEV;

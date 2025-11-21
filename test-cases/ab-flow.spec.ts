@@ -3,24 +3,24 @@
 import { test, type Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
-import createVerzoekTask from './tasks/create-verzoek.spec';
-import loginTask from './tasks/login-navigate-case.spec';
-import opvoerenDienstSocratesTask from './tasks/opvoeren-dienst-socrates.spec';
-import overwegenInzetHandhavingTask from './tasks/overwegen-inzet-handhaving.spec';
-import uitkomstPoortonderzoekTask from './tasks/vastleggen-uitkomst-poortonderzoek.spec';
-import overwegenUitzettenInfoverzoekTask from './tasks/overwegen-uitzetten-infoverzoek.spec';
-import vaststellenPersoonAanvragerTask from './tasks/vaststellen-persoon-aanvrager.spec';
-import vaststellenPersoonPartnerTask from './tasks/vaststellen-persoon-partner.spec';
-import vaststellenVerblijfadresAanvragerTask from './tasks/vaststellen-verblijfadres-aanvrager.spec';
-import vaststellenVerblijfadresPartnerTask from './tasks/vaststellen-verblijfadres-partner.spec';
-import vaststellenVerblijfstitelAanvragerTask from './tasks/vaststellen-verblijfstitel-aanvrager.spec';
-import vaststellenVerblijfstitelPartnerTask from './tasks/vaststellen-verblijfstitel-partner.spec';
-import vaststellenAanvangsdatumTask from './tasks/vaststellen-aanvangsdatum.spec';
-import vaststellenIngangsdatumTask from './tasks/vaststellen-ingangsdatum.spec';
-import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituatie.spec';
-import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
-import vaststellenLeefsituatieTask from './tasks/vaststellen-leefsituatie.spec';
-import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
+import createVerzoekTask from '../tests/tasks/create-verzoek.spec';
+import loginTask from '../tests/tasks/login-navigate-case.spec';
+import opvoerenDienstSocratesTask from '../tests/tasks/opvoeren-dienst-socrates.spec';
+import overwegenInzetHandhavingTask from '../tests/tasks/overwegen-inzet-handhaving.spec';
+import uitkomstPoortonderzoekTask from '../tests/tasks/vastleggen-uitkomst-poortonderzoek.spec';
+import overwegenUitzettenInfoverzoekTask from '../tests/tasks/overwegen-uitzetten-infoverzoek.spec';
+import vaststellenPersoonAanvragerTask from '../tests/tasks/vaststellen-persoon-aanvrager.spec';
+import vaststellenPersoonPartnerTask from '../tests/tasks/vaststellen-persoon-partner.spec';
+import vaststellenVerblijfadresAanvragerTask from '../tests/tasks/vaststellen-verblijfadres-aanvrager.spec';
+import vaststellenVerblijfadresPartnerTask from '../tests/tasks/vaststellen-verblijfadres-partner.spec';
+import vaststellenVerblijfstitelAanvragerTask from '../tests/tasks/vaststellen-verblijfstitel-aanvrager.spec';
+import vaststellenVerblijfstitelPartnerTask from '../tests/tasks/vaststellen-verblijfstitel-partner.spec';
+import vaststellenAanvangsdatumTask from '../tests/tasks/vaststellen-aanvangsdatum.spec';
+import vaststellenIngangsdatumTask from '../tests/tasks/vaststellen-ingangsdatum.spec';
+import vaststellenLeefWoonsituatieTask from '../tests/tasks/vaststellen-leef-woonsituatie.spec';
+import vaststellenWoonsituatieTask from '../tests/tasks/vaststellen-woonsituatie.spec';
+import vaststellenLeefsituatieTask from '../tests/tasks/vaststellen-leefsituatie.spec';
+import vaststellenBesluitTask from '../tests/tasks/vaststellen-besluit.spec';
 
 type TaskFn = (page: Page, testData: TestData) => Promise<void>;
 

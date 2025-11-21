@@ -1,13 +1,13 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { loginEnv } from './login-env';
-import { loginDev } from './login-dev';
+import { loginEnv } from '../tasks/login-env';
+import { loginDev } from '../tasks/login-dev';
 
 export type LoginEnvironment = 'alo-dev' | 'alo-test' | 'alo-acc';
 
 export async function login(page: Page, environment: LoginEnvironment) {
     if (environment === 'alo-test' || environment === 'alo-acc') {
-        await loginEnv(page);
+        await loginEnv(page, environment);
     } else {
         await loginDev(page);
     }
@@ -38,6 +38,7 @@ export async function waitForAngular(page: Page) {
   }
 }
 
+// Aanpassen per process
 export async function navigateToAlgemeneBijstandAanvraag(page: Page) {
   console.log('Navigating to Algemene bijstand section...');
   try {

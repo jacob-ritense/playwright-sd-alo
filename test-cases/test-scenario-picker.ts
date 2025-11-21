@@ -38,8 +38,8 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     15: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)
     16: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
 
-    // 99: adhoc taak 1?
-    // 98: adhoc taak 2?
+    //99A: adhoc taak 1?
+    //99B: adhoc taak 2?
 };
 
 let activeScenario: ScenarioKey = 'A';

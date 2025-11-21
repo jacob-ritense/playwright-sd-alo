@@ -2,14 +2,14 @@
 // multi-function-ab-flow.ts
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import type { LoginEnvironment } from './tasks/utils';
+import type { LoginEnvironment } from './helper-functions/utils';
 import {
     setActiveScenario,
     getActiveScenarioSteps,
     getActiveRequestFile,
     SCENARIOS,
     type ScenarioKey,
-} from '../test-cases/scenarios/test-scenario-picker';
+} from '../test-cases/test-scenario-picker';
 
 import createVerzoekTask from './tasks/create-verzoek.spec';
 import loginTask from './tasks/login-navigate-case.spec';
@@ -52,7 +52,7 @@ export type FlowSlug =
 
 export type FlowOptions = {
     API_TEST_REQUEST_FILE?: string;
-    INFRA: LoginEnvironment;   // <- strongly typed now
+    INFRA: LoginEnvironment;
     Scenario: ScenarioKey;
     lastTask?: FlowSlug;
 };
