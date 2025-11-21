@@ -1,28 +1,17 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { loginTest } from './login-test';
-import { URL_DEV, USERNAME_LOCAL, PASSWORD_LOCAL, URL_TEST, USERNAME_TEST, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
+import { loginEnv } from '../tasks/login-env';
+import { loginDev } from '../tasks/login-dev';
 
-export { URL_DEV, URL_TEST, USERNAME_LOCAL, USERNAME_TEST, PASSWORD_LOCAL, PASSWORD_TEST, SECRET_KEY_TEST } from './env';
+export type LoginEnvironment = 'alo-dev' | 'alo-test' | 'alo-acc';
 
-export type FlowEnvironment = 'dev' | 'test' | 'acc';
-export type LoginEnvironment = 'local' | 'test';
-
-export async function login(page: Page, environment?: LoginEnvironment) {
-  const strategy = environment ?? loginStrategyByEnvironment[resolveFlowEnvironment()];
-  if (strategy === 'test') {
-    await loginTest(page);
-    return;
-  }
-
-  await loginLocalPortal(page);
+export async function login(page: Page, environment: LoginEnvironment) {
+    if (environment === 'alo-test' || environment === 'alo-acc') {
+        await loginEnv(page, environment);
+    } else {
+        await loginDev(page);
+    }
 }
-
-const loginStrategyByEnvironment: Record<FlowEnvironment, LoginEnvironment> = {
-  dev: 'local',
-  test: 'test',
-  acc: 'test', // Placeholder until ACC-specific login is needed
-};
 
 export async function waitForAngular(page: Page) {
   console.log('Waiting for Angular to initialize...');
@@ -49,47 +38,7 @@ export async function waitForAngular(page: Page) {
   }
 }
 
-export async function loginLocalPortal(page: Page) {
-  console.log('Attempting local login...');
-  const loginPageUrl = URL_DEV;
-  if (!loginPageUrl) {
-    throw new Error('URL_DEV environment variable is not set. Please configure it in .env.properties.');
-  }
-  try {
-    await page.goto(loginPageUrl);
-    console.log(`Navigated to ${loginPageUrl}`);
-
-    if (!USERNAME_LOCAL || !PASSWORD_LOCAL) {
-      throw new Error('Missing local login credentials');
-    }
-
-    await page.waitForSelector('input[type="text"]', { state: 'visible', timeout: 10000 });
-    await page.waitForSelector('input[type="password"]', { state: 'visible', timeout: 10000 });
-
-    await page.getByLabel('Username or email').fill(USERNAME_LOCAL);
-    await page.getByLabel('Password').fill(PASSWORD_LOCAL);
-
-    await page.getByRole('button', {name: 'Sign In'}).click();
-
-    await page.waitForURL((url) => url.toString() !== loginPageUrl, { timeout: 15000 });
-    await page.waitForLoadState('networkidle', {timeout: 20000});
-
-    const loginErrorVisible = await page.getByText(/invalid credentials|login failed/i).isVisible({timeout: 2000});
-    if (loginErrorVisible) {
-      await page.screenshot({ path: 'login-credentials-error.png', fullPage: true });
-      throw new Error('Login failed - explicit error message displayed');
-    }
-    console.log('Local login appears successful.');
-
-  } catch (error) {
-    console.error('Login failed:', error.message);
-    if (!error.message.includes('URL did not change') && !error.message.includes('explicit error message')) {
-      await page.screenshot({ path: 'login-generic-error.png', fullPage: true });
-    }
-    throw new Error(`Login failed: ${error.message}`);
-  }
-}
-
+// Aanpassen per process
 export async function navigateToAlgemeneBijstandAanvraag(page: Page) {
   console.log('Navigating to Algemene bijstand section...');
   try {
@@ -154,7 +103,7 @@ export async function openCreatedCase(page: Page, lastName: string) {
   try {
     await page.waitForSelector('table', { state: 'visible', timeout: 15000 });
 
-    const maxAttempts = 5;
+    const maxAttempts = 10;
     let attempts = 0;
     let caseFound = false;
 
@@ -279,28 +228,6 @@ async function verifyCaseDetails(page: Page) {
   }
 }
 
-export async function waitForTask(page: Page, timeout: number = 2000) {
-  console.log('Waiting for task to appear...');
-  try {
-    await page.waitForLoadState('networkidle');
-    
-    const voortgangTab = page.getByRole('tab', { name: 'Voortgang' });
-    await voortgangTab.waitFor({ state: 'visible', timeout: 10000 });
-    await voortgangTab.click();
-    
-    await page.waitForTimeout(2000);
-    
-    const algemeenTab = page.getByRole('tab', { name: 'Algemeen' });
-    await algemeenTab.waitFor({ state: 'visible', timeout: 10000 });
-    await algemeenTab.click();
-    
-    await page.waitForTimeout(timeout);
-  } catch (error) {
-    console.error('Failed while waiting for task:', error);
-    throw new Error(`Task wait failed: ${error.message}`);
-  }
-}
-
 export async function waitForSpecificTask(page: Page, taskName: string, maxAttempts: number = 10, waitTimeBetweenAttempts: number = 2000): Promise<boolean> {
   console.log(`Waiting for "${taskName}" task to appear...`);
   let attempts = 0;
@@ -308,17 +235,10 @@ export async function waitForSpecificTask(page: Page, taskName: string, maxAttem
   while (attempts < maxAttempts) {
     try {
       const algemeenTab = page.getByRole('tab', { name: 'Algemeen' });
-      if (await algemeenTab.isVisible()) {
-        await algemeenTab.click();
-        await page.waitForLoadState('networkidle', { timeout: 5000 });
-      } else {
         const voortgangTab = page.getByRole('tab', { name: 'Voortgang' });
-        if (await voortgangTab.isVisible()){
-          await voortgangTab.click();
-          await page.waitForLoadState('networkidle', { timeout: 5000 });
-        }
-      }
-      
+        await page.reload();
+        await page.waitForLoadState('networkidle', { timeout: 10000 });
+
       const taskElement = page.getByText(taskName, { exact: true });
       const isVisible = await taskElement.isVisible();
 
@@ -348,67 +268,6 @@ export async function waitForSpecificTask(page: Page, taskName: string, maxAttem
   return false;
 }
 
-export async function completeSpecificTask(page: Page, taskName: string) {
-  console.log(`Starting to complete specific task: "${taskName}"...`);
-  try {
-    const algemeenTab = page.getByRole('tab', { name: 'Algemeen' });
-    if (await algemeenTab.isVisible()) {
-      await algemeenTab.click();
-      await page.waitForLoadState('networkidle', { timeout: 5000 });
-    }
-
-    const taskElement = page.getByText(taskName, { exact: true });
-    await taskElement.waitFor({ state: 'visible', timeout: 20000 });
-    console.log(`Clicking task: "${taskName}"`);
-    await taskElement.click();
-    
-    await page.waitForLoadState('networkidle', { timeout: 15000 });
-    await page.waitForTimeout(1000);
-
-    await fillFormInputs(page);
-    await completeTask(page);
-    
-    console.log(`Attempted to complete specific task "${taskName}"`);
-  } catch (error) {
-    console.error(`Failed during completion of specific task "${taskName}":`, error.message);
-    await page.screenshot({ path: `complete-specific-task-${taskName.replace(/\\s+/g, '_')}-error.png`, fullPage: true });
-    throw new Error(`Failed to complete specific task "${taskName}": ${error.message}`);
-  }
-}
-
-export async function fillFormInputs(page: Page) {
-  const inputs = await page.getByRole('textbox').all();
-  for (const input of inputs) {
-    if (!await input.inputValue()) {
-      const placeholder = await input.getAttribute('placeholder') || '';
-      const label = await input.getAttribute('aria-label') || placeholder;
-      const value = generateInputValue(label);
-      await input.fill(value);
-      console.log(`Filled input "${label}" with value: ${value}`);
-    }
-  }
-
-  const checkboxes = await page.getByRole('checkbox').all();
-  for (const checkbox of checkboxes) {
-    if (!await checkbox.isChecked()) {
-      await checkbox.check();
-      console.log('Checked required checkbox');
-    }
-  }
-
-  const radioGroups = await page.getByRole('radiogroup').all();
-  for (const group of radioGroups) {
-    const radios = await group.getByRole('radio').all();
-    if (radios.length > 0) {
-      const firstRadio = radios[0];
-      if (!await firstRadio.isChecked()) {
-        await firstRadio.check();
-        console.log('Selected first radio button option');
-      }
-    }
-  }
-}
-
 function generateInputValue(label: string): string {
   const lowercaseLabel = label.toLowerCase();
   if (lowercaseLabel.includes('email')) {
@@ -422,28 +281,4 @@ function generateInputValue(label: string): string {
   } else {
     return faker.lorem.words(3);
   }
-}
-
-export async function completeTask(page: Page) {
-  const buttonTexts = ['Bevestigen', 'Doorgaan', 'Opslaan', 'Afronden', 'Volgende', 'De dienst is opgevoerd in Socrates'];
-  
-  for (const text of buttonTexts) {
-    const button = page.getByRole('button', { name: text });
-    if (await button.isVisible()) {
-      await button.click();
-      await page.waitForLoadState('networkidle');
-      console.log(`Clicked ${text} button to complete task`);
-      return;
-    }
-  }
-  
-  throw new Error('No completion button found for task');
-} 
-
-export function resolveFlowEnvironment(): FlowEnvironment {
-  const env = (process.env.AB_FLOW_ENV_CURRENT ?? process.env.AB_FLOW_ENV ?? 'dev').toLowerCase();
-  if (env === 'test' || env === 'acc') {
-    return env;
-  }
-  return 'dev';
 }

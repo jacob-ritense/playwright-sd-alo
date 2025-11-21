@@ -1,7 +1,8 @@
 // tasks/vaststellen-persoon-partner.ts
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { getOptionForTask, type Option } from '../../test-cases/scenarios/test-scenario-picker';
+import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
+import {waitForSpecificTask} from "../helper-functions/utils";
 
 interface TestData {
     lastName: string;
@@ -27,16 +28,11 @@ export default async function(page: Page, testData: TestData) {
     try {
         console.log(`Looking for task: "${taskName}"`);
         const taskElement = page.getByText(taskName, { exact: true });
-        try {
-            await taskElement.waitFor({ state: 'visible', timeout: 30000 });
-        } catch (timeoutError) {
-            console.warn(`Task "${taskName}" not visible within timeout, refreshing page and retrying...`);
-            await page.reload();
-            await page.waitForLoadState('networkidle', { timeout: 15000 });
-            await page.waitForTimeout(2000);
-            await page.getByText(taskName, { exact: true }).waitFor({ state: 'visible', timeout: 20000 });
+        const taskFound = await waitForSpecificTask(page, taskName);
+        if (!taskFound) {
+            throw new Error(`Task "${taskName}" did not appear after multiple refresh attempts`);
         }
-        console.log(`Task "${taskName}" is visible.`);
+
         await taskElement.click();
         console.log(`Clicked task: "${taskName}".`);
         await page.waitForLoadState('networkidle', { timeout: 15000 });

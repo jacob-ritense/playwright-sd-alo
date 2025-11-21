@@ -1251,7 +1251,7 @@ Content-Type: application/json
                                 "achternaamKind": "Rol",
                                 "voorletterKind": "L",
                                 "voorvoegselKind": "van 't",
-                                "geboortedatumKind": "2025-01-02",
+                                "geboortedatumKind": "2000-01-02",
                                 "krijgtKinderbijslag": "NEE"
                             },
                             {
@@ -1260,7 +1260,7 @@ Content-Type: application/json
                                 "achternaamKind": "Speciaal",
                                 "voorletterKind": "S",
                                 "voorvoegselKind": "",
-                                "geboortedatumKind": "2025-01-03",
+                                "geboortedatumKind": "200-01-03",
                                 "krijgtKinderbijslag": "NEE"
                             },
                             {
@@ -1278,7 +1278,7 @@ Content-Type: application/json
                                 "achternaamKind": "Calzone",
                                 "voorletterKind": "P",
                                 "voorvoegselKind": "",
-                                "geboortedatumKind": "2025-01-08",
+                                "geboortedatumKind": "2000-01-08",
                                 "krijgtKinderbijslag": "JA"
                             },
                             {
@@ -1287,7 +1287,7 @@ Content-Type: application/json
                                 "achternaamKind": "Vongole",
                                 "voorletterKind": "P",
                                 "voorvoegselKind": "",
-                                "geboortedatumKind": "2025-01-02",
+                                "geboortedatumKind": "2000-01-02",
                                 "krijgtKinderbijslag": "JA"
                             },
                             {
@@ -1296,7 +1296,7 @@ Content-Type: application/json
                                 "achternaamKind": "Met",
                                 "voorletterKind": "P",
                                 "voorvoegselKind": "",
-                                "geboortedatumKind": "2024-12-31",
+                                "geboortedatumKind": "2000-12-31",
                                 "krijgtKinderbijslag": "JA"
                             },
                             {
@@ -1305,7 +1305,7 @@ Content-Type: application/json
                                 "achternaamKind": "vlammetjes",
                                 "voorletterKind": "P",
                                 "voorvoegselKind": "",
-                                "geboortedatumKind": "1850-01-10",
+                                "geboortedatumKind": "1800-01-10",
                                 "krijgtKinderbijslag": "NEE"
                             },
                             {
@@ -1314,12 +1314,12 @@ Content-Type: application/json
                                 "achternaamKind": "Americano",
                                 "voorletterKind": "P",
                                 "voorvoegselKind": "",
-                                "geboortedatumKind": "2025-01-09",
+                                "geboortedatumKind": "2000-01-09",
                                 "krijgtKinderbijslag": "JA"
                             }
                         ]
                     },
-                    "thuiswonendeKinderen": "JA"
+                    "thuiswonendeKinderen": "NEE"
                 },
                 "alo-aanvullende-gegevens": {
                     "lieverPost": false,

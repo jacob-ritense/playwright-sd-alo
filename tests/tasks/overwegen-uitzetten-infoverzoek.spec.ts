@@ -1,6 +1,6 @@
 // tasks/overwegen-uitzetten-infoverzoek.ts
 import { Page } from '@playwright/test';
-import { getOptionForTask, type Option } from '../../test-cases/scenarios/test-scenario-picker';
+import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
 
 interface TestData {
     lastName: string;

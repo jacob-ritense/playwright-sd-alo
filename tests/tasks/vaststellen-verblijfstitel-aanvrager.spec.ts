@@ -1,7 +1,7 @@
 // tasks/vaststellen-verblijfstitel-aanvrager.ts
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { getOptionForTask, type Option } from '../../test-cases/scenarios/test-scenario-picker';
+import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
 
 interface TestData {
     lastName: string;
