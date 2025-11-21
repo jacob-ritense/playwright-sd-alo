@@ -12,10 +12,8 @@ export type RequestVariant = keyof typeof REQUEST_FILES; // 'V1' | 'V2' | ...
 
 export const SCENARIOS = {
     // first token = V*, rest = steps
-    A: 'V1, 1,2A,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
-    B: 'V1, 1,2B,3,4A,5A,6A,7B,8B,9B,10B,11,12,13,14B,15C,16B',
-    C: 'V1, 1,2A,3,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16A',
-    // D: '...', etc.
+    Default: 'V1, 1,2A,3,4A,5A,6A,7A,8A,9A,10A,11,12,13,14A,15A,16D',
+    // Maak hier je eigen scenario: A: '...', etc.
 } as const;
 
 export type ScenarioKey = keyof typeof SCENARIOS;
