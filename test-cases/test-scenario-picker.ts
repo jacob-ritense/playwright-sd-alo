@@ -1,5 +1,6 @@
 // test-scenario-picker.ts
-export type Option = 'A' | 'B' | 'C' | 'D' | 'E';
+export type Option = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
+                         | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O';
 
 // Map variant -> HTTP file
 export const REQUEST_FILES = {
@@ -14,7 +15,7 @@ export const SCENARIOS = {
     // first token = V*, rest = steps
     A: 'V1, 1,2A,4A,5A,6A,7A,8A,9A,10A,12,14A,16A',
     B: 'V1, 1,2B,3,4A,5B,5A,6A,7C,8C,9A,10B,12,14B,16B',
-    C: 'V1, 1,2A,3,4A,5A,6A,7C,8A,9B,10B,12,14A,16C',
+    C: 'V1, 1,2A,3,4A,5A, 99A, 6A,7C,8A,9B,10B,12,14A,16C',
     // D: '...', etc.
 } as const;
 
@@ -38,8 +39,22 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     15: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)
     16: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
 
-    //99A: adhoc taak 1?
-    //99B: adhoc taak 2?
+    99: 'adhoc-task', // Ad hoc tasks
+    // A = Aanvraag buiten behandeling
+    // B = Aanvraag intrekken
+    // C = Behandeling aanvraag opnieuw
+    // D = Brongegevens verversen
+    // E = Contactgegevens wijzigen
+    // F = Informatieverzoek annuleren
+    // G = Informatieverzoek deadline
+    // H = Informatieverzoek handmatige
+    // I = Opnieuw informatieverzoek
+    // J = Opnieuw vaststellen leef en
+    // K = Opnieuw vaststellen verblijfadres aanvrager
+    // L = Opnieuw vaststellen verblijfadres partner
+    // M = Opnieuw vaststellen verblijfstitel aanvrager
+    // N = Opnieuw vaststellen verblijfstitel partner
+    // O = Opnieuw vaststellen ingangsdatum
 };
 
 let activeScenario: ScenarioKey = 'A';

@@ -29,6 +29,7 @@ import vaststellenLeefWoonsituatieTask from './tasks/vaststellen-leef-woonsituat
 import vaststellenWoonsituatieTask from './tasks/vaststellen-woonsituatie.spec';
 import vaststellenLeefsituatieTask from './tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from './tasks/vaststellen-besluit.spec';
+import adhocTask from './tasks/adhoc-tasks.spec';
 
 export type FlowSlug =
     | 'create-verzoek'
@@ -48,7 +49,8 @@ export type FlowSlug =
     | 'vaststellen-woonsituatie'
     | 'vastleggen-uitkomst-poortonderzoek'
     | 'vaststellen-leefsituatie'
-    | 'vaststellen-besluit';
+    | 'vaststellen-besluit'
+    | 'adhoc-task';
 
 export type FlowOptions = {
     API_TEST_REQUEST_FILE?: string;
@@ -82,6 +84,7 @@ const tasks = [
     {name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask},
     {name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask},
     {name: 'vaststellen-besluit', fn: vaststellenBesluitTask},
+    {name: 'adhoc-task', fn: adhocTask},
 ] as const;
 
 const getTaskBySlug = (slug: (typeof tasks)[number]['name']) => tasks.find(t => t.name === slug)!;
