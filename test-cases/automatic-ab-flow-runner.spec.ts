@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { runAbFlow, type FlowOptions } from '../tests/automatic-ab-flow';
+import { runAbFlow, type FlowOptions } from './automatic-ab-flow';
 
 // Tests runner
 // Fill in INFRA (Environment), Scenario (from test-scenario-picker) and the LastTask if wanted.

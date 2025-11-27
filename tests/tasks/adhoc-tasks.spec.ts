@@ -1,7 +1,7 @@
 // tasks/adhoc-task.spec.ts
 import { Page } from '@playwright/test';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
-import type { TestData } from '../automatic-ab-flow';
+import type { TestData } from '../../test-cases/automatic-ab-flow';
 
 // follow-up tasks
 import vastleggenIntrekkingTask from './vastleggen-intrekking.spec';

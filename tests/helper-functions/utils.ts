@@ -286,4 +286,24 @@ export async function openTask(page, taskName) {
 }
 
 
+export async function claimCase(page) {
+    console.log(`→ claimCase()`);
 
+    try {
+        await page.waitForLoadState('networkidle', { timeout: 10000 });
+
+        const overflowBtn = page.getByRole('button', { name: 'Overflow' });
+        await overflowBtn.waitFor({ state: 'visible', timeout: 5000 });
+        await overflowBtn.click();
+
+        const claimItem = page.getByRole('menuitem', { name: 'Claimen' });
+        await claimItem.waitFor({ state: 'visible', timeout: 5000 });
+        await claimItem.click();
+
+        await page.waitForTimeout(2000);
+
+        console.log(`✓ Case claimed`);
+    } catch (err) {
+        console.error(`✗ Failed to claim case:`, err);
+    }
+}

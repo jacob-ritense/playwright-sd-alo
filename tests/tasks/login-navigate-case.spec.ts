@@ -1,8 +1,9 @@
 // tasks/login-navigate-case.spec.ts
 import { Page } from '@playwright/test';
 import { login, waitForAngular, navigateToAlgemeneBijstandAanvraag, openCreatedCase } from '../helper-functions/utils';
-import type { TestData } from '../automatic-ab-flow'; // scenario flow
+import type { TestData } from '../../test-cases/automatic-ab-flow'; // scenario flow
 import { DEFAULT_INFRA } from '../helper-functions/env'; // adjust path
+import { claimCase } from '../helper-functions/utils';
 
 export default async function loginTask(page: Page, testData: TestData) {
     const infra = (testData.options?.INFRA ?? DEFAULT_INFRA);
@@ -11,4 +12,10 @@ export default async function loginTask(page: Page, testData: TestData) {
     await waitForAngular(page);
     await navigateToAlgemeneBijstandAanvraag(page);
     await openCreatedCase(page, testData.lastName);
+
+    try {
+        await claimCase(page);
+    } catch (err) {
+        console.warn(`Could not claim case, continuing without claiming.`, err);
+    }
 }
