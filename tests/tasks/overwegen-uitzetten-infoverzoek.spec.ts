@@ -1,6 +1,7 @@
 // tasks/overwegen-uitzetten-infoverzoek.ts
 import { Page } from '@playwright/test';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
+import { openTask  } from '../helper-functions/utils';
 
 interface TestData {
     lastName: string;
@@ -21,13 +22,7 @@ const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
 export default async function(page: Page, testData: TestData) {
     const taskName = "Overwegen uitzetten informatieverzoek";
     try {
-        console.log(`Looking for task: "${taskName}"`);
-        const taskElement = page.getByText(taskName, { exact: true });
-        await taskElement.waitFor({ state: 'visible', timeout: 30000 });
-        console.log(`Task "${taskName}" is visible.`);
-        await taskElement.click();
-        await page.waitForLoadState('networkidle', { timeout: 15000 });
-        await page.waitForTimeout(2000);
+        await openTask(page, taskName);
 
         // 🔑 Get option from scenario picker
         const option = getOptionForTask('overwegen-uitzetten-infoverzoek', 'A');

@@ -1,6 +1,6 @@
 // tasks/vastleggen-intrekking.spec.ts
 import { Page } from '@playwright/test';
-import { faker } from '@faker-js/faker'; // currently unused, keep or remove based on lint rules
+import { openTask  } from '../helper-functions/utils';
 
 interface TestData {
     lastName: string;
@@ -14,15 +14,7 @@ export default async function vastleggenIntrekkingTask(
     const taskName = 'Vastleggen intrekking';
 
     try {
-        console.log(`Looking for task: "${taskName}"`);
-        const taskElement = page.getByText(taskName, { exact: true });
-        await taskElement.waitFor({ state: 'visible', timeout: 30_000 });
-        console.log(`Task "${taskName}" is visible.`);
-        await taskElement.click();
-        console.log(`Clicked task: "${taskName}".`);
-
-        await page.waitForLoadState('networkidle', { timeout: 15_000 });
-        await page.waitForTimeout(2_000);
+        await openTask(page, taskName);
 
         // Kies communicatiekanaal: E-mail
         console.log('Opening communicatiekanaal keuze (choices)...');

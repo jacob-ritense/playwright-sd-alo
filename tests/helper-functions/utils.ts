@@ -228,57 +228,62 @@ async function verifyCaseDetails(page: Page) {
   }
 }
 
-export async function waitForSpecificTask(page: Page, taskName: string, maxAttempts: number = 10, waitTimeBetweenAttempts: number = 2000): Promise<boolean> {
-  console.log(`Waiting for "${taskName}" task to appear...`);
-  let attempts = 0;
+// function generateInputValue(label: string): string {
+//   const lowercaseLabel = label.toLowerCase();
+//   if (lowercaseLabel.includes('email')) {
+//     return faker.internet.email();
+//   } else if (lowercaseLabel.includes('telefoon') || lowercaseLabel.includes('number')) {
+//     return faker.phone.number();
+//   } else if (lowercaseLabel.includes('datum')) {
+//     return faker.date.recent().toISOString().split('T')[0];
+//   } else if (lowercaseLabel.includes('bedrag') || lowercaseLabel.includes('amount')) {
+//     return faker.number.int({ min: 100, max: 1000 }).toString();
+//   } else {
+//     return faker.lorem.words(3);
+//   }
+// }
 
-  while (attempts < maxAttempts) {
-    try {
-      const algemeenTab = page.getByRole('tab', { name: 'Algemeen' });
-        const voortgangTab = page.getByRole('tab', { name: 'Voortgang' });
-        await page.reload();
-        await page.waitForLoadState('networkidle', { timeout: 10000 });
+// Helper config (tweak anytime)
+const maxAttempts = 8;        // how many retries
+const minWaitSeconds = 3;      // first retry wait
+const maxWaitSeconds = 10;     // cap for wait
 
-      const taskElement = page.getByText(taskName, { exact: true });
-      const isVisible = await taskElement.isVisible();
+export async function openTask(page, taskName) {
 
-      if (isVisible) {
-        console.log(`Task "${taskName}" found after ${attempts + 1} attempts`);
-        return true;
-      }
+    await page.waitForTimeout(2000);
+    console.log(`→ openTask("${taskName}")`);
 
-      console.log(`Task "${taskName}" not found, refreshing page (attempt ${attempts + 1}/${maxAttempts})`);
-      await page.reload({ waitUntil: 'networkidle', timeout: 15000 });
-      await page.waitForTimeout(waitTimeBetweenAttempts);
-      attempts++;
-    } catch (error) {
-      console.error(`Error during attempt ${attempts + 1} to find task "${taskName}":`, error.message);
-      attempts++;
-      if (attempts < maxAttempts) {
+    const locator = page.getByText(taskName, { exact: true });
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        console.log(`Attempt ${attempt}/${maxAttempts}: looking for "${taskName}"`);
+
         try {
-          await page.reload({ waitUntil: 'networkidle', timeout: 15000 });
-          await page.waitForTimeout(waitTimeBetweenAttempts);
-        } catch (reloadError) {
-          console.error('Failed to reload page during error recovery:', reloadError.message);
+            await locator.waitFor({ state: "visible", timeout: 10000 });
+            await locator.click();
+
+            await page.waitForLoadState("networkidle", { timeout: 15000 });
+            await page.waitForTimeout(2000);
+
+            console.log(`✓ Task "${taskName}" opened on attempt ${attempt}`);
+            return;
+        } catch {
+            if (attempt === maxAttempts) break;
+
+            // Scaled wait: minWaitSeconds, +1 each attempt, capped at maxWaitSeconds
+            const waitSeconds = Math.min(minWaitSeconds + (attempt - 1), maxWaitSeconds);
+            console.log(`Not found → waiting ${waitSeconds}s → reloading`);
+
+            await page.waitForTimeout(waitSeconds * 1000);
+            await page.reload();
+
+            await page.waitForLoadState("networkidle", { timeout: 15000 });
+            await page.waitForTimeout(2000);
         }
-      }
     }
-  }
-  console.error(`Task "${taskName}" not found after ${maxAttempts} attempts.`);
-  return false;
+
+    throw new Error(`Failed to find task "${taskName}" after ${maxAttempts} attempts.`);
 }
 
-function generateInputValue(label: string): string {
-  const lowercaseLabel = label.toLowerCase();
-  if (lowercaseLabel.includes('email')) {
-    return faker.internet.email();
-  } else if (lowercaseLabel.includes('telefoon') || lowercaseLabel.includes('number')) {
-    return faker.phone.number();
-  } else if (lowercaseLabel.includes('datum')) {
-    return faker.date.recent().toISOString().split('T')[0];
-  } else if (lowercaseLabel.includes('bedrag') || lowercaseLabel.includes('amount')) {
-    return faker.number.int({ min: 100, max: 1000 }).toString();
-  } else {
-    return faker.lorem.words(3);
-  }
-}
+
+

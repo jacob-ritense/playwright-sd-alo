@@ -2,6 +2,7 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
+import { openTask  } from '../helper-functions/utils';
 
 interface TestData {
     lastName: string;
@@ -37,22 +38,7 @@ export default async function vaststellenWoonsituatieTask(page: Page, testData: 
     const taskName = 'Vaststellen woonsituatie';
 
     try {
-        console.log(`[${flowTaskName}] Looking for task: "${taskName}"`);
-        const taskElement = page.getByText(taskName, { exact: true });
-        try {
-            await taskElement.waitFor({ state: 'visible', timeout: 30000 });
-        } catch (timeoutError) {
-            console.warn(`[${flowTaskName}] Task "${taskName}" not visible within timeout, refreshing and retrying...`);
-            await page.reload({ waitUntil: 'networkidle', timeout: 20000 });
-            await page.waitForTimeout(2000);
-            await page.getByText(taskName, { exact: true }).waitFor({ state: 'visible', timeout: 20000 });
-        }
-        console.log(`[${flowTaskName}] Task "${taskName}" is visible.`);
-
-        await taskElement.click();
-        console.log(`[${flowTaskName}] Clicked task: "${taskName}".`);
-        await page.waitForLoadState('networkidle', { timeout: 15000 });
-        await page.waitForTimeout(2000);
+        await openTask(page, taskName);
 
         // 🔑 Option-specific actions
         const option = getOptionForTask('vaststellen-woonsituatie', 'A');

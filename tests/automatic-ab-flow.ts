@@ -1,5 +1,5 @@
 
-// multi-function-ab-flow.ts
+// automatic-ab-flow.ts
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import type { LoginEnvironment } from './helper-functions/utils';
@@ -156,8 +156,31 @@ export async function runAbFlow(page: import('@playwright/test').Page, options: 
         }
     }
 
-    await test.step('Eindcontrole: “Helemaal bij!” zichtbaar', async () => {
-        log.info('Expecting "Helemaal bij!" visible');
-        await expect(page.getByText('Helemaal bij!', { exact: false })).toBeVisible({ timeout: 10_000 });
+// Final check, check for "Lopende bezwaartermijn".
+    await test.step('Eindcontrole: Lopende bezwaartermijn', async () => {
+        log.info('Waiting 5 seconds before navigating to "Voortgang"...');
+        await page.waitForTimeout(5_000);
+
+        log.info('Navigating to "Voortgang" tab...');
+        await page.getByRole('tab', { name: 'Voortgang' }).click();
+
+        const target = page.getByText('lopende bezwaartermijn', { exact: false });
+
+        try {
+            log.info('Expecting "lopende bezwaartermijn" to be visible (first attempt)...');
+            await expect(target).toBeVisible({ timeout: 10_000 });
+        } catch {
+            log.warn('"lopende bezwaartermijn" not found, reloading page and retrying once...');
+            await page.reload();
+
+            log.info('Navigating again to "Voortgang" tab...');
+            await page.getByRole('tab', { name: 'Voortgang' }).click();
+
+            await expect(target).toBeVisible({ timeout: 5_000 });
+        }
+
+        log.info('Navigating back to "Algemeen" tab...');
+        await page.getByRole('tab', { name: 'Algemeen' }).click();
     });
+
 }

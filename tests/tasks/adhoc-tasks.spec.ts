@@ -1,7 +1,7 @@
 // tasks/adhoc-task.spec.ts
 import { Page } from '@playwright/test';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
-import type { TestData } from '../multi-function-ab-flow';
+import type { TestData } from '../automatic-ab-flow';
 
 // follow-up tasks
 import vastleggenIntrekkingTask from './vastleggen-intrekking.spec';
@@ -24,14 +24,14 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         await page.getByRole('menuitem', { name: 'Aanvraag buiten behandeling' }).click();
         console.log('Option A submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5000); // Wait 5 seconds to avoid bug
+        await page.waitForTimeout(5000); // Wait 5 seconds
     },
     B: async (page) => {
         console.log('Option B: "Aanvraag intrekken"');
         await page.getByRole('menuitem', { name: 'Aanvraag intrekken' }).click();
         console.log('Option B submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5000); // Wait 5 seconds to avoid bug
+        await page.waitForTimeout(5000); // Wait 5 seconds
     },
     C: async (page) => {
         console.log('Option C: "Behandeling aanvraag opnieuw"');
@@ -39,7 +39,7 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
 
         console.log('Option C submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5000); // Wait 5 seconds to avoid bug
+        await page.waitForTimeout(5000); // Wait 5 seconds
     },
     D: async (page) => {
         console.log('Option D: "Brongegevens verversen"');
