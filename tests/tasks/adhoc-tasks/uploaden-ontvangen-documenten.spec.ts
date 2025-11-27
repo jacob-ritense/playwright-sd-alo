@@ -13,7 +13,7 @@ export default async function uploadenOntvangenDocumentenTask(page: Page) {
         const toelichtingText = faker.lorem.words(5);
         console.log(`Filling "Toelichting van de aanvrager" with: "${toelichtingText}"`);
         await page.getByRole('textbox', { name: 'Toelichting van de aanvrager' }).fill(toelichtingText);
-
+        console.log(`Checking "Bestand geupload"`);
         await page.getByRole('checkbox', { name: 'Bestand geupload *' }).check();
 
         // Completing task
@@ -27,10 +27,10 @@ export default async function uploadenOntvangenDocumentenTask(page: Page) {
         console.error(`Failed during "${taskName}" task processing:`, error);
         try {
             await page.screenshot({
-                path: 'invoeren-nieuwe-deadline-error.png',
+                path: 'uploaden-ontvangen-documenten-error.png',
                 fullPage: true,
             });
-            console.log('Screenshot saved as invoeren-nieuwe-deadline-error.png');
+            console.log('Screenshot saved as uploaden-ontvangen-documenten-error.png');
         } catch (screenshotError) {
             console.error('Failed to save error screenshot:', screenshotError);
         }

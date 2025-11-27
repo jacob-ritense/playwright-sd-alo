@@ -15,7 +15,7 @@ export const SCENARIOS = {
     // first token = V*, rest = steps
     A: 'V1, 1,2A,4A,5A,6A,7A,8A,9A,10A,12,14A,16A',
     B: 'V1, 1,2B,3,4A,5B,5A,6A,7C,8C,9A,10B,12,14B,16B',
-    C: 'V1, 1,2A,4A,5A,99A,99C,2B,3,4A,6A,7C,8A,9B,10B,12,14A,16C',
+    C: 'V1, 1,2A, 99E, 4B,5A, 99G, 99H, 6A,7C,8A, 99I, 4B, 99F,9B,10B,12,14A,16C',
     // D: '...', etc.
 } as const;
 
@@ -47,9 +47,9 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     // E = Contactgegevens wijzigen
     // F = Informatieverzoek annuleren
     // G = Informatieverzoek deadline
-    // H = Informatieverzoek handmatige
+    // H = Informatieverzoek handmatige reactie
     // I = Opnieuw informatieverzoek
-    // J = Opnieuw vaststellen leef en
+    // J = Opnieuw vaststellen leef en woonsituatie
     // K = Opnieuw vaststellen verblijfadres aanvrager
     // L = Opnieuw vaststellen verblijfadres partner
     // M = Opnieuw vaststellen verblijfstitel aanvrager

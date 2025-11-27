@@ -1,46 +1,21 @@
-// tasks/vastleggen-buiten-behandeling-stelling.spec.ts
+// tasks/verzoek-om-informatie.spec.ts
 import { Page } from '@playwright/test';
-import { faker } from '@faker-js/faker';
-import { openTask  } from '../../helper-functions/utils';
+import { openTask  } from '../helper-functions/utils';
+import {faker} from "@faker-js/faker";
 
-export default async function vastleggenBuitenBehandelingStellingTask(page: Page) {
-    const taskName = 'Vastleggen buiten behandeling stelling';
+export default async function verzoekOmInformatieTask(page: Page) {
+    const taskName = 'Verzoek om informatie';
 
     try {
         await openTask(page, taskName);
 
-        // Fill in dates as dd-mm-yyyy_
-        const now = new Date();
-        const date =
-            String(now.getDate()).padStart(2, '0') +
-            '-' +
-            String(now.getMonth() + 1).padStart(2, '0') +
-            '-' +
-            now.getFullYear() +
-            '_';
-
-        console.log(`Filling first date textbox with: "${date}"`);
-        await page.getByRole('textbox').nth(0).click();
-        await page.getByRole('textbox').nth(0).fill(date);
-
-        console.log(`Filling second date textbox with: "${date}"`);
-        await page.getByRole('textbox').nth(1).click();
-        await page.getByRole('textbox').nth(1).fill(date);
-
-        // Fill in "Ontbrekende stukken" and "Toelichting"
-        const ontbrekendeStukkenText = faker.lorem.words(5);
-        console.log(
-            `Filling "Ontbrekende stukken?" with: "${ontbrekendeStukkenText}"`
-        );
-        await page
-            .getByRole('textbox', { name: 'Ontbrekende stukken' })
-            .fill(ontbrekendeStukkenText);
-
+        // Fill in form
         const toelichtingText = faker.lorem.words(5);
-        console.log(`Filling "Toelichting" with: "${toelichtingText}"`);
-        await page
-            .getByRole('textbox', { name: 'Toelichting' })
-            .fill(toelichtingText);
+        console.log(`Filling "Bericht aan aanvrager" with: "${toelichtingText}"`);
+        await page.getByRole('textbox', { name: 'Bericht aan aanvrager' }).fill(toelichtingText);
+
+        console.log(`Selecting "Ja" on radio button "Herstel termijn van toepassing?"`);
+        await page.getByRole('radio', { name: 'Ja' }).check();
 
         // File "beschikking" upload
         const filePath = 'context-files/test-beschikking.txt';
@@ -74,8 +49,8 @@ export default async function vastleggenBuitenBehandelingStellingTask(page: Page
         await page.waitForTimeout(1_000);
 
         // Completing task
-        console.log('Clicking "Indienen" button...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
+        console.log('Clicking "Informatieverzoek uitzetten" button...');
+        await page.getByRole('button', { name: 'Informatieverzoek uitzetten' }).click();
         await page.waitForLoadState('networkidle', { timeout: 15_000 });
         await page.waitForTimeout(2_000);
 
@@ -84,12 +59,10 @@ export default async function vastleggenBuitenBehandelingStellingTask(page: Page
         console.error(`Failed during "${taskName}" task processing:`, error);
         try {
             await page.screenshot({
-                path: 'vastleggen-buiten-behandeling-stelling-error.png',
+                path: 'verzoek-om-informatie-error.png',
                 fullPage: true,
             });
-            console.log(
-                'Screenshot saved as vastleggen-buiten-behandeling-stelling-error.png'
-            );
+            console.log('Screenshot saved as verzoek-om-informatie-error.png');
         } catch (screenshotError) {
             console.error('Failed to save error screenshot:', screenshotError);
         }

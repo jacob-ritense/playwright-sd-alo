@@ -62,6 +62,7 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
     F: async (page) => {
         console.log('Option F: "Informatieverzoek annuleren"');
         await page.getByRole('menuitem', { name: 'Informatieverzoek annuleren' }).click();
+        await page.waitForLoadState('networkidle', { timeout: 15_000 });
         console.log('Option F submit: Clicking "Informatieverzoek annuleren"...');
         await page.getByRole('button', { name: 'Informatieverzoek annuleren' }).click();
     },
@@ -144,6 +145,9 @@ export default async function adhocTask(page: Page) {
 
         const handler = optionHandlers[option] ?? optionHandlers.D!;
         await handler(page);
+
+        await page.waitForLoadState('networkidle', { timeout: 15_000 });
+        await page.waitForTimeout(1_000);
 
         console.log(
             `Adhoc task flow (including any follow-up) completed for option "${option}".`
