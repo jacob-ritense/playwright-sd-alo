@@ -1,12 +1,7 @@
 import { Page } from '@playwright/test';
 import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-  lastName: string;
-  requestId: string | null;
-}
-
-export default async function opvoerenDienstSocratesTask(page: Page, testData: TestData) {
+export default async function opvoerenDienstSocratesTask(page: Page) {
   const taskName = "Opvoeren dienst in Socrates";
   await openTask(page, taskName);
 

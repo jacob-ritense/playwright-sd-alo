@@ -1,12 +1,7 @@
 import { Page } from '@playwright/test';
 import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-  lastName: string;
-  requestId: string | null;
-}
-
-export default async function vaststellenAanvangsdatumTask(page: Page, testData: TestData) {
+export default async function vaststellenAanvangsdatumTask(page: Page) {
   const taskName = 'Vaststellen aanvangsdatum';
 
   try {

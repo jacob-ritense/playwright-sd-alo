@@ -4,11 +4,6 @@ import { faker } from '@faker-js/faker';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
 import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
-
 const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
         // Option A: Choose "Ja"
@@ -35,7 +30,7 @@ const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     },
 };
 
-export default async function verblijfstitelAanvragerTask(page: Page, testData: TestData) {
+export default async function verblijfstitelAanvragerTask(page: Page) {
     const taskName = 'Vaststellen verblijfstitel aanvrager';
     try {
         await openTask(page, taskName);

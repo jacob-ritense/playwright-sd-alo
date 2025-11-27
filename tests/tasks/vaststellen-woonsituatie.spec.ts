@@ -4,11 +4,6 @@ import { faker } from '@faker-js/faker';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
 import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
-
 const optionHandlers: Partial<Record<Option, (page: Page, flowTaskName: string) => Promise<void>>> = {
     A: async (page, flowTaskName) => {
         console.log(`[${flowTaskName}] Filling "Aantal belanghebbenden" with 1...`);
@@ -33,7 +28,7 @@ const optionHandlers: Partial<Record<Option, (page: Page, flowTaskName: string) 
     },
 };
 
-export default async function vaststellenWoonsituatieTask(page: Page, testData: TestData) {
+export default async function vaststellenWoonsituatieTask(page: Page) {
     const flowTaskName = 'vaststellen-woonsituatie';
     const taskName = 'Vaststellen woonsituatie';
 

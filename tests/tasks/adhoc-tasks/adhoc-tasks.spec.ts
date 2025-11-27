@@ -1,11 +1,11 @@
 // tasks/adhoc-task.spec.ts
 import { Page } from '@playwright/test';
-import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
-import type { TestData } from '../../test-cases/automatic-ab-flow';
+import { getOptionForTask, type Option } from '../../../test-cases/test-scenario-picker';
 
 // follow-up tasks
 import vastleggenIntrekkingTask from './vastleggen-intrekking.spec';
 import vastleggenBuitenBehandelingStellingTask from './vastleggen-buiten-behandeling-stelling.spec';
+import wijzigenContactgegevensAanvragerTask from './wijzigen-contactgegevens-aanvrager.spec';
 
 const TASK_KEY = 'adhoc-task';
 
@@ -18,28 +18,30 @@ const startRestartFlow = async (page: Page) => {
 };
 
 const optionHandlers: Partial<Record<Option, OptionHandler>> = {
-    // A, B, C, D, E, G, H → submit with "Doorgaan"
     A: async (page) => {
         console.log('Option A: "Aanvraag buiten behandeling"');
         await page.getByRole('menuitem', { name: 'Aanvraag buiten behandeling' }).click();
         console.log('Option A submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5000); // Wait 5 seconds
+        await page.waitForTimeout(5_000);
+
+        await vastleggenBuitenBehandelingStellingTask(page);
     },
     B: async (page) => {
         console.log('Option B: "Aanvraag intrekken"');
         await page.getByRole('menuitem', { name: 'Aanvraag intrekken' }).click();
         console.log('Option B submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5000); // Wait 5 seconds
+        await page.waitForTimeout(5_000);
+
+        await vastleggenIntrekkingTask(page);
     },
     C: async (page) => {
         console.log('Option C: "Behandeling aanvraag opnieuw"');
         await page.getByRole('menuitem', { name: 'Behandeling aanvraag opnieuw' }).click();
-
         console.log('Option C submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5000); // Wait 5 seconds
+        await page.waitForTimeout(5_000);
     },
     D: async (page) => {
         console.log('Option D: "Brongegevens verversen"');
@@ -52,6 +54,8 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         await page.getByRole('menuitem', { name: 'Contactgegevens wijzigen' }).click();
         console.log('Option E submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
+
+        await wijzigenContactgegevensAanvragerTask(page);
     },
     F: async (page) => {
         console.log('Option F: "Informatieverzoek annuleren"');
@@ -71,8 +75,6 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         console.log('Option H submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
     },
-
-    // I–O → restart flow + "Indienen"
     I: async (page) => {
         console.log('Option I: "Opnieuw informatieverzoek"');
         await startRestartFlow(page);
@@ -124,36 +126,22 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
     },
 };
 
-export default async function adhocTask(page: Page, testData: TestData) {
+export default async function adhocTask(page: Page) {
     let option: Option | undefined;
 
     try {
         console.log('Starting adhoc task: clicking "Start"...');
         await page.getByRole('button', { name: 'Start' }).click();
 
-        option = getOptionForTask(TASK_KEY, 'A');
+        option = getOptionForTask(TASK_KEY, 'D');
         console.log(`Adhoc task option from scenario picker: ${option}`);
 
-        const handler = optionHandlers[option] ?? optionHandlers.A!;
+        const handler = optionHandlers[option] ?? optionHandlers.D!;
         await handler(page);
-        console.log(`Adhoc task flow completed for option "${option}".`);
 
-        // 🔁 Follow-up tasks AFTER adhoc completion
-        if (option === 'A') {
-            console.log(
-                'Option A selected – running follow-up task "Vastleggen buiten behandeling stelling"...'
-            );
-            await vastleggenBuitenBehandelingStellingTask(page, testData);
-            console.log(
-                'Follow-up task "Vastleggen buiten behandeling stelling" completed.'
-            );
-        } else if (option === 'B') {
-            console.log(
-                'Option B selected – running follow-up task "Vastleggen intrekking"...'
-            );
-            await vastleggenIntrekkingTask(page, testData);
-            console.log('Follow-up task "Vastleggen intrekking" completed.');
-        }
+        console.log(
+            `Adhoc task flow (including any follow-up) completed for option "${option}".`
+        );
     } catch (error) {
         console.error(
             `Failed during adhoc task processing (option: ${option ?? 'unknown'}):`,

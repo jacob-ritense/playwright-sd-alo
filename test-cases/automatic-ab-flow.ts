@@ -29,7 +29,7 @@ import vaststellenLeefWoonsituatieTask from '../tests/tasks/vaststellen-leef-woo
 import vaststellenWoonsituatieTask from '../tests/tasks/vaststellen-woonsituatie.spec';
 import vaststellenLeefsituatieTask from '../tests/tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from '../tests/tasks/vaststellen-besluit.spec';
-import adhocTask from '../tests/tasks/adhoc-tasks.spec';
+import adhocTask from '../tests/tasks/adhoc-tasks/adhoc-tasks.spec';
 
 export type FlowSlug =
     | 'create-verzoek'

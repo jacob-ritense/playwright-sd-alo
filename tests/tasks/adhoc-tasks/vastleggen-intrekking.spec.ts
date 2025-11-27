@@ -1,16 +1,8 @@
 // tasks/vastleggen-intrekking.spec.ts
 import { Page } from '@playwright/test';
-import { openTask  } from '../helper-functions/utils';
+import { openTask  } from '../../helper-functions/utils';
 
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
-
-export default async function vastleggenIntrekkingTask(
-    page: Page,
-    _testData: TestData
-) {
+export default async function vastleggenIntrekkingTask(page: Page) {
     const taskName = 'Vastleggen intrekking';
 
     try {
@@ -23,16 +15,11 @@ export default async function vastleggenIntrekkingTask(
         console.log('Selecting option "E-mail"...');
         await page.getByRole('option', { name: 'E-mail' }).click();
 
+        // Afronden
         console.log('Clicking "Doorgaan" button...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
         await page.waitForLoadState('networkidle', { timeout: 15_000 });
-        await page.waitForTimeout(1_000);
-
-        // Afronden
-        console.log('Clicking "Indienen" button...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
-        await page.waitForLoadState('networkidle', { timeout: 15_000 });
-        await page.waitForTimeout(2_000);
+        await page.waitForTimeout(3_000);
 
         console.log(`Successfully completed task "${taskName}".`);
     } catch (error) {

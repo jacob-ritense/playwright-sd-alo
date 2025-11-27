@@ -4,11 +4,6 @@ import { faker } from '@faker-js/faker';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
 import { openTask } from '../helper-functions/utils';
 
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
-
 // Shared helpers used by B/C/D
 async function selectToekennen(page: Page, taskName: string) {
     console.log(`[${taskName}] Selecting "Toekennen" radio option...`);
@@ -75,7 +70,7 @@ const optionHandlers: Partial<Record<Option, (page: Page, taskName: string) => P
     },
 };
 
-export default async function vaststellenBesluitTask(page: Page, testData: TestData) {
+export default async function vaststellenBesluitTask(page: Page) {
     const taskName = 'Vaststellen besluit';
 
     try {

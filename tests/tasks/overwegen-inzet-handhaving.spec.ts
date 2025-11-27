@@ -4,11 +4,6 @@ import { faker } from '@faker-js/faker';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
 import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
-
 const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
         console.log('Clicking "Nee" radio button...');
@@ -20,7 +15,7 @@ const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     },
 };
 
-export default async function(page: Page, testData: TestData) {
+export default async function(page: Page) {
     const taskName = "Overwegen inzet handhaving";
     try {
         await openTask(page, taskName);

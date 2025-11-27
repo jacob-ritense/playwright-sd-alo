@@ -3,15 +3,7 @@ import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
-
-export default async function vastleggenUitkomstPoortonderzoekTask(
-    page: Page,
-    testData: TestData
-) {
+export default async function vastleggenUitkomstPoortonderzoekTask(page: Page) {
     const taskName = 'Vastleggen uitkomst poortonderzoek';
 
     try {
