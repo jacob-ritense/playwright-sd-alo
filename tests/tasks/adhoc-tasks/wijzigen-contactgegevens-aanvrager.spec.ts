@@ -11,7 +11,7 @@ export default async function wijzigenContactgegevensAanvragerTask(page: Page) {
         await page.getByTestId('bs.vastleggen-wijziging-contactgegevens-aanvrager.wijzigen-contactgegevens-naamContactpersoon').click();
         await page.getByTestId('bs.vastleggen-wijziging-contactgegevens-aanvrager.wijzigen-contactgegevens-naamContactpersoon').fill('Piet Jan');
 
-        // Afronden
+        // Completing task
         console.log('Clicking "Indienen" button...');
         await page.getByRole('button', { name: 'Indienen' }).click();
         await page.waitForLoadState('networkidle', { timeout: 15_000 });

@@ -6,6 +6,8 @@ import { getOptionForTask, type Option } from '../../../test-cases/test-scenario
 import vastleggenIntrekkingTask from './vastleggen-intrekking.spec';
 import vastleggenBuitenBehandelingStellingTask from './vastleggen-buiten-behandeling-stelling.spec';
 import wijzigenContactgegevensAanvragerTask from './wijzigen-contactgegevens-aanvrager.spec';
+import invoerenNieuweDeadlineTask from "./invoeren-nieuwe-deadline.spec";
+import uploadenOntvangenDocumentenTask from "./uploaden-ontvangen-documenten.spec";
 
 const TASK_KEY = 'adhoc-task';
 
@@ -68,12 +70,16 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         await page.getByRole('menuitem', { name: 'Informatieverzoek deadline' }).click();
         console.log('Option G submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
+
+        await invoerenNieuweDeadlineTask(page);
     },
     H: async (page) => {
         console.log('Option H: "Informatieverzoek handmatige"');
         await page.getByRole('menuitem', { name: 'Informatieverzoek handmatige' }).click();
         console.log('Option H submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
+
+        await uploadenOntvangenDocumentenTask(page);
     },
     I: async (page) => {
         console.log('Option I: "Opnieuw informatieverzoek"');

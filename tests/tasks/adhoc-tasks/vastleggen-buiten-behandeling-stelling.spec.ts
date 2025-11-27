@@ -73,6 +73,7 @@ export default async function vastleggenBuitenBehandelingStellingTask(page: Page
         await page.waitForLoadState('networkidle', { timeout: 15_000 });
         await page.waitForTimeout(1_000);
 
+        // Completing task
         console.log('Clicking "Indienen" button...');
         await page.getByRole('button', { name: 'Indienen' }).click();
         await page.waitForLoadState('networkidle', { timeout: 15_000 });
