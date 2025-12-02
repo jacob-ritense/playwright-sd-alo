@@ -1,0 +1,171 @@
+// tasks/adhoc-task.spec.ts
+import { Page } from '@playwright/test';
+import { getOptionForTask, type Option } from '../../../test-cases/test-scenario-picker';
+
+// follow-up tasks
+import vastleggenIntrekkingTask from './vastleggen-intrekking.spec';
+import vastleggenBuitenBehandelingStellingTask from './vastleggen-buiten-behandeling-stelling.spec';
+import wijzigenContactgegevensAanvragerTask from './wijzigen-contactgegevens-aanvrager.spec';
+import invoerenNieuweDeadlineTask from "./invoeren-nieuwe-deadline.spec";
+import uploadenOntvangenDocumentenTask from "./uploaden-ontvangen-documenten.spec";
+
+const TASK_KEY = 'adhoc-task';
+
+type OptionHandler = (page: Page) => Promise<void>;
+
+const startRestartFlow = async (page: Page) => {
+    console.log('Starting "Taak opnieuw starten" flow...');
+    await page.getByRole('menuitem', { name: 'Taak opnieuw starten' }).click();
+    await page.locator('.choices > div').first().click();
+};
+
+const optionHandlers: Partial<Record<Option, OptionHandler>> = {
+    A: async (page) => {
+        console.log('Option A: "Aanvraag buiten behandeling"');
+        await page.getByRole('menuitem', { name: 'Aanvraag buiten behandeling' }).click();
+        console.log('Option A submit: Clicking "Doorgaan"...');
+        await page.getByRole('button', { name: 'Doorgaan' }).click();
+        await page.waitForTimeout(5_000);
+
+        await vastleggenBuitenBehandelingStellingTask(page);
+    },
+    B: async (page) => {
+        console.log('Option B: "Aanvraag intrekken"');
+        await page.getByRole('menuitem', { name: 'Aanvraag intrekken' }).click();
+        console.log('Option B submit: Clicking "Doorgaan"...');
+        await page.getByRole('button', { name: 'Doorgaan' }).click();
+        await page.waitForTimeout(5_000);
+
+        await vastleggenIntrekkingTask(page);
+    },
+    C: async (page) => {
+        console.log('Option C: "Behandeling aanvraag opnieuw"');
+        await page.getByRole('menuitem', { name: 'Behandeling aanvraag opnieuw' }).click();
+        console.log('Option C submit: Clicking "Doorgaan"...');
+        await page.getByRole('button', { name: 'Doorgaan' }).click();
+        await page.waitForTimeout(5_000);
+    },
+    D: async (page) => {
+        console.log('Option D: "Brongegevens verversen"');
+        await page.getByRole('menuitem', { name: 'Brongegevens verversen' }).click();
+        console.log('Option D submit: Clicking "Doorgaan"...');
+        await page.getByRole('button', { name: 'Doorgaan' }).click();
+    },
+    E: async (page) => {
+        console.log('Option E: "Contactgegevens wijzigen"');
+        await page.getByRole('menuitem', { name: 'Contactgegevens wijzigen' }).click();
+        console.log('Option E submit: Clicking "Doorgaan"...');
+        await page.getByRole('button', { name: 'Doorgaan' }).click();
+
+        await wijzigenContactgegevensAanvragerTask(page);
+    },
+    F: async (page) => {
+        console.log('Option F: "Informatieverzoek annuleren"');
+        await page.getByRole('menuitem', { name: 'Informatieverzoek annuleren' }).click();
+        await page.waitForLoadState('networkidle', { timeout: 15_000 });
+        console.log('Option F submit: Clicking "Informatieverzoek annuleren"...');
+        await page.getByRole('button', { name: 'Informatieverzoek annuleren' }).click();
+    },
+    G: async (page) => {
+        console.log('Option G: "Informatieverzoek deadline"');
+        await page.getByRole('menuitem', { name: 'Informatieverzoek deadline' }).click();
+        console.log('Option G submit: Clicking "Doorgaan"...');
+        await page.getByRole('button', { name: 'Doorgaan' }).click();
+
+        await invoerenNieuweDeadlineTask(page);
+    },
+    H: async (page) => {
+        console.log('Option H: "Informatieverzoek handmatige"');
+        await page.getByRole('menuitem', { name: 'Informatieverzoek handmatige' }).click();
+        console.log('Option H submit: Clicking "Doorgaan"...');
+        await page.getByRole('button', { name: 'Doorgaan' }).click();
+
+        await uploadenOntvangenDocumentenTask(page);
+    },
+    I: async (page) => {
+        console.log('Option I: "Opnieuw informatieverzoek"');
+        await startRestartFlow(page);
+        await page.getByText('Opnieuw informatieverzoek').click();
+        console.log('Option I submit: Clicking "Indienen"...');
+        await page.getByRole('button', { name: 'Indienen' }).click();
+    },
+    J: async (page) => {
+        console.log('Option J: "Opnieuw vaststellen leef en"');
+        await startRestartFlow(page);
+        await page.getByText('Opnieuw vaststellen leef en').click();
+        console.log('Option J submit: Clicking "Indienen"...');
+        await page.getByRole('button', { name: 'Indienen' }).click();
+    },
+    K: async (page) => {
+        console.log('Option K: "Opnieuw vaststellen verblijfadres aanvrager"');
+        await startRestartFlow(page);
+        await page.getByText('Opnieuw vaststellen verblijfadres aanvrager').click();
+        console.log('Option K submit: Clicking "Indienen"...');
+        await page.getByRole('button', { name: 'Indienen' }).click();
+    },
+    L: async (page) => {
+        console.log('Option L: "Opnieuw vaststellen verblijfadres partner"');
+        await startRestartFlow(page);
+        await page.getByText('Opnieuw vaststellen verblijfadres partner').click();
+        console.log('Option L submit: Clicking "Indienen"...');
+        await page.getByRole('button', { name: 'Indienen' }).click();
+    },
+    M: async (page) => {
+        console.log('Option M: "Opnieuw vaststellen verblijfstitel aanvrager"');
+        await startRestartFlow(page);
+        await page.getByText('Opnieuw vaststellen verblijfstitel aanvrager').click();
+        console.log('Option M submit: Clicking "Indienen"...');
+        await page.getByRole('button', { name: 'Indienen' }).click();
+    },
+    N: async (page) => {
+        console.log('Option N: "Opnieuw vaststellen verblijfstitel partner"');
+        await startRestartFlow(page);
+        await page.getByText('Opnieuw vaststellen verblijfstitel partner').click();
+        console.log('Option N submit: Clicking "Indienen"...');
+        await page.getByRole('button', { name: 'Indienen' }).click();
+    },
+    O: async (page) => {
+        console.log('Option O: "Opnieuw vaststellen ingangsdatum"');
+        await startRestartFlow(page);
+        await page.getByText('Opnieuw vaststellen ingangsdatum').click();
+        console.log('Option O submit: Clicking "Indienen"...');
+        await page.getByRole('button', { name: 'Indienen' }).click();
+    },
+};
+
+export default async function adhocTask(page: Page) {
+    let option: Option | undefined;
+
+    try {
+        console.log('Starting adhoc task: clicking "Start"...');
+        await page.getByRole('button', { name: 'Start' }).click();
+
+        option = getOptionForTask(TASK_KEY, 'D');
+        console.log(`Adhoc task option from scenario picker: ${option}`);
+
+        const handler = optionHandlers[option] ?? optionHandlers.D!;
+        await handler(page);
+
+        await page.waitForLoadState('networkidle', { timeout: 15_000 });
+        await page.waitForTimeout(1_000);
+
+        console.log(
+            `Adhoc task flow (including any follow-up) completed for option "${option}".`
+        );
+    } catch (error) {
+        console.error(
+            `Failed during adhoc task processing (option: ${option ?? 'unknown'}):`,
+            error
+        );
+        try {
+            const screenshotName = option
+                ? `adhoc-task-${option}-error.png`
+                : 'adhoc-task-error.png';
+            await page.screenshot({ path: screenshotName, fullPage: true });
+            console.log(`Error screenshot saved as ${screenshotName}`);
+        } catch (screenshotError) {
+            console.error('Failed to save error screenshot:', screenshotError);
+        }
+        throw error;
+    }
+}

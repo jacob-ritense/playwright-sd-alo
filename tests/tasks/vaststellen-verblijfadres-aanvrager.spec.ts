@@ -2,11 +2,7 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
-
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
+import { openTask  } from '../helper-functions/utils';
 
 const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
@@ -59,25 +55,10 @@ const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
 
 };
 
-export default async function verblijfadresAanvragerTask(page: Page, testData: TestData) {
+export default async function verblijfadresAanvragerTask(page: Page) {
     const taskName = 'Selecteren verblijfadres aanvrager';
     try {
-        console.log(`Looking for task: "${taskName}"`);
-        const taskElement = page.getByText(taskName, { exact: true });
-        try {
-            await taskElement.waitFor({ state: 'visible', timeout: 100000 });
-        } catch (timeoutError) {
-            console.warn(`Task "${taskName}" not visible within timeout, refreshing and retrying...`);
-            await page.reload({ waitUntil: 'networkidle', timeout: 20000 });
-            await page.waitForTimeout(2000);
-            await page.getByText(taskName, { exact: true }).waitFor({ state: 'visible', timeout: 20000 });
-        }
-        console.log(`Task "${taskName}" is visible.`);
-
-        await taskElement.click();
-        console.log(`Clicked task: "${taskName}".`);
-        await page.waitForLoadState('networkidle', { timeout: 15000 });
-        await page.waitForTimeout(2000);
+        await openTask(page, taskName);
 
         // Ensure the section question is present before interacting with radios
         const questionText = 'Welk adres wordt gebruikt voor de woonsituatie?';

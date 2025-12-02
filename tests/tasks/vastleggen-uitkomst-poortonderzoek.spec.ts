@@ -1,27 +1,13 @@
 // tasks/vastleggen-uitkomst-poortonderzoek.spec.ts
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
-
-export default async function vastleggenUitkomstPoortonderzoekTask(
-    page: Page,
-    testData: TestData
-) {
+export default async function vastleggenUitkomstPoortonderzoekTask(page: Page) {
     const taskName = 'Vastleggen uitkomst poortonderzoek';
 
     try {
-        console.log(`Looking for task: "${taskName}"`);
-        const taskElement = page.getByText(taskName, { exact: true });
-        await taskElement.waitFor({ state: 'visible', timeout: 30_000 });
-        console.log(`Task "${taskName}" is visible.`);
-        await taskElement.click();
-        console.log(`Clicked task: "${taskName}".`);
-
-        await page.waitForLoadState('networkidle', { timeout: 15_000 });
+        await openTask(page, taskName);
 
         const toelichtingText = faker.lorem.words(5);
         console.log(

@@ -1,44 +1,24 @@
 import { Page } from '@playwright/test';
+import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-  lastName: string;
-  requestId: string | null;
-}
-
-export default async function vaststellenAanvangsdatumTask(page: Page, testData: TestData) {
-  const flowTaskName = 'vaststellen-aanvangsdatum';
+export default async function vaststellenAanvangsdatumTask(page: Page) {
   const taskName = 'Vaststellen aanvangsdatum';
 
   try {
-    console.log(`[${flowTaskName}] Looking for task: "${taskName}"`);
-    const taskElement = page.getByText(taskName, { exact: true });
-    try {
-      await taskElement.waitFor({ state: 'visible', timeout: 30000 });
-    } catch (timeoutError) {
-      console.warn(`[${flowTaskName}] Task "${taskName}" not visible within timeout, refreshing and retrying...`);
-      await page.reload({ waitUntil: 'networkidle', timeout: 20000 });
-      await page.waitForTimeout(2000);
-      await page.getByText(taskName, { exact: true }).waitFor({ state: 'visible', timeout: 20000 });
-    }
-    console.log(`[${flowTaskName}] Task "${taskName}" is visible.`);
+      await openTask(page, taskName);
 
-    await taskElement.click();
-    console.log(`[${flowTaskName}] Clicked task: "${taskName}".`);
-    await page.waitForLoadState('networkidle', { timeout: 15000 });
-    await page.waitForTimeout(2000);
-
-    console.log(`[${flowTaskName}] Clicking "Afronden" button...`);
+    console.log(`[${taskName}] Clicking "Afronden" button...`);
     await page.getByRole('button', { name: 'Afronden' }).click();
     await page.waitForLoadState('networkidle', { timeout: 15000 });
     await page.waitForTimeout(2000);
-    console.log(`[${flowTaskName}] Task "${taskName}" completed.`);
+    console.log(`[${taskName}] Task "${taskName}" completed.`);
   } catch (error) {
-    console.error(`[${flowTaskName}] Failed during task processing:`, error);
+    console.error(`[${taskName}] Failed during task processing:`, error);
     try {
       await page.screenshot({ path: 'vaststellen-aanvangsdatum-error.png', fullPage: true });
-      console.log(`[${flowTaskName}] Screenshot saved as vaststellen-aanvangsdatum-error.png`);
+      console.log(`[${taskName}] Screenshot saved as vaststellen-aanvangsdatum-error.png`);
     } catch (screenshotError) {
-      console.error(`[${flowTaskName}] Failed to save error screenshot:`, screenshotError);
+      console.error(`[${taskName}] Failed to save error screenshot:`, screenshotError);
     }
     throw error;
   }

@@ -2,12 +2,7 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
-import {waitForSpecificTask} from "../helper-functions/utils";
-
-interface TestData {
-    lastName: string;
-    requestId: string | null;
-}
+import { openTask  } from '../helper-functions/utils';
 
 const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
@@ -23,19 +18,10 @@ const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     },
 };
 
-export default async function(page: Page, testData: TestData) {
+export default async function(page: Page) {
     const taskName = 'Vaststellen persoon aanvrager';
     try {
-        console.log(`Looking for task: "${taskName}"`);
-        const taskElement = page.getByText(taskName, { exact: true });
-        const taskFound = await waitForSpecificTask(page, taskName);
-        if (!taskFound) {
-            throw new Error(`Task "${taskName}" did not appear after multiple refresh attempts`);
-        }
-
-        await taskElement.click();
-        console.log(`Clicked task: "${taskName}".`);
-        await page.waitForLoadState('networkidle', { timeout: 15000 });
+        await openTask(page, taskName);
 
         // 🔑 Get option from scenario picker
         const option = getOptionForTask('vaststellen-persoon-aanvrager', 'A');

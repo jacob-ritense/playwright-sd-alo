@@ -1,17 +1,9 @@
 import { Page } from '@playwright/test';
-import { waitForSpecificTask  } from '../helper-functions/utils';
+import { openTask  } from '../helper-functions/utils';
 
-interface TestData {
-  lastName: string;
-  requestId: string | null;
-}
-
-export default async function opvoerenDienstSocratesTask(page: Page, testData: TestData) {
+export default async function opvoerenDienstSocratesTask(page: Page) {
   const taskName = "Opvoeren dienst in Socrates";
-  const taskFound = await waitForSpecificTask(page, taskName);
-  if (!taskFound) {
-    throw new Error(`Task "${taskName}" did not appear after multiple refresh attempts`);
-  }
+  await openTask(page, taskName);
 
   const taskElement = page.getByText(taskName, { exact: true });
   await taskElement.click();
