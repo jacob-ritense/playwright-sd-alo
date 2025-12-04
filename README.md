@@ -12,7 +12,7 @@ End-to-end Playwright-tests voor de Sociaal Domein algemene-bijstand flows. De s
 - Playwright-browsers installeren (eerste run of na upgrades): `npx playwright install`
 
 ## `.env.properties` en request-variabelen instellen
-1) Kopieer het voorbeeld: `.env.properties.example` en hernoem het naar `.env.properties`
+1) Kopieer het voorbeeld: `env.properties.example` en hernoem het naar `.env.properties`
 2) Vul de waarden in:
    - Vul je Den haag gebruikersnaam in onder `USERNAME_TEST`.
    - Vul je Den haag wachtwoord in onder `PASSWORD_TEST`.
