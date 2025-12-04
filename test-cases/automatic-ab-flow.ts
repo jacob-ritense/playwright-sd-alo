@@ -24,7 +24,6 @@ import vaststellenVerblijfadresPartnerTask from '../tests/tasks/vaststellen-verb
 import vaststellenVerblijfstitelAanvragerTask from '../tests/tasks/vaststellen-verblijfstitel-aanvrager.spec';
 import vaststellenVerblijfstitelPartnerTask from '../tests/tasks/vaststellen-verblijfstitel-partner.spec';
 import vaststellenIngangsdatumTask from '../tests/tasks/vaststellen-ingangsdatum.spec';
-import vaststellenLeefWoonsituatieTask from '../tests/tasks/vaststellen-leef-woonsituatie.spec';
 import vaststellenWoonsituatieTask from '../tests/tasks/vaststellen-woonsituatie.spec';
 import vaststellenLeefsituatieTask from '../tests/tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from '../tests/tasks/vaststellen-besluit.spec';
@@ -43,7 +42,6 @@ export type FlowSlug =
     | 'vaststellen-verblijfstitel-aanvrager'
     | 'vaststellen-verblijfstitel-partner'
     | 'vaststellen-ingangsdatum'
-    | 'vaststellen-leef-woonsituatie'
     | 'vaststellen-woonsituatie'
     | 'vastleggen-uitkomst-poortonderzoek'
     | 'vaststellen-leefsituatie'
@@ -77,7 +75,6 @@ const tasks = [
     {name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask},
     {name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask},
     {name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask},
-    {name: 'vaststellen-leef-woonsituatie', fn: vaststellenLeefWoonsituatieTask},
     {name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask},
     {name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask},
     {name: 'vaststellen-besluit', fn: vaststellenBesluitTask},
