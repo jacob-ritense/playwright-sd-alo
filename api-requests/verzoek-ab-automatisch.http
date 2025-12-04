@@ -122,7 +122,7 @@ Content-Type: application/json
             "attachments": [],
             "language_code": "nl",
             "submission_id": "c035840c-1637-4718-9d3f-77c95a64b5d2",
-            "public_reference": "placeholder"
+            "public_reference": "OF-{{$random.alphanumeric(8)}}"
         },
         "startAt": "2025-07-02",
         "registrationAt": "2025-07-02"

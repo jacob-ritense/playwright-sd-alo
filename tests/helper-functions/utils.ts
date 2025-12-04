@@ -98,8 +98,8 @@ export async function navigateToAlgemeneBijstandAanvraag(page: Page) {
   }
 }
 
-export async function openCreatedCase(page: Page, lastName: string) {
-  console.log(`Opening case for lastName: ${lastName}`);
+export async function openCreatedCase(page: Page, publicReference: string) {
+  console.log(`Opening case for public_reference: ${publicReference}`);
   try {
     await page.waitForSelector('table', { state: 'visible', timeout: 15000 });
 
@@ -109,13 +109,13 @@ export async function openCreatedCase(page: Page, lastName: string) {
 
     while (!caseFound && attempts < maxAttempts) {
       try {
-        const caseCell = page.getByRole('cell', { name: lastName });
+        const caseCell = page.getByRole('cell', { name: publicReference });
         
         if (await caseCell.isVisible()) {
           const row = caseCell.locator('xpath=ancestor::tr');
           const isDisabled = await row.getAttribute('aria-disabled') === 'true';
           if (isDisabled) {
-            throw new Error(`Case for ${lastName} is not accessible (locked/disabled)`);
+            throw new Error(`Case for ${publicReference} is not accessible (locked/disabled)`);
           }
 
           await row.click();
@@ -145,7 +145,7 @@ export async function openCreatedCase(page: Page, lastName: string) {
     }
 
     if (!caseFound) {
-      throw new Error(`Case for ${lastName} not found in table after ${maxAttempts} attempts`);
+      throw new Error(`Case for ${publicReference} not found in table after ${maxAttempts} attempts`);
     }
 
     await verifyCaseDetails(page);

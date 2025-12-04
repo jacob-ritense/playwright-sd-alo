@@ -1,8 +1,6 @@
 // algemene-bijstand-flow.spec.ts (standalone runner)
 
 import { test, type Page } from '@playwright/test';
-import { faker } from '@faker-js/faker';
-
 import createVerzoekTask from '../tests/tasks/create-verzoek.spec';
 import loginTask from '../tests/tasks/login-navigate-case.spec';
 import opvoerenDienstSocratesTask from '../tests/tasks/opvoeren-dienst-socrates.spec';
@@ -46,14 +44,14 @@ const tasks: { name: string; fn: TaskFn }[] = [
 ];
 
 interface TestData {
-    lastName: string;
+    publicReference: string | null;
     requestId: string | null;
 }
 
 // ── Reusable runner that relies on env (INFRA / API file) ──
 export async function runAbFlow(page: Page) {
     const testData: TestData = {
-        lastName: faker.person.lastName(),
+        publicReference: null,
         requestId: null,
     };
     console.log('Test data:', testData);
@@ -78,7 +76,6 @@ test.describe('Algemene bijstand Flow (standalone, env-based)', () => {
         await runAbFlow(page);
     });
 });
-
 
 
 

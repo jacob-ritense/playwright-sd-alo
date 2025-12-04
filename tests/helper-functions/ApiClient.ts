@@ -1,9 +1,9 @@
 import * as fs from 'fs';
-import {request, expect} from "@playwright/test";
+import {request} from "@playwright/test";
 import { faker } from '@faker-js/faker';
 import path from 'node:path';
 
-export async function createVerzoek(achternaam: string, apiTestRequestFile: string, apiRequestConfigFile: string, environment: string) {
+export async function createVerzoek(apiTestRequestFile: string, apiRequestConfigFile: string, environment: string) {
     console.log('Creating verzoek with config file:', apiRequestConfigFile);
 
     if (!apiRequestConfigFile?.trim()) {
@@ -62,21 +62,6 @@ export async function createVerzoek(achternaam: string, apiTestRequestFile: stri
         throw new Error('Request body structure is invalid for setting typeVersion.');
     }
 
-    // Update name fields in the request
-    if (body?.record?.data?.data) {
-        const data = body.record.data.data;
-        
-        // Update main applicant's last name
-        if (data['uw-gegevens']?.naw?.grPersoongegevens) {
-            data['uw-gegevens'].naw.grPersoongegevens.achternaam = achternaam;
-            console.log('Updated main applicant last name to:', achternaam);
-        } else {
-            console.warn('Could not find grPersoongegevens structure to update last name. Path checked: data[\'uw-gegevens\']?.naw?.grPersoongegevens');
-        }
-    } else {
-        throw new Error('Could not find data structure in request body');
-    }
-
     const headers = {
         'Authorization': `Token ${token}`,
         'Content-Crs': 'EPSG:4326',
@@ -84,9 +69,12 @@ export async function createVerzoek(achternaam: string, apiTestRequestFile: stri
     };
 
     let payload = JSON.stringify(body);
-    if (publicReference && payload.includes('"public_reference":"placeholder"')) {
+    const publicReferencePlaceholder = 'OF-{{$random.alphanumeric(8)}}';
+    if (publicReference && payload.includes(`"public_reference":"${publicReferencePlaceholder}"`)) {
         console.warn('Detected placeholder public_reference in serialized payload. Overriding with generated value.');
-        payload = payload.replace(/\"public_reference\"\s*:\s*\"placeholder\"/g, `"public_reference":"${publicReference}"`);
+        const escapedPlaceholder = publicReferencePlaceholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const placeholderRegex = new RegExp(`\"public_reference\"\\s*:\\s*\"${escapedPlaceholder}\"`, 'g');
+        payload = payload.replace(placeholderRegex, `"public_reference":"${publicReference}"`);
     }
 
     console.log('Sending request to create verzoek with public_reference:', publicReference ?? 'not set');
@@ -131,7 +119,8 @@ export async function createVerzoek(achternaam: string, apiTestRequestFile: stri
         console.log('Verzoek created successfully with ID:', id);
         return {
             ...responseData,
-            id: id // Ensure ID is at the top level
+            id: id, // Ensure ID is at the top level
+            public_reference: publicReference ?? responseData.public_reference
         };
     } else {
         let errorMessage = `Failed to create verzoek: ${response.status()}`;
@@ -177,4 +166,3 @@ export function readHttpFile(filePath: string) {
         return bodyText; // .http bodies aren’t always JSON
     }
 }
-

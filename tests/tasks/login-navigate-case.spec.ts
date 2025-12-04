@@ -11,7 +11,11 @@ export default async function loginTask(page: Page, testData: TestData) {
     await login(page, infra);
     await waitForAngular(page);
     await navigateToAlgemeneBijstandAanvraag(page);
-    await openCreatedCase(page, testData.lastName);
+    if (!testData.publicReference) {
+        throw new Error('Missing publicReference on testData; create-verzoek task should populate it.');
+    }
+    console.log('Searching for case with public_reference:', testData.publicReference);
+    await openCreatedCase(page, testData.publicReference);
 
     try {
         await claimCase(page);

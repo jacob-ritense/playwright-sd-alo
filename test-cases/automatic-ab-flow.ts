@@ -1,7 +1,6 @@
 
 // automatic-ab-flow.ts
 import { test, expect } from '@playwright/test';
-import { faker } from '@faker-js/faker';
 import type { LoginEnvironment } from '../tests/helper-functions/utils';
 import {
     setActiveScenario,
@@ -60,7 +59,7 @@ export type FlowOptions = {
 };
 
 export interface TestData {
-    lastName: string;
+    publicReference: string | null;
     requestId: string | null;
     options?: FlowOptions & { API_TEST_REQUEST_FILE: string };
 }
@@ -125,7 +124,7 @@ export async function runAbFlow(page: import('@playwright/test').Page, options: 
     const apiFile = options.API_TEST_REQUEST_FILE ?? getActiveRequestFile();
 
     const testData: TestData = {
-        lastName: faker.person.lastName(),
+        publicReference: null,
         requestId: null,
         options: { ...options, API_TEST_REQUEST_FILE: apiFile },
     };
