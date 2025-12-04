@@ -4,19 +4,20 @@ export type Option = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
 
 // Map variant -> HTTP file
 export const REQUEST_FILES = {
-    V1: './api-requests/verzoek-alo-ab-dcm-acc-currency-test.http',
+    V1: './api-requests/verzoek-alo-ab-dcm-handmatig.http',
     V2: './api-requests/verzoek-ab-automatisch.http',
     // V3: '...', etc.
 } as const;
 
 export type RequestVariant = keyof typeof REQUEST_FILES; // 'V1' | 'V2' | ...
 
+// Create your scenarios here.
 export const SCENARIOS = {
     // first token = V*, rest = steps
-    A: 'V1, 1,2A,4A,5A,6A,7A,8A,9A,10A,12,14A,16A',
-    B: 'V1, 1,2B,3,4A,5B,5A,6A,7C,8C,9A,10B,12,14B,16B',
-    C: 'V1, 1,2A, 99E, 4B,5A, 99G, 99H, 6A,7C,8A, 99I, 4B, 99F,9B,10B,12,14A,16C',
-    // D: '...', etc.
+    Default: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 11, 12, 13, 14A, 15A',
+    A: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 12, 14A',
+    B: 'V1, 1, 2A, 99E, 4B, 5A, 99G, 99H, 6A, 7C, 8A, 99I, 4B, 99F, 9B, 10B, 12, 14A',
+    // C: '...', etc.
 } as const;
 
 export type ScenarioKey = keyof typeof SCENARIOS;
@@ -32,12 +33,11 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     8: 'vaststellen-verblijfadres-partner', //A = Verblijfadres, B = BRP adres, C = Anders
     9: 'vaststellen-verblijfstitel-aanvrager', //A = Ja , B = Nee
     10: 'vaststellen-verblijfstitel-partner', //A = Ja , B = Nee
-    11: 'vaststellen-aanvangsdatum', // Geen keuzes
-    12: 'vaststellen-ingangsdatum', // Geen keuzes
-    13: 'vaststellen-leef-woonsituatie', // Geen keuzes
-    14: 'vaststellen-woonsituatie', // A: 1-belanghebbend-zelfstandig-Art23JA B: 2-belanghebbend-instelling-Art23NEE
-    15: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)
-    16: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
+    11: 'vaststellen-ingangsdatum', // Geen keuzes
+    12: 'vaststellen-leef-woonsituatie', // Geen keuzes
+    13: 'vaststellen-woonsituatie', // A: 1-belanghebbend-zelfstandig-Art23JA B: 2-belanghebbend-instelling-Art23NEE
+    14: 'vaststellen-leefsituatie', //ABCDE (1st - 5th option)
+    15: 'vaststellen-besluit', //A = Afwijzen, B = Lening, C = Krediethypotheek, D = Lening om niet
 
     99: 'adhoc-task', // Ad hoc tasks
     // A = Aanvraag buiten behandeling

@@ -21,7 +21,6 @@ export default async function (page: Page, testData: TestData) {
         });
 
         const response = await createVerzoek(
-            testData.lastName,
             apiTestRequestFile,
             apiRequestConfigFile,
             infra,
@@ -32,10 +31,11 @@ export default async function (page: Page, testData: TestData) {
         if (!response.id) throw new Error('Verzoek should have an ID');
 
         testData.requestId = response.id;
+        testData.publicReference = response.public_reference;
         console.log('Created verzoek with ID:', testData.requestId);
+        console.log('Created verzoek with public_reference:', testData.publicReference);
     } catch (error) {
         console.error('Failed to create verzoek:', error);
         throw error;
     }
 }
-
