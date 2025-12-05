@@ -26,7 +26,6 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         await page.getByRole('menuitem', { name: 'Aanvraag buiten behandeling' }).click();
         console.log('Option A submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5_000);
 
         await vastleggenBuitenBehandelingStellingTask(page);
         await checkBezwaarTermijn(page);
@@ -36,7 +35,6 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         await page.getByRole('menuitem', { name: 'Aanvraag intrekken' }).click();
         console.log('Option B submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5_000);
 
         await vastleggenIntrekkingTask(page);
         await checkBezwaarTermijn(page);
@@ -46,7 +44,6 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         await page.getByRole('menuitem', { name: 'Behandeling aanvraag opnieuw' }).click();
         console.log('Option C submit: Clicking "Doorgaan"...');
         await page.getByRole('button', { name: 'Doorgaan' }).click();
-        await page.waitForTimeout(5_000);
     },
     D: async (page) => {
         console.log('Option D: "Brongegevens verversen"');
@@ -149,8 +146,8 @@ export default async function adhocTask(page: Page) {
         const handler = optionHandlers[option] ?? optionHandlers.D!;
         await handler(page);
 
+        await page.waitForTimeout(2_000);
         await page.waitForLoadState('networkidle', { timeout: 15_000 });
-        await page.waitForTimeout(1_000);
 
         console.log(
             `Adhoc task flow (including any follow-up) completed for option "${option}".`

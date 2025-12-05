@@ -96,6 +96,11 @@ async function runTaskWithLogging(page: import('@playwright/test').Page, testDat
         try {
             await getTaskBySlug(slug).fn(page, testData);
             log.info(`Finished task "${title}" OK`);
+
+            // After every task wait 1 second to prevent errors
+            await page.waitForLoadState('networkidle', { timeout: 10_000 });
+            await page.waitForTimeout(1_000);
+
         } catch (e: any) {
             log.error(`Task "${title}" failed`, e?.stack ?? e);
             const file = `error-${slug}-${Date.now()}.png`;
