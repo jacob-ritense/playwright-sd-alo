@@ -8,6 +8,7 @@ import vastleggenBuitenBehandelingStellingTask from './vastleggen-buiten-behande
 import wijzigenContactgegevensAanvragerTask from './wijzigen-contactgegevens-aanvrager.spec';
 import invoerenNieuweDeadlineTask from "./invoeren-nieuwe-deadline.spec";
 import uploadenOntvangenDocumentenTask from "./uploaden-ontvangen-documenten.spec";
+import {checkBezwaarTermijn} from "../../helper-functions/utils";
 
 const TASK_KEY = 'adhoc-task';
 
@@ -28,6 +29,7 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         await page.waitForTimeout(5_000);
 
         await vastleggenBuitenBehandelingStellingTask(page);
+        await checkBezwaarTermijn(page);
     },
     B: async (page) => {
         console.log('Option B: "Aanvraag intrekken"');
@@ -37,6 +39,7 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         await page.waitForTimeout(5_000);
 
         await vastleggenIntrekkingTask(page);
+        await checkBezwaarTermijn(page);
     },
     C: async (page) => {
         console.log('Option C: "Behandeling aanvraag opnieuw"');

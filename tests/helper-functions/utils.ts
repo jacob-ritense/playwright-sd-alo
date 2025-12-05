@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { loginEnv } from '../tasks/login-env';
 import { loginDev } from '../tasks/login-dev';
@@ -306,4 +306,35 @@ export async function claimCase(page) {
     } catch (err) {
         console.error(`✗ Failed to claim case:`, err);
     }
+}
+
+export async function checkBezwaarTermijn(page: Page) {
+    const label = '(Eind)controle: Lopende bezwaartermijn';
+
+    console.log(`[${label}] Waiting 5 seconds before navigating to "Voortgang"...`);
+    await page.waitForTimeout(5_000);
+
+    console.log(`[${label}] Navigating to "Voortgang" tab...`);
+    await page.getByRole('tab', { name: 'Voortgang' }).click();
+
+    const target = page.getByText(/lopende bezwaartermijn/i);
+
+    try {
+        console.log(`[${label}] Expecting "lopende bezwaartermijn" to be visible (first attempt)...`);
+        await expect(target).toBeVisible({ timeout: 10_000 });
+    } catch {
+        console.warn(`[${label}] "lopende bezwaartermijn" not found, reloading page and retrying once...`);
+        await page.reload();
+        await page.waitForLoadState('domcontentloaded');
+
+        console.log(`[${label}] Navigating again to "Voortgang" tab...`);
+        await page.getByRole('tab', { name: 'Voortgang' }).click();
+
+        const targetAfterReload = page.getByText(/lopende bezwaartermijn/i);
+        await expect(targetAfterReload).toBeVisible({ timeout: 5_000 });
+    }
+
+    console.log(`[${label}] Navigating back to "Algemeen" tab...`);
+    await page.getByRole('tab', { name: 'Algemeen' }).click();
+    await page.waitForLoadState('networkidle', { timeout: 10_000 });
 }
