@@ -24,8 +24,8 @@ export const SCENARIOS = {
     F: 'V1, 1, 2A, 4A, 5A, 99D, 99E',                                               // Adhoc flow  - Check "Brongegevens verversen" & "Contactgegevens wijzigen
     G: 'V1, 1, 2A, 4B, 99G, 99F',                                                   // Adhoc flow  - Check "Infoverzoek deadline verlengen" & "Infoverzoek annuleren"
     H: 'V1, 1, 2A, 4B, 99H, 5A, 99I, 4A',                                           // Adhoc flow  - Check "Infoverzoek handmatige reactie" & "Opnieuw infoverzoek"
-    I: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 99K, 7B, 8B, 99L, 8A',                           // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
-    J: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 99M, 9B, 10B, 99N, 10A',                 // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
+    I: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 99K, 7B, 8B, 99L, 8A',                       // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
+    J: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 99M, 9B, 10B, 99N, 10A',            // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
     K: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 11, 12A, 99J, 12A, 13A',            // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
     L: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 11, 99O, 11, 12A, 14A',             // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
     // Z: '...', etc.

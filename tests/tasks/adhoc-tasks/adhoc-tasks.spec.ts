@@ -85,49 +85,49 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
     I: async (page) => {
         console.log('Option I: "Opnieuw informatieverzoek"');
         await startRestartFlow(page);
-        await page.getByText('Opnieuw informatieverzoek').click();
+        await page.getByRole('option', { name: 'Opnieuw informatieverzoek' }).click();
         console.log('Option I submit: Clicking "Indienen"...');
         await page.getByRole('button', { name: 'Indienen' }).click();
     },
     J: async (page) => {
         console.log('Option J: "Opnieuw vaststellen leef en"');
         await startRestartFlow(page);
-        await page.getByText('Opnieuw vaststellen leef en').click();
+        await page.getByRole('option', { name: 'Opnieuw vaststellen leef en' }).click();
         console.log('Option J submit: Clicking "Indienen"...');
         await page.getByRole('button', { name: 'Indienen' }).click();
     },
     K: async (page) => {
         console.log('Option K: "Opnieuw vaststellen verblijfadres aanvrager"');
         await startRestartFlow(page);
-        await page.getByText('Opnieuw vaststellen verblijfadres aanvrager').click();
+        await page.getByRole('option', { name: 'Opnieuw vaststellen verblijfadres aanvrager' }).click();
         console.log('Option K submit: Clicking "Indienen"...');
         await page.getByRole('button', { name: 'Indienen' }).click();
     },
     L: async (page) => {
         console.log('Option L: "Opnieuw vaststellen verblijfadres partner"');
         await startRestartFlow(page);
-        await page.getByText('Opnieuw vaststellen verblijfadres partner').click();
+        await page.getByRole('option', { name: 'Opnieuw vaststellen verblijfadres partner' }).click();
         console.log('Option L submit: Clicking "Indienen"...');
         await page.getByRole('button', { name: 'Indienen' }).click();
     },
     M: async (page) => {
         console.log('Option M: "Opnieuw vaststellen verblijfstitel aanvrager"');
         await startRestartFlow(page);
-        await page.getByText('Opnieuw vaststellen verblijfstitel aanvrager').click();
+        await page.getByRole('option', { name: 'Opnieuw vaststellen verblijfstitel aanvrager' }).click();
         console.log('Option M submit: Clicking "Indienen"...');
         await page.getByRole('button', { name: 'Indienen' }).click();
     },
     N: async (page) => {
         console.log('Option N: "Opnieuw vaststellen verblijfstitel partner"');
         await startRestartFlow(page);
-        await page.getByText('Opnieuw vaststellen verblijfstitel partner').click();
+        await page.getByRole('option', { name: 'Opnieuw vaststellen verblijfstitel partner' }).click();
         console.log('Option N submit: Clicking "Indienen"...');
         await page.getByRole('button', { name: 'Indienen' }).click();
     },
     O: async (page) => {
         console.log('Option O: "Opnieuw vaststellen ingangsdatum"');
         await startRestartFlow(page);
-        await page.getByText('Opnieuw vaststellen ingangsdatum').click();
+        await page.getByRole('option', { name: 'Opnieuw vaststellen ingangsdatum' }).click();
         console.log('Option O submit: Clicking "Indienen"...');
         await page.getByRole('button', { name: 'Indienen' }).click();
     },

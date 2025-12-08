@@ -300,33 +300,41 @@ export async function claimCase(page : any) {
     }
 }
 
-export async function checkBezwaarTermijn(page : any) {
+export async function checkBezwaarTermijn(page: Page) {
     const label = '(Eind)controle: Lopende bezwaartermijn';
 
     console.log(`[${label}] Waiting 5 seconds before navigating to "Voortgang"...`);
-    await page.waitForTimeout(5_000);
+    await page.waitForTimeout(5000);
 
-    console.log(`[${label}] Navigating to "Voortgang" tab...`);
-    await page.getByRole('tab', { name: 'Voortgang' }).click();
+    const targetText = /lopende bezwaartermijn/i;
 
-    const target = page.getByText(/lopende bezwaartermijn/i);
-
-    try {
-        console.log(`[${label}] Expecting "lopende bezwaartermijn" to be visible (first attempt)...`);
-        await expect(target).toBeVisible({ timeout: 10_000 });
-    } catch {
-        console.warn(`[${label}] "lopende bezwaartermijn" not found, reloading page and retrying once...`);
-        await page.reload();
-        await page.waitForLoadState('domcontentloaded');
-
-        console.log(`[${label}] Navigating again to "Voortgang" tab...`);
+    for (let delay = 2000, attempt = 1; delay <= 8000; delay += 1000, attempt++) {
+        console.log(`[${label}] Attempt ${attempt}: opening "Voortgang" tab`);
         await page.getByRole('tab', { name: 'Voortgang' }).click();
 
-        const targetAfterReload = page.getByText(/lopende bezwaartermijn/i);
-        await expect(targetAfterReload).toBeVisible({ timeout: 5_000 });
+        const target = page.getByText(targetText);
+
+        try {
+            await expect(target).toBeVisible({ timeout: 2000 });
+            console.log(`[${label}] FOUND "lopende bezwaartermijn" on attempt ${attempt}`);
+            break;
+        } catch {
+            if (delay === 8000) {
+                console.warn(`[${label}] Not found after last attempt.`);
+                break;
+            }
+
+            console.warn(
+                `[${label}] Not found → waiting ${delay}ms → reloading page...`
+            );
+
+            await page.waitForTimeout(delay);
+            await page.reload();
+            await page.waitForLoadState('domcontentloaded');
+        }
     }
 
     console.log(`[${label}] Navigating back to "Algemeen" tab...`);
     await page.getByRole('tab', { name: 'Algemeen' }).click();
-    await page.waitForLoadState('networkidle', { timeout: 10_000 });
+    await page.waitForLoadState('networkidle', { timeout: 10000 });
 }
