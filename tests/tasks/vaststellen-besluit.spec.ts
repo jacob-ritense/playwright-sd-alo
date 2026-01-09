@@ -2,7 +2,7 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
-import { openTask } from '../helper-functions/utils';
+import {checkBezwaarTermijn, openTask} from '../helper-functions/utils';
 
 // Shared helpers used by B/C/D
 async function selectToekennen(page: Page, taskName: string) {
@@ -107,6 +107,8 @@ export default async function vaststellenBesluitTask(page: Page) {
 
         console.log(`[${taskName}] Clicking "Indienen"...`);
         await page.getByRole('button', { name: 'Indienen' }).click();
+
+        await checkBezwaarTermijn(page);
         await page.waitForLoadState('networkidle', { timeout: 15000 });
         await page.waitForTimeout(2000);
 

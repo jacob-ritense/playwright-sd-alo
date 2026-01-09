@@ -1,0 +1,257 @@
+POST {{objects_api_url}}
+Authorization: Token {{token}}
+Content-Crs: EPSG:4326
+Content-Type: application/json
+
+{
+  "type": "{{objecttypes_api_url_alo}}",
+  "record": {
+    "typeVersion": "{{objecttypes_version}}",
+    "data": {
+      "bsn": "022264541",
+      "data": {
+        "uw-gegevens": {
+          "naw": {
+            "grAdresgegevens": {
+              "plaats": "'s-Gravenhage",
+              "straat": "Spui",
+              "postcode": "2511BT",
+              "huisletter": "",
+              "huisnummer": 70,
+              "toevoeging": ""
+            },
+            "grPersoongegevens": {
+              "Bsn": "022264541",
+              "voornaam": "Nora",
+              "achternaam": "Wollingen",
+              "voorletters": "N.",
+              "voorvoegsels": "van",
+              "geboortedatum": "1985-03-12"
+            }
+          }
+        },
+
+        "alo-inleiding": {},
+
+        "alo-uitbetaling": {
+          "hoeBetaald": "VOLLEDIG_OP_MIJN_REKENING",
+          "ibanAanWie": "JA",
+          "ibanUitbetaling": "NL12RABO0123456789",
+          "naamRekeninghouder": "Nora van Wollingen"
+        },
+
+        "alo-uw-inkomsten": {
+          "grUitkering": {
+            "grWw": {
+              "ww": 600,
+              "geenWw": false,
+              "wwPeriode": "MAAND"
+            },
+            "welkeUitkering": {
+              "WW": true,
+              "ANW": false,
+              "AOW": false,
+              "WAO": false,
+              "WIA": false,
+              "WAJONG": false,
+              "ZIEKTEWET": false
+            }
+          },
+          "grLoondienst": {
+            "hhgWerkgevers": [
+              {
+                "naamWerkgever": "Stadswinkel Den Haag Centrum",
+                "soortContract": "CONTRACT_BEPAALDE_TIJD",
+                "hoeveelUurWerk": 24,
+                "nettoloon": 1500,
+                "hoevaakLoon": "MAAND",
+                "kiesLoonheffing": "JA",
+                "urenvermindering": "NEE",
+                "kiesExtraUitbetaald": "NEE"
+              }
+            ]
+          },
+          "heeftInkomsten": "JA",
+          "soortenInkomsten": {
+            "LOONDIENST": true,
+            "UITKERING": true
+          }
+        },
+
+        "inkomsten-partner": {
+          "heeftPartnerInkomsten": "MIJN_PARTNER_HEEFT_GEEN_INKOMEN",
+          "soortenInkomstenPartner": {}
+        },
+
+        "alo-reden-aanvraag": {
+          "grIoaw": {
+            "geenRechtMeerWw": "NEE",
+            "geenRechtMeerWga": "NEE",
+            "gedeeltelijkArbeidsongeschikt": "NEE"
+          },
+          "grIngangsdatum": {
+            "redenLaat": "NEE",
+            "welkeredenlaat": "ANDERE_REDEN",
+            "waaromLaatAlgemeen": "Ik wist niet hoe ik deze uitkering kon aanvragen"
+          },
+          "waaromBijstandsuitkering": "GEEN_ONVOLDOENDE_INKOMEN",
+          "grGeenInkomen": {
+            "waaromGeenInkomen": "INKOMSTEN_TE_LAAG"
+          }
+        },
+
+        "alo-uw-woonsituatie": {
+          "hoeWoontU": "EIGEN_KOOPWONING_OF_WOONBOOT"
+        },
+
+        "alo-uw-beschikbaarheid": {
+          "grBeschikbaarheid": {
+            "onbetaald": "NEE",
+            "onbetaaldWerk": "",
+            "beschikbaarheid": 40
+          },
+          "grBeschikbaarheidPartner": {
+            "onbetaaldPartner": "NEE",
+            "onbetaaldwerkPartner": "",
+            "beschikbaarheidPartner": 40
+          }
+        },
+
+        "alo-gezinssamenstelling": {
+          "partnerWoontBijU": "JA",
+          "grGegevensPartner": {
+            "bsnPartner": "689735273",
+            "grAdresPartner": {
+              "plaatsPartner": "'s-Gravenhage",
+              "straatPartner": "Spui",
+              "postcodePartner": "2511BT",
+              "huisletterPartner": "",
+              "huisnummerPartner": 70,
+              "nummerToevoegingPartner": ""
+            },
+            "geboortePartner": "1983-11-02",
+            "achternaamPartner": "Terphuis",
+            "voorletterPartner": "L",
+            "voorvoegselPartner": "",
+            "zelfdeAdresPartner": "JA",
+            "nationaliteitPartner": "NEDERLANDSE_NATIONALITEIT",
+            "geenNederlanderPartner": "NEE"
+          },
+          "grGegevensKinderen": {
+            "hhgGegevensKinderen": [
+              {
+                "voornaamKind": "Bauke",
+                "opleidingKind": "MBO",
+                "achternaamKind": "Terphuis",
+                "voorletterKind": "K",
+                "voorvoegselKind": "",
+                "geboortedatumKind": "2010-09-25",
+                "krijgtKinderbijslag": "JA"
+              },
+              {
+                "voornaamKind": "Olaf",
+                "opleidingKind": "GEEN_OPLEIDING",
+                "achternaamKind": "Terphuis",
+                "voorletterKind": "O",
+                "voorvoegselKind": "",
+                "geboortedatumKind": "2012-08-08",
+                "krijgtKinderbijslag": "JA"
+              },
+              {
+                "voornaamKind": "Fenna",
+                "opleidingKind": "GEEN_OPLEIDING",
+                "achternaamKind": "Terphuis",
+                "voorletterKind": "N",
+                "voorvoegselKind": "",
+                "geboortedatumKind": "2012-08-08",
+                "krijgtKinderbijslag": "JA"
+              }
+            ]
+          },
+          "thuiswonendeKinderen": "JA"
+        },
+
+        "alo-aanvullende-gegevens": {
+          "lieverPost": false,
+          "grWoonsituatie": {
+            "woonsituatie": "WAAR_IK_WOON"
+          },
+          "grAdresVerblijf": {
+            "plaatsVerblijf": "'s-Gravenhage",
+            "straatVerblijf": "Spui",
+            "postcodeVerblijf": "2511BT",
+            "huisletterVerblijf": "",
+            "huisnummerVerblijf": 70,
+            "nummerToevoegingVerblijf": "",
+            "toelichtingadresVerblijf": ""
+          },
+          "grNationaliteit": {
+            "nationaliteitBezit": "NEDERLANDSE_NATIONALITEIT",
+            "geenNederlandseNationaliteit": "NEE"
+          },
+          "grContactAanvraag": {
+            "hulpAanvraag": "NEE"
+          },
+          "grNieuweContactgegevens": {
+            "geenEmail": false,
+            "emailAdres": "nora.van.Wollingen@example.com",
+            "geenTelefoon": false,
+            "telefoonnummer": "0689453143"
+          }
+        },
+
+        "alo-uw-inkomsten-overzicht": {},
+
+        "alo-bezittingen-en-schulden": {
+          "grKoopwoning": {
+            "wozWaarde": 350000,
+            "beleggingsGekoppeld": "NEE",
+            "restHypotheekSchuld": 280000
+          },
+          "grMotorvoertuigen": {
+            "hhgMotorvoertuigen": [
+              {
+                "kenteken": "NK45TR",
+                "dagwaarde": 6500
+              }
+            ]
+          },
+          "grRekeningen": {
+            "grLogicaBank": {
+              "hhgVoegRekeningToe": [
+                {
+                  "prive": "NL12RABO0123456789",
+                  "hoeveelGeld": 1500,
+                  "typeRekening": "NEDERLANDSE_PRIVE_REKENING",
+                  "geenRekeningUploaden": true
+                }
+              ]
+            },
+            "geenBankrekening": false
+          },
+          "grContant": {
+            "waardeContant": 200
+          },
+          "grUwVermogen": {
+            "welkVermogen": {
+              "KOOPWONING": true,
+              "MOTORVOERTUIG": true,
+              "BANK_EN_SPAARREKENINGEN": true,
+              "CONTANTEN": true
+            }
+          },
+          "heeftSchulden": "NEE"
+        },
+
+        "alo-bezittingen-schulden-overzicht": {}
+      },
+      "type": "Verzoek AB DCM",
+      "attachments": [],
+      "language_code": "nl",
+      "submission_id": "12345-abcde-67890",
+      "public_reference": "OF-{{$random.alphanumeric(8)}}"
+    },
+    "startAt": "2025-03-20",
+    "registrationAt": "2025-03-20"
+  }
+}
