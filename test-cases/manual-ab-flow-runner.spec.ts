@@ -13,7 +13,6 @@ import vaststellenVerblijfadresAanvragerTask from '../tests/tasks/vaststellen-ve
 import vaststellenVerblijfadresPartnerTask from '../tests/tasks/vaststellen-verblijfadres-partner.spec';
 import vaststellenVerblijfstitelAanvragerTask from '../tests/tasks/vaststellen-verblijfstitel-aanvrager.spec';
 import vaststellenVerblijfstitelPartnerTask from '../tests/tasks/vaststellen-verblijfstitel-partner.spec';
-import vaststellenAanvangsdatumTask from '../tests/tasks/vaststellen-aanvangsdatum.spec';
 import vaststellenIngangsdatumTask from '../tests/tasks/vaststellen-ingangsdatum.spec';
 import vaststellenWoonsituatieTask from '../tests/tasks/vaststellen-woonsituatie.spec';
 import vaststellenLeefsituatieTask from '../tests/tasks/vaststellen-leefsituatie.spec';
@@ -34,7 +33,6 @@ const tasks: { name: string; fn: TaskFn }[] = [
     { name: 'vaststellen-verblijfadres-partner', fn: vaststellenVerblijfadresPartnerTask },
     { name: 'vaststellen-verblijfstitel-aanvrager', fn: vaststellenVerblijfstitelAanvragerTask },
     { name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
-    { name: 'vaststellen-aanvangsdatum', fn: vaststellenAanvangsdatumTask },
     { name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
     { name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
     // { name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask },

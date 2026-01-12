@@ -96,6 +96,11 @@ async function runTaskWithLogging(page: import('@playwright/test').Page, testDat
         try {
             await getTaskBySlug(slug).fn(page, testData);
             log.info(`Finished task "${title}" OK`);
+
+            // After every task wait 1 second to prevent errors
+            await page.waitForLoadState('networkidle', { timeout: 10_000 });
+            await page.waitForTimeout(1_000);
+
         } catch (e: any) {
             log.error(`Task "${title}" failed`, e?.stack ?? e);
             const file = `error-${slug}-${Date.now()}.png`;
@@ -148,33 +153,4 @@ export async function runAbFlow(page: import('@playwright/test').Page, options: 
             break;
         }
     }
-
-// Final check, check for "Lopende bezwaartermijn".
-    await test.step('Eindcontrole: Lopende bezwaartermijn', async () => {
-        log.info('Waiting 5 seconds before navigating to "Voortgang"...');
-        await page.waitForTimeout(5_000);
-
-        log.info('Navigating to "Voortgang" tab...');
-        await page.getByRole('tab', { name: 'Voortgang' }).click();
-
-        const target = page.getByText('lopende bezwaartermijn', { exact: false });
-
-        try {
-            log.info('Expecting "lopende bezwaartermijn" to be visible (first attempt)...');
-            await expect(target).toBeVisible({ timeout: 10_000 });
-        } catch {
-            log.warn('"lopende bezwaartermijn" not found, reloading page and retrying once...');
-            await page.reload();
-
-            log.info('Navigating again to "Voortgang" tab...');
-            await page.getByRole('tab', { name: 'Voortgang' }).click();
-
-            await expect(target).toBeVisible({ timeout: 5_000 });
-        }
-
-        log.info('Navigating back to "Algemeen" tab...');
-        await page.getByRole('tab', { name: 'Algemeen' }).click();
-        await page.waitForLoadState('networkidle', { timeout: 10000 });
-    });
-
 }

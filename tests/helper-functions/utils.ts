@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { loginEnv } from '../tasks/login-env';
 import { loginDev } from '../tasks/login-dev';
@@ -24,7 +24,7 @@ export async function waitForAngular(page: Page) {
     }, { timeout: 30000 });
     await page.waitForLoadState('networkidle', { timeout: 60000 });
   } catch (error) {
-    console.error('Failed waiting for Angular:', error.message);
+      console.error('Failed waiting for Angular:', error.message);
     try {
       const currentUrl = page.url();
       console.error('Current URL during Angular wait failure:', currentUrl);
@@ -32,9 +32,9 @@ export async function waitForAngular(page: Page) {
       console.error('Page content during Angular wait failure (first 1000 chars):', content.substring(0,1000));
       await page.screenshot({ path: 'angular-wait-failure.png', fullPage: true });
     } catch (debugError) {
-      console.error('Could not get debug info during Angular wait failure:', debugError.message);
+        console.error('Could not get debug info during Angular wait failure:', debugError.message);
     }
-    throw new Error(`Angular initialization timeout or error: ${error.message}`);
+      throw new Error(`Angular initialization timeout or error: ${error.message}`);
   }
 }
 
@@ -87,14 +87,14 @@ export async function navigateToAlgemeneBijstandAanvraag(page: Page) {
           await waitForAngular(page);
           await page.waitForTimeout(2000);
         } else {
-          throw new Error(`Failed to access Alle dossiers tab after ${maxAttempts} attempts: ${error.message}`);
+            throw new Error(`Failed to access Alle dossiers tab after ${maxAttempts} attempts: ${error.message}`);
         }
       }
     }
   } catch (error) {
     console.error('Navigation failed:', error);
     await page.screenshot({ path: 'navigation-error.png', fullPage: true });
-    throw new Error(`Navigation failed: ${error.message}`);
+      throw new Error(`Navigation failed: ${error.message}`);
   }
 }
 
@@ -153,7 +153,7 @@ export async function openCreatedCase(page: Page, publicReference: string) {
   } catch (error) {
     console.error('Failed to open case:', error);
     await page.screenshot({ path: 'case-open-error.png', fullPage: true });
-    throw new Error(`Failed to open case: ${error.message}`);
+      throw new Error(`Failed to open case: ${error.message}`);
   }
 }
 
@@ -215,7 +215,7 @@ async function verifyCaseDetails(page: Page) {
           await elementHandle.click();
           console.log(`Successfully clicked ${element}`);
         } catch (error) {
-          console.log(`Could not click ${element}:`, error.message);
+            console.log(`Could not click ${element}:`, error.message);
         }
       }
     }
@@ -228,27 +228,12 @@ async function verifyCaseDetails(page: Page) {
   }
 }
 
-// function generateInputValue(label: string): string {
-//   const lowercaseLabel = label.toLowerCase();
-//   if (lowercaseLabel.includes('email')) {
-//     return faker.internet.email();
-//   } else if (lowercaseLabel.includes('telefoon') || lowercaseLabel.includes('number')) {
-//     return faker.phone.number();
-//   } else if (lowercaseLabel.includes('datum')) {
-//     return faker.date.recent().toISOString().split('T')[0];
-//   } else if (lowercaseLabel.includes('bedrag') || lowercaseLabel.includes('amount')) {
-//     return faker.number.int({ min: 100, max: 1000 }).toString();
-//   } else {
-//     return faker.lorem.words(3);
-//   }
-// }
-
 // Helper config (tweak anytime)
 const maxAttempts = 8;        // how many retries
 const minWaitSeconds = 3;      // first retry wait
 const maxWaitSeconds = 10;     // cap for wait
 
-export async function openTask(page, taskName) {
+export async function openTask(page : any, taskName : any) {
 
     await page.waitForTimeout(2000);
     console.log(`→ openTask("${taskName}")`);
@@ -286,7 +271,7 @@ export async function openTask(page, taskName) {
 }
 
 
-export async function claimCase(page) {
+export async function claimCase(page : any) {
     console.log(`→ claimCase()`);
 
     try {
@@ -306,4 +291,43 @@ export async function claimCase(page) {
     } catch (err) {
         console.error(`✗ Failed to claim case:`, err);
     }
+}
+
+export async function checkBezwaarTermijn(page: Page) {
+    const label = '(Eind)controle: Lopende bezwaartermijn';
+
+    console.log(`[${label}] Waiting 5 seconds before navigating to "Voortgang"...`);
+    await page.waitForTimeout(5000);
+
+    const targetText = /lopende bezwaartermijn/i;
+
+    for (let delay = 2000, attempt = 1; delay <= 8000; delay += 1000, attempt++) {
+        console.log(`[${label}] Attempt ${attempt}: opening "Voortgang" tab`);
+        await page.getByRole('tab', { name: 'Voortgang' }).click();
+
+        const target = page.getByText(targetText);
+
+        try {
+            await expect(target).toBeVisible({ timeout: 2000 });
+            console.log(`[${label}] FOUND "lopende bezwaartermijn" on attempt ${attempt}`);
+            break;
+        } catch {
+            if (delay === 8000) {
+                console.warn(`[${label}] Not found after last attempt.`);
+                break;
+            }
+
+            console.warn(
+                `[${label}] Not found → waiting ${delay}ms → reloading page...`
+            );
+
+            await page.waitForTimeout(delay);
+            await page.reload();
+            await page.waitForLoadState('domcontentloaded');
+        }
+    }
+
+    console.log(`[${label}] Navigating back to "Algemeen" tab...`);
+    await page.getByRole('tab', { name: 'Algemeen' }).click();
+    await page.waitForLoadState('networkidle', { timeout: 10000 });
 }
