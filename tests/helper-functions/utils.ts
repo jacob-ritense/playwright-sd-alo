@@ -24,20 +24,26 @@ export async function waitForAngular(page: Page) {
     }, { timeout: 30000 });
     await page.waitForLoadState('networkidle', { timeout: 60000 });
   } catch (error) {
-    // @ts-ignore
-      console.error('Failed waiting for Angular:', error.message);
-    try {
-      const currentUrl = page.url();
-      console.error('Current URL during Angular wait failure:', currentUrl);
-      const content = await page.content();
-      console.error('Page content during Angular wait failure (first 1000 chars):', content.substring(0,1000));
-      await page.screenshot({ path: 'angular-wait-failure.png', fullPage: true });
-    } catch (debugError) {
-      // @ts-ignore
-        console.error('Could not get debug info during Angular wait failure:', debugError.message);
-    }
-    // @ts-ignore
-      throw new Error(`Angular initialization timeout or error: ${error.message}`);
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      console.error('Failed waiting for Angular:', errorMsg);
+
+      try {
+          const currentUrl = page.url();
+          console.error('Current URL during Angular wait failure:', currentUrl);
+
+          const content = await page.content();
+          console.error(
+              'Page content during Angular wait failure (first 1000 chars):',
+              content.substring(0, 1000)
+          );
+
+          await page.screenshot({ path: 'angular-wait-failure.png', fullPage: true });
+      } catch (debugError) {
+          const debugMsg = debugError instanceof Error ? debugError.message : String(debugError);
+          console.error('Could not get debug info during Angular wait failure:', debugMsg);
+      }
+
+      throw new Error(`Angular initialization timeout or error: ${errorMsg}`);
   }
 }
 
@@ -84,22 +90,29 @@ export async function navigateToAlgemeneBijstandAanvraag(page: Page) {
         await page.waitForSelector('table', { state: 'visible', timeout: 15000 });
         return;
       } catch (error) {
-        attempts++;
-        if (attempts < maxAttempts) {
-          await page.reload();
-          await waitForAngular(page);
-          await page.waitForTimeout(2000);
-        } else {
-          // @ts-ignore
-            throw new Error(`Failed to access Alle dossiers tab after ${maxAttempts} attempts: ${error.message}`);
-        }
+          attempts++;
+
+          if (attempts < maxAttempts) {
+              await page.reload();
+              await waitForAngular(page);
+              await page.waitForTimeout(2000);
+          } else {
+              const msg = error instanceof Error ? error.message : String(error);
+              throw new Error(
+                  `Failed to access Alle dossiers tab after ${maxAttempts} attempts: ${msg}`
+              );
+          }
       }
     }
   } catch (error) {
-    console.error('Navigation failed:', error);
-    await page.screenshot({ path: 'navigation-error.png', fullPage: true });
-    // @ts-ignore
-      throw new Error(`Navigation failed: ${error.message}`);
+      console.error('Navigation failed:', error);
+      await page.screenshot({ path: 'navigation-error.png', fullPage: true });
+
+      if (error instanceof Error) {
+          throw new Error(`Navigation failed: ${error.message}`);
+      }
+
+      throw new Error('Navigation failed: unknown error');
   }
 }
 
@@ -156,10 +169,14 @@ export async function openCreatedCase(page: Page, publicReference: string) {
     await verifyCaseDetails(page);
     console.log('Case opened successfully');
   } catch (error) {
-    console.error('Failed to open case:', error);
-    await page.screenshot({ path: 'case-open-error.png', fullPage: true });
-    // @ts-ignore
-      throw new Error(`Failed to open case: ${error.message}`);
+      console.error('Failed to open case:', error);
+      await page.screenshot({ path: 'case-open-error.png', fullPage: true });
+
+      if (error instanceof Error) {
+          throw new Error(`Failed to open case: ${error.message}`);
+      }
+
+      throw new Error('Failed to open case: unknown error');
   }
 }
 
@@ -221,8 +238,11 @@ async function verifyCaseDetails(page: Page) {
           await elementHandle.click();
           console.log(`Successfully clicked ${element}`);
         } catch (error) {
-          // @ts-ignore
-            console.log(`Could not click ${element}:`, error.message);
+            if (error instanceof Error) {
+                console.log(`Could not click ${element}:`, error.message);
+            } else {
+                console.log(`Could not click ${element}:`, error);
+            }
         }
       }
     }
