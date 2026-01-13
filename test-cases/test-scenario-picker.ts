@@ -44,11 +44,12 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     7: 'vaststellen-verblijfstitel-aanvrager',      // A = Ja               B = Nee
     8: 'vaststellen-verblijfstitel-partner',       // A = Ja               B = Nee
     9: 'vaststellen-ingangsdatum',                 // Geen keuzes
-    10: 'vaststellen-verblijfadres-aanvrager',       // A = Verblijfadres    B = BRP adres, C = Anders
-    11: 'vaststellen-verblijfadres-partner',         // A = Verblijfadres    B = BRP adres, C = Anders
-    12: 'vaststellen-woonsituatie',                 // A: 1-belanghebbend-zelfstandig-Art23JA   B: 2-belanghebbend-instelling-Art23NEE
-    13: 'vaststellen-leefsituatie',                 // ABCDE (1st - 5th option)
-    14: 'vaststellen-besluit',                      // A = Afwijzen     B = Lening    C = Krediethypotheek    D = Lening om niet
+    10: 'vaststellen-relaties',                 // Geen keuzes
+    11: 'vaststellen-verblijfadres-aanvrager',       // A = Verblijfadres    B = BRP adres, C = Anders
+    12: 'vaststellen-verblijfadres-partner',         // A = Verblijfadres    B = BRP adres, C = Anders
+    13: 'vaststellen-woonsituatie',                 // A: 1-belanghebbend-zelfstandig-Art23JA   B: 2-belanghebbend-instelling-Art23NEE
+    14: 'vaststellen-leefsituatie',                 // ABCDE (1st - 5th option)
+    15: 'vaststellen-besluit',                      // A = Afwijzen     B = Lening    C = Krediethypotheek    D = Lening om niet
 
     99: 'adhoc-task', // Ad hoc tasks
     // A = Aanvraag buiten behandeling
