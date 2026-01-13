@@ -41,11 +41,11 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     4: 'overwegen-uitzetten-infoverzoek',           // A = Nee,             B = Ja
     5: 'vaststellen-persoon-aanvrager',             // A = Ja BRP           B = Nee (ander BSN)
     6: 'vaststellen-persoon-partner',               // A = Ja BRP           B = Nee (ander BSN)
-    7: 'vaststellen-verblijfadres-aanvrager',       // A = Verblijfadres    B = BRP adres, C = Anders
-    8: 'vaststellen-verblijfadres-partner',         // A = Verblijfadres    B = BRP adres, C = Anders
-    9: 'vaststellen-verblijfstitel-aanvrager',      // A = Ja               B = Nee
-    10: 'vaststellen-verblijfstitel-partner',       // A = Ja               B = Nee
-    11: 'vaststellen-ingangsdatum',                 // Geen keuzes
+    7: 'vaststellen-verblijfstitel-aanvrager',      // A = Ja               B = Nee
+    8: 'vaststellen-verblijfstitel-partner',       // A = Ja               B = Nee
+    9: 'vaststellen-ingangsdatum',                 // Geen keuzes
+    10: 'vaststellen-verblijfadres-aanvrager',       // A = Verblijfadres    B = BRP adres, C = Anders
+    11: 'vaststellen-verblijfadres-partner',         // A = Verblijfadres    B = BRP adres, C = Anders
     12: 'vaststellen-woonsituatie',                 // A: 1-belanghebbend-zelfstandig-Art23JA   B: 2-belanghebbend-instelling-Art23NEE
     13: 'vaststellen-leefsituatie',                 // ABCDE (1st - 5th option)
     14: 'vaststellen-besluit',                      // A = Afwijzen     B = Lening    C = Krediethypotheek    D = Lening om niet

@@ -57,41 +57,10 @@ export async function waitForDashboard(page: Page) {
 }
 
 
-
-
-
-
-export async function waitForAngular(page: Page) {
-  console.log('Waiting for Angular to initialize...');
-  try {
-    await page.waitForSelector('app-root', { state: 'attached', timeout: 30000 });
-    await page.waitForFunction(() => {
-      const angular = (window as any).ng;
-      const appRootElement = document.querySelector('app-root');
-      return angular && appRootElement && angular.getComponent(appRootElement);
-    }, { timeout: 30000 });
-    await page.waitForLoadState('networkidle', { timeout: 60000 });
-  } catch (error) {
-      console.error('Failed waiting for Angular:', error.message);
-    try {
-      const currentUrl = page.url();
-      console.error('Current URL during Angular wait failure:', currentUrl);
-      const content = await page.content();
-      console.error('Page content during Angular wait failure (first 1000 chars):', content.substring(0,1000));
-      await page.screenshot({ path: 'angular-wait-failure.png', fullPage: true });
-    } catch (debugError) {
-        console.error('Could not get debug info during Angular wait failure:', debugError.message);
-    }
-      throw new Error(`Angular initialization timeout or error: ${error.message}`);
-  }
-}
-
-// Aanpassen per process
 export async function navigateToAlgemeneBijstandAanvraag(page: Page) {
   console.log('Navigating to Algemene bijstand section...');
   try {
     await page.waitForLoadState('networkidle', { timeout: 30000 });
-    await waitForAngular(page);
     
     const dossierButton = page.getByRole('button', {name: 'Dossiers'});
     await dossierButton.waitFor({ state: 'visible', timeout: 30000 });
@@ -132,7 +101,6 @@ export async function navigateToAlgemeneBijstandAanvraag(page: Page) {
         attempts++;
         if (attempts < maxAttempts) {
           await page.reload();
-          await waitForAngular(page);
           await page.waitForTimeout(2000);
         } else {
             throw new Error(`Failed to access Alle dossiers tab after ${maxAttempts} attempts: ${error.message}`);

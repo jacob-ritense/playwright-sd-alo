@@ -9,7 +9,6 @@ export default async function loginTask(page: Page, testData: TestData) {
     const infra = (testData.options?.INFRA ?? DEFAULT_INFRA);
 
     await login(page, infra);
-    //await waitForAngular(page);
     await waitForDashboard(page);
     await navigateToAlgemeneBijstandAanvraag(page);
     if (!testData.publicReference) {
