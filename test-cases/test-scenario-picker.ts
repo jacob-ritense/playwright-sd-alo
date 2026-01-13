@@ -15,22 +15,22 @@ export type RequestVariant = keyof typeof REQUEST_FILES; // 'V1' | 'V2' | ...
 // Create your scenarios here.
 export const SCENARIOS = {
     // first token = V*, rest = steps
-    Default: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 11, 12A, 14A',                // Normal flow - Everything Manual (fastest route)
-    A: 'V3, 1, 2A, 4A, 14A',                                                        // Normal flow - Everything Automatic
-    B: 'V1, 1, 2B, 3, 4A, 5B, 5A, 6B, 6A, 7B, 8C, 9B, 10B, 11, 12B, 14B',           // Normal flow - Everything Manual (slow route)
-    C: 'V3, 1, 4A, 99C, 2A, 4A, 99C, 2A, 4A, 14A, 99C, 2A, 4A, 14B',                // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
+    Default: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9, 11A, 12A, 10, 13A, 15A',            // Normal flow - Everything Manual (fastest route)
+    A: 'V3, 1, 2A, 4A, 10, 15A',                                                    // Normal flow - Everything Automatic
+    B: 'V1, 1, 2B, 3, 4A, 5B, 5A, 6B, 6A, 7B, 8B, 9, 11B, 12C, 10, 13B, 15B',           // Normal flow - Everything Manual (slow route)
+    C: 'V3, 1, 4A, 99C, 2A, 4A, 99C, 2A, 4A, 15A, 99C, 2A, 4A, 15B',                // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
     D: 'V3, 1, 2A, 4A, 99A',                                                        // Adhoc flow  - Check "Buiten behandeling stellen"
     E: 'V3, 1, 2A, 4A, 99B',                                                        // Adhoc flow  - Check "Aanvraag intrekken"             //Needs testing
     F: 'V1, 1, 2A, 4A, 5A, 99D, 99E',                                               // Adhoc flow  - Check "Brongegevens verversen" & "Contactgegevens wijzigen
     G: 'V1, 1, 2A, 4B, 99G, 99F',                                                   // Adhoc flow  - Check "Infoverzoek deadline verlengen" & "Infoverzoek annuleren"
     H: 'V1, 1, 2A, 4B, 99H, 5A, 99I, 4A',                                           // Adhoc flow  - Check "Infoverzoek handmatige reactie" & "Opnieuw infoverzoek"
-    I: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 99K, 7B, 8B, 99L, 8A',                       // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
-    J: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 99M, 9B, 10B, 99N, 10A',            // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
-    K: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 11, 12A, 99J, 12A, 13A',            // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
-    L: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9A, 10A, 11, 99O, 11, 12A, 14A',             // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
+    I: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9, 11A, 12A, 99K, 11B, 12B, 99L, 11A',       // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
+    J: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 99M, 7B, 8B, 99N, 7A',                       // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
+    K: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9, 11A, 12A, 10, 13A, 99J, 13A, 14A',        // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
+    L: 'V1, 1, 2A, 4A, 5A, 6A, 9, 99O, 9, 13A, 15A',                                // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
     // Z: '...', etc.
-
 } as const;
+
 
 export type ScenarioKey = keyof typeof SCENARIOS;
 
