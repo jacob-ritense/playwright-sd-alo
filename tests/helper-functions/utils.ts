@@ -13,6 +13,54 @@ export async function login(page: Page, environment: LoginEnvironment) {
     }
 }
 
+// Helper config (tweak anytime)
+const maxAttemptsDashboard = 10;
+const minWaitSecondsDashboard = 1;
+const maxWaitSecondsDashboard = 10;
+
+export async function waitForDashboard(page: Page) {
+    console.log('Waiting for the dashboard...');
+
+    const dossiersButton = page.getByRole('button', { name: 'Dossiers' });
+
+    for (let attempt = 1; attempt <= maxAttemptsDashboard; attempt++) {
+        console.log(`Attempt ${attempt}/${maxAttemptsDashboard}: checking dashboard`);
+
+        try {
+            await page.waitForLoadState('domcontentloaded', { timeout: 30000 });
+            await page.waitForLoadState('networkidle', { timeout: 30000 });
+
+            await dossiersButton.waitFor({ state: 'visible', timeout: 5000 });
+
+            console.log('✓ Dashboard ready (Dossiers button visible)');
+            return;
+        } catch {
+            if (attempt === maxAttemptsDashboard) break;
+
+            const waitSeconds = Math.min(
+                minWaitSecondsDashboard + (attempt - 1),
+                maxWaitSecondsDashboard
+            );
+
+            console.log(`Dashboard not ready → waiting ${waitSeconds}s → reloading`);
+
+            await page.waitForTimeout(waitSeconds * 1000);
+            await page.reload();
+
+            await page.waitForLoadState('domcontentloaded', { timeout: 30000 });
+        }
+    }
+
+    throw new Error(
+        `Dashboard did not load: "Dossiers" button not visible after ${maxAttemptsDashboard} attempts.`
+    );
+}
+
+
+
+
+
+
 export async function waitForAngular(page: Page) {
   console.log('Waiting for Angular to initialize...');
   try {
@@ -229,19 +277,18 @@ async function verifyCaseDetails(page: Page) {
 }
 
 // Helper config (tweak anytime)
-const maxAttempts = 8;        // how many retries
-const minWaitSeconds = 3;      // first retry wait
-const maxWaitSeconds = 10;     // cap for wait
+const maxAttemptsTask = 8;        // how many retries
+const minWaitSecondsTask = 3;     // first retry wait
+const maxWaitSecondsTask = 10;    // cap for wait
 
-export async function openTask(page : any, taskName : any) {
-
+export async function openTask(page: any, taskName: any) {
     await page.waitForTimeout(2000);
     console.log(`→ openTask("${taskName}")`);
 
     const locator = page.getByText(taskName, { exact: true });
 
-    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-        console.log(`Attempt ${attempt}/${maxAttempts}: looking for "${taskName}"`);
+    for (let attempt = 1; attempt <= maxAttemptsTask; attempt++) {
+        console.log(`Attempt ${attempt}/${maxAttemptsTask}: looking for "${taskName}"`);
 
         try {
             await locator.waitFor({ state: "visible", timeout: 10000 });
@@ -253,10 +300,14 @@ export async function openTask(page : any, taskName : any) {
             console.log(`✓ Task "${taskName}" opened on attempt ${attempt}`);
             return;
         } catch {
-            if (attempt === maxAttempts) break;
+            if (attempt === maxAttemptsTask) break;
 
-            // Scaled wait: minWaitSeconds, +1 each attempt, capped at maxWaitSeconds
-            const waitSeconds = Math.min(minWaitSeconds + (attempt - 1), maxWaitSeconds);
+            // Scaled wait: minWaitSecondsTask, +1 each attempt, capped at maxWaitSecondsTask
+            const waitSeconds = Math.min(
+                minWaitSecondsTask + (attempt - 1),
+                maxWaitSecondsTask
+            );
+
             console.log(`Not found → waiting ${waitSeconds}s → reloading`);
 
             await page.waitForTimeout(waitSeconds * 1000);
@@ -267,8 +318,9 @@ export async function openTask(page : any, taskName : any) {
         }
     }
 
-    throw new Error(`Failed to find task "${taskName}" after ${maxAttempts} attempts.`);
+    throw new Error(`Failed to find task "${taskName}" after ${maxAttemptsTask} attempts.`);
 }
+
 
 
 export async function claimCase(page : any) {
