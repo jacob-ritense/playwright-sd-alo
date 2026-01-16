@@ -14,11 +14,45 @@ const TASK_KEY = 'adhoc-task';
 
 type OptionHandler = (page: Page) => Promise<void>;
 
-const startRestartFlow = async (page: Page) => {
-    console.log('Starting "Taak opnieuw starten" flow...');
+const restartTask = async (page: Page, taskName: string) => {
+    console.log(`Restarting task: "${taskName}"`);
     await page.getByRole('menuitem', { name: 'Taak opnieuw starten' }).click();
-    await page.locator('.choices > div').first().click();
+
+    const dropdown = page.locator('.choices > div').first();
+    const option = page.getByRole('option', { name: taskName, exact: false });
+
+    const chip = page.getByText(
+        new RegExp(`^${escapeRegExp(taskName)}.*Remove item$`)
+    );
+
+    const maxAttempts = 5;
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+        console.log(`Selecting "${taskName}" (attempt ${attempt}/${maxAttempts})`);
+
+        await dropdown.click();
+        await option.click();
+        await page.waitForTimeout(1000);
+
+        const found = await chip.first().isVisible().catch(() => false);
+        if (found) {
+            console.log(`Confirmed selected item for "${taskName}"`);
+            console.log(`Submitting restart for: "${taskName}"`);
+            await page.getByRole('button', { name: 'Indienen' }).click();
+            return;
+        }
+
+        if (attempt === maxAttempts) {
+            throw new Error(`Failed to select "${taskName}" after ${maxAttempts} attempts (no "Remove item" chip found)`);
+        }
+    }
 };
+
+function escapeRegExp(s: string) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+
 
 const optionHandlers: Partial<Record<Option, OptionHandler>> = {
     A: async (page) => {
@@ -84,52 +118,31 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
     },
     I: async (page) => {
         console.log('Option I: "Opnieuw informatieverzoek"');
-        await startRestartFlow(page);
-        await page.getByRole('option', { name: 'Opnieuw informatieverzoek' }).click();
-        console.log('Option I submit: Clicking "Indienen"...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
+        await restartTask(page, 'Opnieuw informatieverzoek');
     },
     J: async (page) => {
         console.log('Option J: "Opnieuw vaststellen leef en"');
-        await startRestartFlow(page);
-        await page.getByRole('option', { name: 'Opnieuw vaststellen leef en' }).click();
-        console.log('Option J submit: Clicking "Indienen"...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
+        await restartTask(page, 'Opnieuw vaststellen leef en');
     },
     K: async (page) => {
         console.log('Option K: "Opnieuw vaststellen verblijfadres aanvrager"');
-        await startRestartFlow(page);
-        await page.getByRole('option', { name: 'Opnieuw vaststellen verblijfadres aanvrager' }).click();
-        console.log('Option K submit: Clicking "Indienen"...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
+        await restartTask(page, 'Opnieuw vaststellen verblijfadres aanvrager');
     },
     L: async (page) => {
         console.log('Option L: "Opnieuw vaststellen verblijfadres partner"');
-        await startRestartFlow(page);
-        await page.getByRole('option', { name: 'Opnieuw vaststellen verblijfadres partner' }).click();
-        console.log('Option L submit: Clicking "Indienen"...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
+        await restartTask(page, 'Opnieuw vaststellen verblijfadres partner');
     },
     M: async (page) => {
         console.log('Option M: "Opnieuw vaststellen verblijfstitel aanvrager"');
-        await startRestartFlow(page);
-        await page.getByRole('option', { name: 'Opnieuw vaststellen verblijfstitel aanvrager' }).click();
-        console.log('Option M submit: Clicking "Indienen"...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
+        await restartTask(page, 'Opnieuw vaststellen verblijfstitel aanvrager');
     },
     N: async (page) => {
         console.log('Option N: "Opnieuw vaststellen verblijfstitel partner"');
-        await startRestartFlow(page);
-        await page.getByRole('option', { name: 'Opnieuw vaststellen verblijfstitel partner' }).click();
-        console.log('Option N submit: Clicking "Indienen"...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
+        await restartTask(page, 'Opnieuw vaststellen verblijfstitel partner');
     },
     O: async (page) => {
         console.log('Option O: "Opnieuw vaststellen ingangsdatum"');
-        await startRestartFlow(page);
-        await page.getByRole('option', { name: 'Opnieuw vaststellen ingangsdatum' }).click();
-        console.log('Option O submit: Clicking "Indienen"...');
-        await page.getByRole('button', { name: 'Indienen' }).click();
+        await restartTask(page, 'Opnieuw vaststellen ingangsdatum');
     },
 };
 

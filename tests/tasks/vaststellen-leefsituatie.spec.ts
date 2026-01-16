@@ -18,7 +18,7 @@ const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     C: async (page) => {
         // Select "Alleenstaand" radio button
         console.log('Selecting "Alleenstaand"...');
-        await page.getByRole('radio', { name: 'Alleenstaand' }).check();
+        await page.getByRole('radio', {name: 'Alleenstaand', exact: true}).check();
     },
     D: async (page) => {
         // Select "Samenwonend met kinderen" radio button
