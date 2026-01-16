@@ -27,7 +27,7 @@ export const SCENARIOS = {
     I: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9, 11A, 12A, 99K, 11B, 12B, 99L, 12A',       // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
     J: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 99M, 7B, 8B, 99N, 8A',                       // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
     K: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9, 11A, 12A, 13A, 10, 99J, 13A, 14A',        // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
-    L: 'V1, 1, 2A, 4A, 5A, 6A, 9, 99O, 9, 13A, 10, 15A',                            // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
+    L: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9, 99O, 9',                                  // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
     // Z: '...', etc.
 } as const;
 
