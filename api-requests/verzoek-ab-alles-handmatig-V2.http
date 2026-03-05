@@ -1,0 +1,330 @@
+POST {{objects_api_url}}
+Authorization: Token {{token}}
+Content-Crs: EPSG:4326
+Content-Type: application/json
+
+{
+  "type": "{{objecttypes_api_url_alo}}",
+  "record": {
+    "typeVersion": "{{objecttypes_version}}",
+    "data": {
+      "bsn": "022264541",
+      "data": {
+        "alo-ioaw": {
+          "grIoaw": {
+            "geenRechtMeerWw": "NEE",
+            "geenRechtMeerWga": "NEE",
+            "gedeeltelijkArbeidsongeschikt": "NEE"
+          }
+        },
+        "schulden": {
+          "heeftSchulden": "NEE"
+        },
+        "your-details": {
+          "naw": {
+            "grAdresgegevens": {
+              "plaats": "'s-Gravenhage",
+              "straat": "Spui",
+              "postcode": "2511BT",
+              "huisletter": "",
+              "huisnummer": 68,
+              "toevoeging": ""
+            },
+            "grPersoongegevens": {
+              "Bsn": "022264541",
+              "voornaam": "Nora",
+              "achternaam": "Wollingen",
+              "voorletters": "N.",
+              "voorvoegsels": "van",
+              "geboortedatum": "1985-03-13"
+            }
+          }
+        },
+        "alo-inleiding": {},
+        "alo-uitbetaling": {
+          "hoeBetaald": "VOLLEDIG_OP_MIJN_REKENING",
+          "ibanAanWie": "JA",
+          "ibanUitbetaling": "NL12RABO0123456789",
+          "naamRekeninghouder": "Nora van Wollingen"
+        },
+        "alo-uw-inkomsten": {
+          "grUitkering": {
+            "grWw": {
+              "ww": 600,
+              "geenWw": false,
+              "wwPeriode": "MAAND"
+            },
+            "welkeUitkering": {
+              "WW": true,
+              "ANW": false,
+              "AOW": false,
+              "WAO": false,
+              "WIA": false,
+              "WAJONG": false,
+              "ZIEKTEWET": false
+            }
+          },
+          "grLoondienst": {
+            "hhgWerkgevers": [
+              {
+                "naamWerkgever": "Stadswinkel Den Haag Centrum",
+                "soortContract": "CONTRACT_BEPAALDE_TIJD",
+                "hoeveelUurWerk": 24,
+                "nettoloon": 1500,
+                "hoevaakLoon": "MAAND",
+                "kiesLoonheffing": "JA",
+                "urenvermindering": "NEE",
+                "kiesExtraUitbetaald": "NEE"
+              }
+            ]
+          },
+          "heeftInkomsten": "JA",
+          "soortenInkomsten": {
+            "LOONDIENST": true,
+            "UITKERING": true
+          }
+        },
+        "inkomsten-partner": {
+          "heeftPartnerInkomsten": "MIJN_PARTNER_HEEFT_GEEN_INKOMEN",
+          "soortenInkomstenPartner": {}
+        },
+        "alo-reden-aanvraag": {
+          "grIngangsdatum": {
+            "bijstandsuitkeringEerderStarten": "JA",
+            "welkeredenlaat": "ANDERE_REDEN",
+            "waaromLaatAlgemeen": "Ik wist niet hoe ik deze uitkering kon aanvragen"
+          },
+          "beeindigingRelatie": {
+            "hoeBetaalt": "Ik probeer Duitse schlager muziek te zingen op het plein en daar krijg ik geld voor ",
+            "sindWanneer": "2025-01-09",
+            "wasGetrouwd": "JA",
+            "afsprakenBijdragen": "NEE"
+          },
+            "waaromBijstandsuitkering": "WIJZIGING_GEZINSSITUATIE",
+            "grWijzigingGezinssituatie": {
+            "watGewijzigd": "RELATIE_VERBROKEN"
+          }
+        },
+        "alo-uw-woonsituatie": {
+          "hoeWoontU": "VERBLIJF_ZORGINSTELLING",
+                  "grAndereBewoners": {
+                        "grBewoner": {
+                            "hhgAndereBewoners": [
+                                {
+                                    "bBLAndereBewoner": "NEE",
+                                    "medebewonerOpleiding": "NEE",
+                                    "relatieAndereBewoner": "IEMAND_DIE_EEN_KAMER_BIJ_MIJ_HUURT",
+                                    "achternaamAndereBewoner": "Sommer",
+                                    "samenlevenAndereBewoner": {
+                                        "NIET_VAN_TOEPASSING": false,
+                                        "SAMENLEVINGSCONTRACT": false,
+                                        "SAMEN_EEN_KIND_OF_EEN_ERKEND_KIND": false,
+                                        "AFGELOPEN_2_JAAR_ALS_1_HUISHOUDEN_GEZIEN": false,
+                                        "AFGELOPEN_2_JAAR_GEHUWD_OF_GEREGISTREERD_PARTNER_GEWEEST": false
+                                    },
+                                    "kostenDelenAndereBewoner": {
+                                        "NIET_VAN_TOEPASSING": false,
+                                        "DE_KOSTEN_VAN_DE_HUUR": false,
+                                        "KOSTEN_VAN_DE_BOODSCHAPPEN": false,
+                                        "VASTE_LASTEN_ZOALS_GAS_EN_WATER": false
+                                    },
+                                    "voorlettersAndereBewoner": "H",
+                                    "activiteitenAndereBewoner": {
+                                        "WIJ_ETEN_SAMEN": true,
+                                        "GEEN_ACTIVITEITEN_SAMEN": true,
+                                        "WIJ_GAAN_SAMEN_OP_VAKANTIE": true,
+                                        "WIJ_VERDELEN_OF_DOEN_SAMEN_DE_TAKEN_IN_HET_HUISHOUDEN": true
+                                    },
+                                    "voorvoegselsAndereBewoner": "",
+                                    "geboortedatumAndereBewoner": "1970-10-03"
+                                },
+                                {
+                                    "soortOpleiding": "ANDERS",
+                                    "medebewonerOpleiding": "JA",
+                                    "relatieAndereBewoner": "MIJN_OPA_OMA_BROER_OF_ZUS",
+                                    "achternaamAndereBewoner": "Akkermans",
+                                    "samenlevenAndereBewoner": {
+                                        "NIET_VAN_TOEPASSING": false,
+                                        "SAMENLEVINGSCONTRACT": true,
+                                        "SAMEN_EEN_KIND_OF_EEN_ERKEND_KIND": false,
+                                        "AFGELOPEN_2_JAAR_ALS_1_HUISHOUDEN_GEZIEN": false,
+                                        "AFGELOPEN_2_JAAR_GEHUWD_OF_GEREGISTREERD_PARTNER_GEWEEST": false
+                                    },
+                                    "kostenDelenAndereBewoner": {
+                                        "NIET_VAN_TOEPASSING": false,
+                                        "DE_KOSTEN_VAN_DE_HUUR": true,
+                                        "KOSTEN_VAN_DE_BOODSCHAPPEN": true,
+                                        "VASTE_LASTEN_ZOALS_GAS_EN_WATER": true
+                                    },
+                                    "voorlettersAndereBewoner": "P",
+                                    "activiteitenAndereBewoner": {
+                                        "WIJ_ETEN_SAMEN": true,
+                                        "GEEN_ACTIVITEITEN_SAMEN": false,
+                                        "WIJ_GAAN_SAMEN_OP_VAKANTIE": true,
+                                        "WIJ_VERDELEN_OF_DOEN_SAMEN_DE_TAKEN_IN_HET_HUISHOUDEN": true
+                                    },
+                                    "voorvoegselsAndereBewoner": "",
+                                    "geboortedatumAndereBewoner": "1983-05-02",
+                                    "omschrijvingOpleidingAndereBewoner": "Omscholingstraject via oude werkgever"
+                                }
+                            ]
+                        },
+                        "meerMensenOpAdres": "JA"
+                    }
+        },
+        "alo-uw-beschikbaarheid": {
+          "grBeschikbaarheid": {
+            "onbetaald": "NEE",
+            "onbetaaldWerk": "",
+            "beschikbaarheid": 40
+          }
+        },
+         "beschikbaarheid-partner": {
+           "grBeschikbaarheidPartner": {
+            "onbetaaldPartner": "NEE",
+            "onbetaaldwerkPartner": "",
+            "beschikbaarheidPartner": 40
+          }
+        },
+        "alo-gezinssamenstelling": {
+          "partnerWoontBijU": "JA",
+          "thuiswonendeKinderen": "JA"
+        },
+        "gegevens-partner": {
+          "grGegevensPartner": {
+            "bsnPartner": "689735273",
+            "grAdresPartner": {
+              "plaatsPartner": "'s-Gravenhage",
+              "straatPartner": "Spui",
+              "postcodePartner": "2511BT",
+              "huisletterPartner": "",
+              "huisnummerPartner": 69,
+              "nummerToevoegingPartner": ""
+            },
+            "geboortePartner": "1983-11-03",
+            "achternaamPartner": "Terphuis",
+            "voorletterPartner": "L",
+            "voorvoegselPartner": "",
+            "zelfdeAdresPartner": "JA",
+            "nationaliteitPartner": "GELDIGE_VERBLIJFSVERGUNNING",
+            "geenNederlanderPartner": "JA"
+          }
+        },
+        "gegevens-kinderen": {
+          "grGegevensKinderen": {
+            "hhgGegevensKinderen": [
+              {
+                "voornaamKind": "Bauke",
+                "opleidingKind": "MBO",
+                "achternaamKind": "Terphuis",
+                "voorletterKind": "K",
+                "voorvoegselKind": "",
+                "geboortedatumKind": "2010-09-25",
+                "krijgtKinderbijslag": "JA"
+              },
+              {
+                "voornaamKind": "Olaf",
+                "opleidingKind": "GEEN_OPLEIDING",
+                "achternaamKind": "Terphuis",
+                "voorletterKind": "O",
+                "voorvoegselKind": "",
+                "geboortedatumKind": "2012-08-08",
+                "krijgtKinderbijslag": "JA"
+              },
+              {
+                "voornaamKind": "Fenna",
+                "opleidingKind": "GEEN_OPLEIDING",
+                "achternaamKind": "Terphuis",
+                "voorletterKind": "N",
+                "voorvoegselKind": "",
+                "geboortedatumKind": "2012-08-08",
+                "krijgtKinderbijslag": "JA"
+              }
+            ]
+          }
+        },
+        "alo-aanvullende-gegevens": {
+          "lieverPost": false,
+          "grWoonsituatie": {
+            "woonsituatie": "WAAR_IK_WOON"
+          },
+          "grAdresVerblijf": {
+            "plaatsVerblijf": "'s-Gravenhage",
+            "straatVerblijf": "Spui",
+            "postcodeVerblijf": "2511BT",
+            "huisletterVerblijf": "",
+            "huisnummerVerblijf": 69,
+            "nummerToevoegingVerblijf": "",
+            "toelichtingadresVerblijf": ""
+          },
+          "grNationaliteit": {
+            "nationaliteitBezit": "GELDIGE_VERBLIJFSVERGUNNING",
+            "geenNederlandseNationaliteit": "JA"
+          },
+          "grContactAanvraag": {
+            "hulpAanvraag": "NEE"
+          },
+          "grNieuweContactgegevens": {
+            "geenEmail": false,
+            "emailAdres": "nora.van.wollingen@example.com",
+            "geenTelefoon": false,
+            "telefoonnummer": "0689453143"
+          }
+        },
+        "alo-uw-inkomsten-overzicht": {},
+        "alo-bezittingen-en-schulden": {
+          "grKoopwoning": {
+            "wozWaarde": 350000,
+            "beleggingsGekoppeld": "NEE",
+            "restHypotheekSchuld": 280000
+          },
+          "grMotorvoertuigen": {
+            "hhgMotorvoertuigen": [
+              {
+                "kenteken": "NK45TR",
+                "dagwaarde": 6500
+              }
+            ]
+          },
+          "grRekeningen": {
+            "grLogicaBank": {
+              "hhgVoegRekeningToe": [
+                {
+                  "prive": "NL12RABO0123456789",
+                  "hoeveelGeld": 1500,
+                  "typeRekening": "NEDERLANDSE_PRIVE_REKENING",
+                  "geenRekeningUploaden": true
+                }
+              ]
+            },
+            "geenBankrekening": "GEEN_REKENING"
+          },
+          "grContant": {
+            "waardeContant": 200
+          },
+          "grUwVermogen": {
+            "welkVermogen": {
+              "CRYPTO": false,
+              "CARAVAN": false,
+              "ERFENIS": false,
+              "VAARTUIG": false,
+              "CONTANTEN": true,
+              "KOOPWONING": true,
+              "MOTORVOERTUIG": true,
+              "EEN_STUK_GROND": false,
+              "OBLIGATIES_AANDELEN": false,
+              "BANK_EN_SPAARREKENINGEN": true
+            }
+          }
+        }
+      },
+      "type": "Verzoek AB DCM",
+      "attachments": [],
+      "language_code": "nl",
+      "submission_id": "12345-abcde-67890",
+      "public_reference": "OF-{{$random.alphanumeric(8)}}"
+    },
+    "startAt": "2025-03-20",
+    "registrationAt": "2025-03-20"
+  }
+}

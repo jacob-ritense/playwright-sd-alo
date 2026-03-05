@@ -7,6 +7,8 @@ export const REQUEST_FILES = {
     V1: './api-requests/verzoek-ab-handmatig.http',
     V2: './api-requests/verzoek-ab-automatisch.http',
     V3: './api-requests/verzoek-ab-nora.http',
+    V4: './api-requests/verzoek-ab-alles-automatisch-V2.http',
+    V5: './api-requests/verzoek-ab-alles-handmatig-V2.http',
     // V3: '...', etc.
 } as const;
 
@@ -15,7 +17,7 @@ export type RequestVariant = keyof typeof REQUEST_FILES; // 'V1' | 'V2' | ...
 // Create your scenarios here.
 export const SCENARIOS = {
     // first token = V*, rest = steps
-    Default: 'V1, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9, 11A, 12A, 13A, 10, 15A',            // Normal flow - Everything Manual (fastest route)
+    Default: 'V4, 1, 2A, 4A, 5A, 6A, 7A, 8A, 9, 11A, 12A, 13A, 10, 15A',            // Normal flow - Everything Manual (fastest route)
     A: 'V3, 1, 2A, 4A, 10, 15A',                                                    // Normal flow - Everything Automatic
     B: 'V1, 1, 2B, 3, 4A, 5B, 5A, 6B, 6A, 7B, 8B, 9, 11B, 12C, 13B, 10, 15B',       // Normal flow - Everything Manual (slow route)
     C: 'V3, 1, 2A, 4A, 99C, 2A, 4A, 10, 99C, 2A, 4A, 10, 15A',                      // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
