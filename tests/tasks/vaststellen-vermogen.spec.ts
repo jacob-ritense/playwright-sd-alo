@@ -39,23 +39,10 @@ export default async function vaststellenVermogenTask(page: Page) {
         await page.getByRole('button', { name: 'Volgende' }).click();
 
         // 2nd page
-        // 1) Remove extra rows until only one row remains
-        while ((await removeButtons.count()) > 1) {
-            await removeButtons.first().click();
-            await page.waitForTimeout(500);
-        }
 
-        // 2) Clear the remaining row (UI keeps 1 row around)
-        if ((await removeButtons.count()) === 1) {
-            await removeButtons.first().click();
-            await page.waitForTimeout(500);
-        }
+        await page.getByText('Soort', { exact: true }).click();
+        await page.getByRole('option', { name: 'Aanhangwagen (A)' }).click();
 
-        await page.locator('.form-control.ui').click();
-        await page.getByText('Digitale valuta (cryptomunten').click();
-
-        await page.locator('#currency').click();
-        await page.locator('#currency').fill('€ 20,000');
         await page.getByTestId('bs-214-vaststellen-bezittingen-pv.bezittingenToelichting').fill(toelichting);
 
         // Volgende
@@ -69,23 +56,6 @@ export default async function vaststellenVermogenTask(page: Page) {
         await page.getByRole('button', { name: 'Volgende' }).click();
 
         // 4th page
-        // 1) Remove extra rows until only one row remains
-        while ((await removeButtons.count()) > 1) {
-            await removeButtons.first().click();
-            await page.waitForTimeout(500);
-        }
-
-        // 2) Clear the remaining row (UI keeps 1 row around)
-        if ((await removeButtons.count()) === 1) {
-            await removeButtons.first().click();
-            await page.waitForTimeout(500);
-        }
-
-        await page.locator('.form-control.ui').click();
-        await page.getByText('Eigen woning (huis/woonschip/').click();
-        await page.locator('#currency').click();
-        await page.locator('#currency').fill('€ 200,000');
-
         await page.getByTestId('bs-214-vaststellen-eigen-woning-pv.eigenWoningToelichting').fill(toelichting);
 
         // Volgende

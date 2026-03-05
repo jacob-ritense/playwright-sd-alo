@@ -7,8 +7,8 @@ export default async function opvoerenDienstSocratesTask(page: Page) {
 
   const taskElement = page.getByText(taskName, { exact: true });
   await taskElement.click();
-  console.log('Clicking "De dienst is opgevoerd in Socrates" button...');
-  await page.getByRole('button', { name: 'De dienst is opgevoerd in Socrates' }).click();
+  console.log('Clicking "Overslaan" button...');
+  await page.getByRole('button', { name: 'Overslaan' }).click();
   await page.waitForLoadState('networkidle', { timeout: 15000 });
 
   console.log(`Successfully completed task "${taskName}"`);

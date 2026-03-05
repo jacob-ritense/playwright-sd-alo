@@ -17,7 +17,7 @@ export type RequestVariant = keyof typeof REQUEST_FILES; // 'V1' | 'V2' | ...
 // Create your scenarios here.
 export const SCENARIOS = {
     // first token = V*, rest = steps
-    Default: 'V5, 5A, 6A, 1, 2A, 4A, 16, 7A, 8A, 11A, 12A, 9, 13A, 10, 15A',            // Normal flow - Everything Manual (fastest route)
+    Default: 'V5, 5A, 6A, 2A, 4A, 16, 7A, 8A, 11A, 12A, 9, 13A, 10, 15A',            // Normal flow - Everything Manual (fastest route)
     A: 'V3, 1, 2A, 4A, 10, 15A',                                                    // Normal flow - Everything Automatic
     B: 'V1, 1, 2B, 3, 4A, 5B, 5A, 6B, 6A, 7B, 8B, 9, 11B, 12C, 13B, 10, 15B',       // Normal flow - Everything Manual (slow route)
     C: 'V3, 1, 2A, 4A, 99C, 2A, 4A, 10, 99C, 2A, 4A, 10, 15A',                      // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
