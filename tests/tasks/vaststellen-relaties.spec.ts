@@ -2,7 +2,7 @@ import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { openTask } from '../helper-functions/utils';
 
-export default async function RelatiesTask(page: Page) {
+export default async function vaststellenRelatiesTask(page: Page) {
     const taskName = 'Vaststellen Relaties';
 
     try {
