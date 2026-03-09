@@ -14,19 +14,19 @@ export type RequestVariant = keyof typeof REQUEST_FILES; // 'V1' | 'V2' | ...
 // Create your scenarios here.
 export const SCENARIOS = {
     // first token = V*, rest = steps
-    Default: 'V2, 1A, 2A, 3, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14A',            // Normal flow - Everything Manual (fastest route)
-    A: 'V1, 4A, 5A, 6, 13,',                                                    // Normal flow - Everything Automatic
-    B: 'V1, ',       // Normal flow - Everything Manual (alternative slow route)
-    C: 'V3, ',                      // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
-    D: 'V3, ',                                                        // Adhoc flow  - Check "Buiten behandeling stellen"
-    E: 'V3, ',                                                        // Adhoc flow  - Check "Aanvraag intrekken"             //Needs testing
-    F: 'V1, ',                                               // Adhoc flow  - Check "Brongegevens verversen" & "Contactgegevens wijzigen"
-    G: 'V1, ',                                                 // Adhoc flow  - Check "Infoverzoek deadline verlengen" & "Infoverzoek annuleren"
-    H: 'V1, ',                                         // Adhoc flow  - Check "Infoverzoek handmatige reactie" & "Opnieuw infoverzoek"
-    I: 'V1, ',       // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
-    J: 'V1, ',                       // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
-    K: 'V1, ',        // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
-    L: 'V1, ',                                  // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
+    Default: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14, 15A',                    // Normal flow - Everything Manual (fastest route)
+    A: 'V1, 4A, 5A, 6, 13, 14, 15A',                                                            // Normal flow - Everything Automatic
+    B: 'V2, 1B, 2B, 4B, 5A, 6, 7B, 8B, 9B, 10B, 11, 12B, 13, 14, 15B',                          // Normal flow - Everything Manual (alternative slow route)
+    C: 'V1, 1A, 2A, 99C, 4A, 5A, 6, 13, 14, 99C',                                               // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
+    D: 'V1, 1A, 2A, 5A, 99A',                                                                   // Adhoc flow  - Check "Buiten behandeling stellen"
+    E: 'V1, 1A, 2A, 5A, 99B',                                                                   // Adhoc flow  - Check "Aanvraag intrekken"             //Needs testing
+    F: 'V1, 1A, 2A, 99D, 99E',                                                                  // Adhoc flow  - Check "Brongegevens verversen" & "Contactgegevens wijzigen"
+    G: 'V1, 1A, 2A, 5B, 99G, 99F',                                                              // Adhoc flow  - Check "Informatieverzoek deadline verlengen" & "Informatieverzoek annuleren"
+    H: 'V1, 1A, 2A, 5B, 99H, 99I, 5A',                                                          // Adhoc flow  - Check "Informatieverzoek handmatige reactie" & "Opnieuw infoverzoek"
+    I: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 99L, 10A, 99K, 9A, 10A',                        // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
+    J: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 99N, 8A, 99M, 7A, 8A',                                   // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
+    K: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14, 15A, 99J, 12A, 16A',           // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
+    L: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 99O, 11',                                   // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
     // Z: '...', etc.
 } as const;
 
@@ -47,7 +47,9 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     11: 'vaststellen-ingangsdatum',                 // Geen keuzes
     12: 'vaststellen-woonsituatie',                 // A: 1-belanghebbend-zelfstandig-Art23JA   B: 2-belanghebbend-instelling-Art23NEE
     13: 'vaststellen-relaties',                     // Geen keuzes
-    14: 'vaststellen-besluit',                      // A = Afwijzen     B = Lening    C = Krediethypotheek    D = Lening om niet
+    14: 'vaststellen-aantal-rechthebbenden',        // Geen keuzes
+    15: 'vaststellen-besluit',                      // A = Afwijzen     B = Lening    C = Krediethypotheek    D = Lening om niet
+    16: 'vaststellen-leefsituatie',                 // ABCDE (1st - 5th option)
 
     99: 'adhoc-task', // Ad hoc tasks
     // A = Aanvraag buiten behandeling
