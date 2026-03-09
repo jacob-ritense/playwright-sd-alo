@@ -1,15 +1,21 @@
 import { Page } from '@playwright/test';
-import { openTask  } from '../helper-functions/utils';
+import { openTask } from '../helper-functions/utils';
 
 export default async function opvoerenDienstSocratesTask(page: Page) {
-  const taskName = "Opvoeren dienst in Socrates";
-  await openTask(page, taskName);
 
-  const taskElement = page.getByText(taskName, { exact: true });
-  await taskElement.click();
-  console.log('Clicking "Overslaan" button...');
-  await page.getByRole('button', { name: 'Overslaan' }).click();
-  await page.waitForLoadState('networkidle', { timeout: 15000 });
+    let taskName = "Opvoeren dienst in Socrates";
 
-  console.log(`Successfully completed task "${taskName}"`);
-} 
+    const retryTask = page.getByText(/Opnieuw proberen opvoeren dienst in socrates/i);
+
+    if (await retryTask.first().isVisible().catch(() => false)) {
+        taskName = "Opnieuw proberen opvoeren dienst in socrates";
+    }
+
+    await openTask(page, taskName);
+
+    console.log('Clicking "Overslaan" button...');
+    await page.getByRole('button', { name: 'Overslaan' }).click();
+    await page.waitForLoadState('networkidle', { timeout: 15000 });
+
+    console.log(`Successfully completed task "${taskName}"`);
+}
