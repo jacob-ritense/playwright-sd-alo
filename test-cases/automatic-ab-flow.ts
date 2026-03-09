@@ -27,6 +27,7 @@ import vaststellenRelatiesTask from '../tests/tasks/vaststellen-relaties.spec';
 import vaststellenVermogenTask from '../tests/tasks/vaststellen-vermogen.spec';
 import vaststellenWoonsituatieTask from '../tests/tasks/vaststellen-woonsituatie.spec';
 import vaststellenLeefsituatieTask from '../tests/tasks/vaststellen-leefsituatie.spec';
+import vaststellenAantalRechthebbendenTask from '../tests/tasks/vaststellen-aantal-rechthebbenden.spec';
 import vaststellenBesluitTask from '../tests/tasks/vaststellen-besluit.spec';
 import adhocTask from '../tests/tasks/adhoc-tasks/adhoc-tasks.spec';
 
@@ -48,6 +49,7 @@ export type FlowSlug =
     | 'vaststellen-woonsituatie'
     | 'vastleggen-uitkomst-poortonderzoek'
     | 'vaststellen-leefsituatie'
+    | 'vaststellen-aantal-rechthebbenden'
     | 'vaststellen-besluit'
     | 'adhoc-task';
 
@@ -82,6 +84,7 @@ const tasks = [
     {name: 'vaststellen-vermogen', fn: vaststellenVermogenTask},
     {name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask},
     {name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask},
+    {name: 'vaststellen-aantal-rechthebbenden', fn: vaststellenAantalRechthebbendenTask},
     {name: 'vaststellen-besluit', fn: vaststellenBesluitTask},
     {name: 'adhoc-task', fn: adhocTask},
 ] as const;
