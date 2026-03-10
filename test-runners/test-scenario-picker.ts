@@ -17,15 +17,15 @@ export const SCENARIOS = {
     Default: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14, 15A',                    // Normal flow - Everything Manual (fastest route)
     A: 'V1, 4A, 5A, 6, 13, 14, 15A',                                                            // Normal flow - Everything Automatic
     B: 'V2, 1B, 1A, 2B, 2A, 4B, 5A, 6, 7B, 8B, 9B, 10B, 11, 12B, 13, 14, 15B',                  // Normal flow - Everything Manual (alternative slow route)
-    C: 'V1, 99C, 4A, 5A, 6, 13, 14, 99C',                                                       // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
-            D: 'V1, 5A, 99A',                                                                   // Adhoc flow  - Check "Buiten behandeling stellen"
+    C: 'V1, 99C, 4A, 5A, 6, 9A, 10A, 13, 14, 99C',  //Delete 9A and 10A after bugfix            // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
+    D: 'V1, 5A, 99A',                                                                           // Adhoc flow  - Check "Buiten behandeling stellen"
     E: 'V1, 5A, 99B',                                                                           // Adhoc flow  - Check "Aanvraag intrekken"             //Needs testing
-    F: 'V1, 99D, 99E',                                                                          // Adhoc flow  - Check "Brongegevens verversen" & "Contactgegevens wijzigen"
+    F: 'V1, 5A, 99D, 99E',                                                                      // Adhoc flow  - Check "Brongegevens verversen" & "Contactgegevens wijzigen"
     G: 'V1, 5B, 99G, 99F',                                                                      // Adhoc flow  - Check "Informatieverzoek deadline verlengen" & "Informatieverzoek annuleren"
     H: 'V1, 5B, 99H, 99I, 5A',                                                                  // Adhoc flow  - Check "Informatieverzoek handmatige reactie" & "Opnieuw infoverzoek"
     I: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 99L, 10A, 99K, 9A, 10A',                        // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
     J: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 99N, 8A, 99M, 7A, 8A',                                   // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
-    K: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14, 15A, 99J, 12A, 16A',           // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
+    K: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14, 99J, 12A, 16A',           // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
     L: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 99O, 11',                                   // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
     // Z: '...', etc.
 } as const;
