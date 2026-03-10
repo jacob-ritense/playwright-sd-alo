@@ -5,7 +5,6 @@ import createVerzoekTask from '../tests/tasks/create-verzoek.spec';
 import loginTask from '../tests/tasks/login-navigate-case.spec';
 import opvoerenDienstSocratesTask from '../tests/tasks/opvoeren-dienst-socrates.spec';
 import overwegenInzetHandhavingTask from '../tests/tasks/overwegen-inzet-handhaving.spec';
-import uitkomstPoortonderzoekTask from '../tests/tasks/vastleggen-uitkomst-poortonderzoek.spec';
 import overwegenUitzettenInfoverzoekTask from '../tests/tasks/overwegen-uitzetten-infoverzoek.spec';
 import vaststellenPersoonAanvragerTask from '../tests/tasks/vaststellen-persoon-aanvrager.spec';
 import vaststellenPersoonPartnerTask from '../tests/tasks/vaststellen-persoon-partner.spec';
@@ -25,7 +24,6 @@ const tasks: { name: string; fn: TaskFn }[] = [
     { name: 'login', fn: loginTask },
     { name: 'opvoeren-dienst-socrates', fn: opvoerenDienstSocratesTask },
     { name: 'overwegen-inzet-handhaving', fn: overwegenInzetHandhavingTask },
-    // { name: 'vastleggen-uitkomst-poortonderzoek', fn: uitkomstPoortonderzoekTask },
     { name: 'overwegen-uitzetten-infoverzoek', fn: overwegenUitzettenInfoverzoekTask },
     { name: 'vaststellen-persoon-aanvrager', fn: vaststellenPersoonAanvragerTask },
     { name: 'vaststellen-persoon-partner', fn: vaststellenPersoonPartnerTask },
