@@ -11,7 +11,7 @@ async function selectToekennen(page: Page, taskName: string) {
     await toekennenRadio.waitFor({ state: 'visible', timeout: 20000 });
     await toekennenRadio.check();
     await page.waitForLoadState('networkidle', { timeout: 15000 });
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(500);
 }
 
 async function pickBijstandsvorm(
@@ -47,7 +47,7 @@ const optionHandlers: Partial<Record<Option, (page: Page, taskName: string) => P
         await afwijzenRadio.waitFor({ state: 'visible', timeout: 20000 });
         await afwijzenRadio.check();
         await page.waitForLoadState('networkidle', { timeout: 15000 });
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(500);
 
         const redenAfwijzing = faker.lorem.words(6);
         console.log(`[${taskName}] Filling "Reden afwijzing" with: "${redenAfwijzing}"`);
@@ -104,6 +104,12 @@ export default async function vaststellenBesluitTask(page: Page) {
         await opslaanButton.click();
         await page.waitForLoadState('networkidle', { timeout: 15000 });
         await page.waitForTimeout(1000);
+
+        if (option === 'B' || option === 'C' || option === 'D') {
+            const toelichting = faker.lorem.words(6);
+            console.log(`[${taskName}] Filling "Toelichting" with: "${toelichting}"`);
+            await page.getByRole('textbox', { name: 'Toelichting' }).fill(toelichting);
+        }
 
         console.log(`[${taskName}] Clicking "Indienen"...`);
         await page.getByRole('button', { name: 'Indienen' }).click();
