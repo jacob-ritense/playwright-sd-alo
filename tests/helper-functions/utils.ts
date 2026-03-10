@@ -253,7 +253,10 @@ export async function openTask(page: any, taskName: any) {
     await page.waitForTimeout(2000);
     console.log(`→ openTask("${taskName}")`);
 
-    const locator = page.getByText(taskName, { exact: true });
+    const locator =
+        typeof taskName === 'string'
+            ? page.getByText(new RegExp(taskName, 'i'))
+            : page.getByText(taskName);
 
     for (let attempt = 1; attempt <= maxAttemptsTask; attempt++) {
         console.log(`Attempt ${attempt}/${maxAttemptsTask}: looking for "${taskName}"`);
