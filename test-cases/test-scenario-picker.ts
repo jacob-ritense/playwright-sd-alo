@@ -16,7 +16,7 @@ export const SCENARIOS = {
     // first token = V*, rest = steps
     Default: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14, 15A',                    // Normal flow - Everything Manual (fastest route)
     A: 'V1, 4A, 5A, 6, 13, 14, 15A',                                                            // Normal flow - Everything Automatic
-    B: 'V2, 1B, 1A, 2B, 2A, 3, 4B, 5A, 6, 7B, 8B, 9B, 10B, 11, 12B, 13, 14, 15B',                  // Normal flow - Everything Manual (alternative slow route)
+    B: 'V2, 1B, 1A, 2B, 2A, 4B, 5A, 6, 7B, 8B, 9B, 10B, 11, 12B, 13, 14, 15B',                  // Normal flow - Everything Manual (alternative slow route)
     C: 'V1, 1A, 2A, 99C, 4A, 5A, 6, 13, 14, 99C',                                               // Adhoc flow  - Check "Aanvraag opnieuw starten" (During all phases)
     D: 'V1, 1A, 2A, 5A, 99A',                                                                   // Adhoc flow  - Check "Buiten behandeling stellen"
     E: 'V1, 1A, 2A, 5A, 99B',                                                                   // Adhoc flow  - Check "Aanvraag intrekken"             //Needs testing

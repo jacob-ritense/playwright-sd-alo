@@ -12,7 +12,7 @@ const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     B: async (page) => {
         console.log('Selecting "Nee, het opgegeven BSN hoort niet bij deze naam"...');
         await page.getByRole('radio', { name: 'Nee, het opgegeven BSN hoort niet bij deze naam' }).check();
-        const gewenstBSNText = '999991954';
+        const gewenstBSNText = '022264541';
         console.log(`Filling "Gewenst BSN" with: "${gewenstBSNText}"`);
         await page.getByRole('textbox', { name: 'Gewenst BSN' }).fill(gewenstBSNText);
     },

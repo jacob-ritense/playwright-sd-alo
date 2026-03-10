@@ -2,7 +2,7 @@ import { Page } from '@playwright/test';
 import { openTask  } from '../helper-functions/utils';
 
 export default async function opvoerenDienstSocratesTask(page: Page) {
-  const taskName = "opvoeren dienst in socrates";
+  const taskName = "Opvoeren dienst in socrates";
   await openTask(page, taskName);
 
   const taskElement = page.getByText(taskName);
