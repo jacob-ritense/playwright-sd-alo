@@ -14,7 +14,6 @@ import vaststellenVerblijfstitelAanvragerTask from '../tests/tasks/vaststellen-v
 import vaststellenVerblijfstitelPartnerTask from '../tests/tasks/vaststellen-verblijfstitel-partner.spec';
 import vaststellenIngangsdatumTask from '../tests/tasks/vaststellen-ingangsdatum.spec';
 import vaststellenWoonsituatieTask from '../tests/tasks/vaststellen-woonsituatie.spec';
-import vaststellenLeefsituatieTask from '../tests/tasks/vaststellen-leefsituatie.spec';
 import vaststellenBesluitTask from '../tests/tasks/vaststellen-besluit.spec';
 
 type TaskFn = (page: Page, testData: TestData) => Promise<void>;
@@ -33,7 +32,6 @@ const tasks: { name: string; fn: TaskFn }[] = [
     { name: 'vaststellen-verblijfstitel-partner', fn: vaststellenVerblijfstitelPartnerTask },
     { name: 'vaststellen-ingangsdatum', fn: vaststellenIngangsdatumTask },
     { name: 'vaststellen-woonsituatie', fn: vaststellenWoonsituatieTask },
-    // { name: 'vaststellen-leefsituatie', fn: vaststellenLeefsituatieTask },
     { name: 'vaststellen-besluit', fn: vaststellenBesluitTask },
 ];
 
