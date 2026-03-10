@@ -5,11 +5,11 @@ export default async function opvoerenDienstSocratesTask(page: Page) {
   const taskName = "Opvoeren dienst in Socrates";
   await openTask(page, taskName);
 
-  const taskElement = page.getByText(taskName, { exact: true });
+  const taskElement = page.getByText(taskName);
   await taskElement.click();
   console.log('Clicking "Overslaan" button...');
   await page.getByRole('button', { name: 'Overslaan' }).click();
   await page.waitForLoadState('networkidle', { timeout: 15000 });
 
   console.log(`Successfully completed task "${taskName}"`);
-} 
+}

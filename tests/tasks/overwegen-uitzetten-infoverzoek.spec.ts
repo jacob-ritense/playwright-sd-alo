@@ -1,6 +1,6 @@
 // tasks/overwegen-uitzetten-infoverzoek.ts
 import { Page } from '@playwright/test';
-import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
+import { getOptionForTask, type Option } from '../../test-runners/test-scenario-picker';
 import { openTask } from '../helper-functions/utils';
 import verzoekOmInformatieTask from './verzoek-om-informatie.spec';
 

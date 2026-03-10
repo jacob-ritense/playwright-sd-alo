@@ -250,7 +250,7 @@ const minWaitSecondsTask = 3;     // first retry wait
 const maxWaitSecondsTask = 10;    // cap for wait
 
 export async function openTask(page: any, taskName: any) {
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
     console.log(`→ openTask("${taskName}")`);
 
     const locator = page.getByText(taskName, { exact: true });

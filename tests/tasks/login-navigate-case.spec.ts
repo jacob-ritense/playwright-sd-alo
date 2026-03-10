@@ -1,7 +1,7 @@
 // tasks/login-navigate-case.spec.ts
 import { Page } from '@playwright/test';
 import { login, waitForDashboard, navigateToAlgemeneBijstandAanvraag, openCreatedCase } from '../helper-functions/utils';
-import type { TestData } from '../../test-cases/automatic-ab-flow'; // scenario flow
+import type { TestData } from '../../test-runners/automatic-ab-flow'; // scenario flow
 import { DEFAULT_INFRA } from '../helper-functions/env'; // adjust path
 import { claimCase } from '../helper-functions/utils';
 

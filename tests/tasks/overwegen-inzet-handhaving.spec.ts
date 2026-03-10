@@ -1,8 +1,9 @@
 // tasks/overwegen-inzet-handhaving.ts
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
-import { getOptionForTask, type Option } from '../../test-cases/test-scenario-picker';
+import { getOptionForTask, type Option } from '../../test-runners/test-scenario-picker';
 import { openTask  } from '../helper-functions/utils';
+import vastleggenUitkomstPoortonderzoekTask from './vastleggen-uitkomst-poortonderzoek.spec';
 
 const optionHandlers: Partial<Record<Option, (page: Page) => Promise<void>>> = {
     A: async (page) => {
@@ -31,7 +32,13 @@ export default async function(page: Page) {
         console.log('Clicking "Indienen" button...');
         await page.getByRole('button', { name: 'Indienen' }).click();
         await page.waitForLoadState('networkidle', { timeout: 15000 });
-        console.log('"Nee" selected, toelichting filled, and form submitted.');
+        console.log('"Option" selected, toelichting filled, and form submitted.');
+
+        if (option === 'B') {
+            console.log('Option B selected → running "Vastleggen uitkomst poortonderzoek" task...');
+            await vastleggenUitkomstPoortonderzoekTask(page);
+        }
+
     } catch (error) {
         console.error('Failed during "Overwegen inzet handhaving" task processing:', error);
         try {
