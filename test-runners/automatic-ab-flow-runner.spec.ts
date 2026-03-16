@@ -17,6 +17,7 @@ const scenarios: FlowOptions[] = [
         { INFRA: 'alo-acc', Scenario: 'J' },
         { INFRA: 'alo-acc', Scenario: 'K' },
         { INFRA: 'alo-acc', Scenario: 'L' },
+        { INFRA: 'alo-acc', Scenario: 'M' },
      // { INFRA: 'alo-test', Scenario: 'C', lastTask: 'vaststellen-persoon-aanvrager' },
 ];
 

@@ -41,7 +41,7 @@ export default async function vaststellenVermogenTask(page: Page) {
         // 2nd page
 
         await page.getByText('Soort', { exact: true }).click();
-        await page.getByRole('option', { name: 'Aanhangwagen (A)' }).click();
+        await page.getByRole('option').nth(3).click();
 
         await page.getByTestId('bs-214-vaststellen-bezittingen-pv.bezittingenToelichting').fill(toelichting);
 

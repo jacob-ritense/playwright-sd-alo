@@ -1,6 +1,6 @@
 // test-scenario-picker.ts
 export type Option = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
-                         | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O';
+                         | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P';
 
 // Map variant -> HTTP file
 export const REQUEST_FILES = {
@@ -25,8 +25,9 @@ export const SCENARIOS = {
     H: 'V1, 5B, 99H, 99I, 5A',                                                                  // Adhoc flow  - Check "Informatieverzoek handmatige reactie" & "Opnieuw infoverzoek"
     I: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 99L, 10A, 99K, 9A, 10A',                        // Adhoc flow  - Check "Opnieuw vaststellen verblijfadres aanvrager + partner"
     J: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 99N, 8A, 99M, 7A, 8A',                                   // Adhoc flow  - Check "Opnieuw vaststellen verblijfstitel aanvrager + partner"
-    K: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14, 99J, 12A, 16A',           // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
+    K: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 12A, 13, 14, 99J, 12A, 16A',                // Adhoc flow  - Check "Opnieuw vaststellen leef en woonsituatie"
     L: 'V2, 1A, 2A, 4A, 5A, 6, 7A, 8A, 9A, 10A, 11, 99O, 11',                                   // Adhoc flow  - Check "Opnieuw vaststellen ingangsdatum"
+    M: 'V1, 4A, 5A, 6, 99P, 6',                                                                 // Adhoc flow  - Check "Opnieuw vaststellen vermogen"
     // Z: '...', etc.
 } as const;
 
@@ -67,6 +68,7 @@ const TASKS_BY_NUMBER: Record<number, string> = {
     // M = Opnieuw vaststellen verblijfstitel aanvrager
     // N = Opnieuw vaststellen verblijfstitel partner
     // O = Opnieuw vaststellen ingangsdatum
+    // P = Opnieuw vaststellen vermogen
 };
 
 let activeScenario: ScenarioKey = 'A';
