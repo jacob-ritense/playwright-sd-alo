@@ -144,6 +144,10 @@ const optionHandlers: Partial<Record<Option, OptionHandler>> = {
         console.log('Option O: "Opnieuw vaststellen ingangsdatum"');
         await restartTask(page, 'Opnieuw vaststellen ingangsdatum');
     },
+    P: async (page) => {
+        console.log('Option O: "Opnieuw vaststellen vermogen"');
+        await restartTask(page, 'Opnieuw vaststellen vermogen');
+    },
 };
 
 export default async function adhocTask(page: Page) {
